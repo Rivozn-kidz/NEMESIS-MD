@@ -1,0 +1,235 @@
+{
+  "players": {
+    "256701583113@s.whatsapp.net": {
+      "class": "warrior",
+      "level": 1,
+      "exp": 50,
+      "expToNextLevel": 100,
+      "maxHp": 100,
+      "hp": 62,
+      "maxMp": 30,
+      "mp": 30,
+      "attack": 15,
+      "defense": 10,
+      "agility": 5,
+      "gold": 145,
+      "inventory": {
+        "potion": 3
+      },
+      "equipment": {
+        "weapon": null,
+        "armor": null
+      },
+      "location": "desa",
+      "quests": {
+        "active": [],
+        "completed": []
+      },
+      "battles": 0,
+      "monstersDefeated": 0,
+      "lastBattle": 0
+    },
+    "6283847258685@s.whatsapp.net": {
+      "class": "mage",
+      "level": 1,
+      "exp": 10,
+      "expToNextLevel": 100,
+      "maxHp": 60,
+      "hp": 60,
+      "maxMp": 100,
+      "mp": 100,
+      "attack": 20,
+      "defense": 5,
+      "agility": 8,
+      "gold": 5,
+      "inventory": {
+        "potion": 4,
+        "zirah": 1,
+        "elixir": 1,
+        "pedang": 1
+      },
+      "equipment": {
+        "weapon": null,
+        "armor": null
+      },
+      "location": "desa",
+      "quests": {
+        "active": [],
+        "completed": []
+      },
+      "battles": 1,
+      "monstersDefeated": 1,
+      "lastBattle": 1756816210841
+    },
+    "6282174667356@s.whatsapp.net": {
+      "class": "warrior",
+      "level": 1,
+      "exp": 59,
+      "expToNextLevel": 100,
+      "maxHp": 100,
+      "hp": 71,
+      "maxMp": 30,
+      "mp": 30,
+      "attack": 15,
+      "defense": 10,
+      "agility": 5,
+      "gold": 165,
+      "inventory": {
+        "potion": 3
+      },
+      "equipment": {
+        "weapon": null,
+        "armor": null
+      },
+      "location": "desa",
+      "quests": {
+        "active": [],
+        "completed": []
+      },
+      "battles": 0,
+      "monstersDefeated": 0,
+      "lastBattle": 0
+    },
+    "6285211958917@s.whatsapp.net": {
+      "class": "warrior",
+      "level": 1,
+      "exp": 7,
+      "expToNextLevel": 100,
+      "maxHp": 100,
+      "hp": 92,
+      "maxMp": 30,
+      "mp": 30,
+      "attack": 15,
+      "defense": 10,
+      "agility": 5,
+      "gold": 65,
+      "inventory": {
+        "potion": 3
+      },
+      "equipment": {
+        "weapon": null,
+        "armor": null
+      },
+      "location": "desa",
+      "quests": {
+        "active": [],
+        "completed": []
+      },
+      "battles": 0,
+      "monstersDefeated": 0,
+      "lastBattle": 0
+    },
+    "6289630341411@s.whatsapp.net": {
+      "class": "warrior",
+      "level": 1,
+      "exp": 8,
+      "expToNextLevel": 100,
+      "maxHp": 100,
+      "hp": 98,
+      "maxMp": 30,
+      "mp": 30,
+      "attack": 15,
+      "defense": 10,
+      "agility": 5,
+      "gold": 65,
+      "inventory": {
+        "potion": 3
+      },
+      "equipment": {
+        "weapon": null,
+        "armor": null
+      },
+      "location": "desa",
+      "quests": {
+        "active": [],
+        "completed": []
+      },
+      "battles": 0,
+      "monstersDefeated": 0,
+      "lastBattle": 0
+    }
+  },
+  "monsters": {
+    "1": {
+      "name": "Goblin",
+      "hp": 30,
+      "attack": 5,
+      "defense": 2,
+      "exp": 10,
+      "gold": 5,
+      "level": 1
+    },
+    "2": {
+      "name": "Orc",
+      "hp": 50,
+      "attack": 8,
+      "defense": 4,
+      "exp": 20,
+      "gold": 10,
+      "level": 3
+    },
+    "3": {
+      "name": "Dragon",
+      "hp": 100,
+      "attack": 15,
+      "defense": 8,
+      "exp": 50,
+      "gold": 30,
+      "level": 10
+    }
+  },
+  "locations": {
+    "desa": {
+      "name": "Desa Pemula",
+      "monsters": [
+        1
+      ],
+      "minLevel": 1,
+      "maxLevel": 5
+    },
+    "hutan": {
+      "name": "Hutan Gelap",
+      "monsters": [
+        1,
+        2
+      ],
+      "minLevel": 3,
+      "maxLevel": 8
+    },
+    "gua": {
+      "name": "Gua Batu",
+      "monsters": [
+        2,
+        3
+      ],
+      "minLevel": 5,
+      "maxLevel": 15
+    }
+  },
+  "items": {
+    "potion": {
+      "name": "Potion",
+      "type": "heal",
+      "value": 30,
+      "price": 10
+    },
+    "elixir": {
+      "name": "Elixir",
+      "type": "mana",
+      "value": 25,
+      "price": 15
+    },
+    "pedang": {
+      "name": "Pedang Besi",
+      "type": "weapon",
+      "attack": 5,
+      "price": 30
+    },
+    "zirah": {
+      "name": "Zirah Kulit",
+      "type": "armor",
+      "defense": 3,
+      "price": 25
+    }
+  }
+}
