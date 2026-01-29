@@ -51,7 +51,7 @@ if (/mongo/.test(global.tempatDB)) {
 } else if (/json/.test(global.tempatDB)) {
 	DataBase = class dataBase {
 		data = {}
-		file = path.join(process.cwd(), 'library/database', global.tempatDB);
+		file = path.join(process.cwd(), 'lib/database', global.tempatDB);
 		
 		read = async () => {
 			let data;
