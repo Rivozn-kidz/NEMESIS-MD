@@ -302,12 +302,37 @@ await fs.unlinkSync(media)
 }
 break
 		
-		case "ytmp3": {
+case "play2": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
-await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
 
-var anu = await ytdl.ytmp3(`${text}`)
+await clutch.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
+
+// Meta API
+let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=mp3`
+let response = await fetch(apiUrl)
+let json = await response.json()
+
+if (!json.status || !json.result?.url) {
+return m.reply("Failed to convert to mp3")
+}
+
+let audioUrl = json.result.url
+
+// Send as document
+await clutch.sendMessage(
+m.chat,
+{
+document: { url: audioUrl },
+fileName: "youtube.mp3",
+mimetype: "audio/mpeg"
+},
+{ quoted: m }
+)
+
+await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
+}
+break
 
 if (anu.status) {
 let urlMp3 = anu.download.url
@@ -324,37 +349,68 @@ break
 case "ytmp4": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
-await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
-var anu = await ytdl.ytmp4(`${text}`)
 
-if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {video: {url: urlMp3}, mimetype: "video/mp4"}, {quoted: m})
-} else {
+await clutch.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
+
+// Meta API (MP4 360p)
+let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=360p`
+let response = await fetch(apiUrl)
+let json = await response.json()
+
+if (!json.status || !json.result?.url) {
 return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘𝚞𝚗𝚍")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
+
+let videoUrl = json.result.url
+
+// Send as video
+await clutch.sendMessage(
+m.chat,
+{
+video: { url: videoUrl },
+mimetype: "video/mp4"
+},
+{ quoted: m }
+)
+
+await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 		
-		case "playvid": {
+	case "playvid": {
 if (!text) return m.reply(example("faded by Alan walker"))
-await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
+
+await clutch.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
+
+// YouTube search
 let ytsSearch = await yts(text)
-const res = await ytsSearch.all[0]
+let res = ytsSearch.all[0]
+if (!res) return m.reply("No results found")
 
-var anu = await ytdl.ytmp4(`${res.url}`)
+// Meta API (MP4 360p)
+let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(res.url)}&format=360p`
+let response = await fetch(apiUrl)
+let json = await response.json()
 
-if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {video: {url: urlMp3}, ptv: true, mimetype: "video/mp4"}, {quoted: m})
-} else {
-return m.reply("𝙴𝚁𝚁𝙾𝚁 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 𝚆𝙷𝙸𝙻𝙴 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝚅𝙸𝙳𝙴𝙾 𝙽𝙾𝚃𝙴")
+if (!json.status || !json.result?.url) {
+return m.reply("𝙴𝚁𝚁𝙾𝚁 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 𝚆𝙷𝙸𝙻𝙴 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝚅𝙸𝙳𝙴𝙾")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
-}
-break
 
+let videoUrl = json.result.url
+
+// Send as normal video
+await clutch.sendMessage(
+m.chat,
+{
+video: { url: videoUrl },
+mimetype: "video/mp4"
+},
+{ quoted: m }
+)
+
+await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
+}
+break	
 case "tt": case "tiktok": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 if (!text.startsWith("https://")) return m.reply(example("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
@@ -407,21 +463,49 @@ await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
 		
-		case "play": {
+case "play": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚜𝚘𝚗𝚐 𝚗𝚊𝚖𝚎 𝚏𝚘𝚛𝚎𝚡𝚊𝚖𝚙𝚕𝚎 .𝚙𝚕𝚊𝚢 𝚏𝚊𝚍𝚎𝚍"))
-await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
+
+await clutch.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
+
+// YouTube search
 let ytsSearch = await yts(text)
-const res = await ytsSearch.all[0]
+let res = ytsSearch.all[0]
+if (!res) return m.reply("No results found")
 
-var anu = await ytdl.ytmp3(`${res.url}`)
+// Meta API (MP3)
+let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(res.url)}&format=mp3`
+let response = await fetch(apiUrl)
+let json = await response.json()
 
-if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {audio: {url: urlMp3}, mimetype: "audio/mpeg", contextInfo: { externalAdReply: {thumbnailUrl: res.thumbnail, title: res.title, body: `Author ${res.author.name} || Duration ${res.timestamp}`, sourceUrl: res.url, renderLargerThumbnail: true, mediaType: 1}}}, {quoted: m})
-} else {
-return m.reply("Error! Result Not Found")
+if (!json.status || !json.result?.url) {
+return m.reply("Failed to download audio")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
+
+let audioUrl = json.result.url
+
+// Send as document
+await clutch.sendMessage(
+m.chat,
+{
+document: { url: audioUrl },
+fileName: `${res.title}.mp3`,
+mimetype: "audio/mpeg",
+contextInfo: {
+externalAdReply: {
+thumbnailUrl: res.thumbnail,
+title: res.title,
+body: `Author ${res.author.name} || Duration ${res.timestamp}`,
+sourceUrl: res.url,
+renderLargerThumbnail: true,
+mediaType: 1
+}
+}
+},
+{ quoted: m }
+)
+
+await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 		case "swgc": {
