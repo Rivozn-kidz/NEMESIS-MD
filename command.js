@@ -304,22 +304,17 @@ break
 		
 case "play2": {
 if (!text) return m.reply(example("the link"))
-if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
+if (!text.startsWith("https://")) return m.reply("Invalid YouTube link")
 
 await clutch.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
 
-// Meta API
-let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=mp3`
+let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(text)}`
 let response = await fetch(apiUrl)
 let json = await response.json()
 
-if (!json.status || !json.result?.url) {
-return m.reply("Failed to convert to mp3")
-}
+let audioUrl = json.audio?.url
+if (!audioUrl) return m.reply("Conversion failed")
 
-let audioUrl = json.result.url
-
-// Send as document
 await clutch.sendMessage(
 m.chat,
 {
@@ -338,22 +333,17 @@ break
 
 case "ytmp4": {
 if (!text) return m.reply(example("the link"))
-if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
+if (!text.startsWith("https://")) return m.reply("Invalid YouTube link")
 
 await clutch.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
 
-// Meta API (MP4 360p)
-let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=360p`
+let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(text)}`
 let response = await fetch(apiUrl)
 let json = await response.json()
 
-if (!json.status || !json.result?.url) {
-return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘𝚞𝚗𝚍")
-}
+let videoUrl = json.video?.url
+if (!videoUrl) return m.reply("Download failed")
 
-let videoUrl = json.result.url
-
-// Send as video
 await clutch.sendMessage(
 m.chat,
 {
@@ -366,29 +356,22 @@ mimetype: "video/mp4"
 await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
-		
-	case "playvid": {
-if (!text) return m.reply(example("faded by Alan walker"))
+case "playvid": {
+if (!text) return m.reply(example("faded by Alan Walker"))
 
 await clutch.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
 
-// YouTube search
 let ytsSearch = await yts(text)
 let res = ytsSearch.all[0]
 if (!res) return m.reply("No results found")
 
-// Meta API (MP4 360p)
-let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(res.url)}&format=360p`
+let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(res.url)}`
 let response = await fetch(apiUrl)
 let json = await response.json()
 
-if (!json.status || !json.result?.url) {
-return m.reply("𝙴𝚁𝚁𝙾𝚁 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 𝚆𝙷𝙸𝙻𝙴 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝚅𝙸𝙳𝙴𝙾")
-}
+let videoUrl = json.video?.url
+if (!videoUrl) return m.reply("Download failed")
 
-let videoUrl = json.result.url
-
-// Send as normal video
 await clutch.sendMessage(
 m.chat,
 {
@@ -400,7 +383,7 @@ mimetype: "video/mp4"
 
 await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
-break	
+break
 case "tt": case "tiktok": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 if (!text.startsWith("https://")) return m.reply(example("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
@@ -452,45 +435,27 @@ await clutch.sendMessage(m.chat, {video: {url: urlVid.url}, mimetype: 'video/mp4
 await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
-		
 case "play": {
-if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚜𝚘𝚗𝚐 𝚗𝚊𝚖𝚎 𝚏𝚘𝚛𝚎𝚡𝚊𝚖𝚙𝚕𝚎 .𝚙𝚕𝚊𝚢 𝚏𝚊𝚍𝚎𝚍"))
+if (!text) return m.reply(example("faded"))
 
 await clutch.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
 
-// YouTube search
 let ytsSearch = await yts(text)
 let res = ytsSearch.all[0]
 if (!res) return m.reply("No results found")
 
-// Meta API (MP3)
-let apiUrl = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(res.url)}&format=mp3`
+let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(res.url)}`
 let response = await fetch(apiUrl)
 let json = await response.json()
 
-if (!json.status || !json.result?.url) {
-return m.reply("Failed to download audio")
-}
+let audioUrl = json.audio?.url
+if (!audioUrl) return m.reply("Download failed")
 
-let audioUrl = json.result.url
-
-// Send as document
 await clutch.sendMessage(
 m.chat,
 {
-document: { url: audioUrl },
-fileName: `${res.title}.mp3`,
-mimetype: "audio/mpeg",
-contextInfo: {
-externalAdReply: {
-thumbnailUrl: res.thumbnail,
-title: res.title,
-body: `Author ${res.author.name} || Duration ${res.timestamp}`,
-sourceUrl: res.url,
-renderLargerThumbnail: true,
-mediaType: 1
-}
-}
+audio: { url: audioUrl },
+mimetype: "audio/mpeg"
 },
 { quoted: m }
 )
