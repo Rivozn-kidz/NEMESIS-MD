@@ -334,16 +334,6 @@ await clutch.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 
-if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {audio: {url: urlMp3}, mimetype: "audio/mpeg"}, {quoted: m})
-} else {
-return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘𝚞𝚗𝚍")
-}
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
-}
-break
-
 //================================================================================
 
 case "ytmp4": {
