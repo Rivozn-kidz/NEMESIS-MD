@@ -170,16 +170,22 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
-		case "ask":
+case "ask":
 case "chat": {
     if (!text) return m.reply("Ask something")
 
-    let res = await fetch(
-        `https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(text)}&botname=nemesis&ownername=Ridz`
-    )
-    let json = await res.json()
+    try {
+        let res = await fetch(
+            `https://meta-api.zone.id/ai/copilot?message=${encodeURIComponent(text)}&model=gpt-5`
+        )
+        let json = await res.json()
 
-    m.reply(`🤖 ${json.message}`)
+        if (!json.result) return m.reply("No response from AI")
+
+        m.reply(`🤖 ${json.result}`)
+    } catch (e) {
+        m.reply("AI error, try again later")
+    }
 }
 break
 
