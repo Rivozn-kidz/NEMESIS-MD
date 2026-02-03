@@ -170,7 +170,68 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
-		
+		case "ask":
+case "chat": {
+    if (!text) return m.reply("Ask something")
+
+    let res = await fetch(
+        `https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(text)}&botname=nemesis&ownername=Ridz`
+    )
+    let json = await res.json()
+
+    m.reply(`🤖 ${json.message}`)
+}
+break
+
+case "imagine":
+case "aiimage": {
+    if (!text) return m.reply("Example: .imagine cyberpunk city at night")
+
+    let url = `https://image.pollinations.ai/prompt/${encodeURIComponent(text)}`
+
+    clutch.sendMessage(
+        m.chat,
+        {
+            image: { url },
+            caption: `🎨 AI Image\nPrompt: ${text}`
+        },
+        { quoted: m }
+    )
+}
+break
+
+case "summarize": {
+    if (!text) return m.reply("Provide text to summarize")
+
+    let res = await fetch(
+        `https://api.affiliateplus.xyz/api/chatbot?message=Summarize this: ${encodeURIComponent(text)}`
+    )
+    let json = await res.json()
+    m.reply(`📝 Summary:\n${json.message}`)
+}
+break
+
+case "rewrite": {
+    if (!text) return m.reply("Provide text to rewrite")
+
+    let res = await fetch(
+        `https://api.affiliateplus.xyz/api/chatbot?message=Rewrite this better: ${encodeURIComponent(text)}`
+    )
+    let json = await res.json()
+    m.reply(`✍️ Rewritten:\n${json.message}`)
+}
+break
+
+case "translate": {
+    if (!text) return m.reply("Example: .translate hello to french")
+
+    let res = await fetch(
+        `https://api.affiliateplus.xyz/api/chatbot?message=Translate: ${encodeURIComponent(text)}`
+    )
+    let json = await res.json()
+    m.reply(`🌍 Translation:\n${json.message}`)
+}
+break
 		case "shortlink": case "shorturl": {
 if (!text) return m.reply(example("https://example.com"))
 if (!isUrl(text)) return m.reply(example("https://example.com"))
