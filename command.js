@@ -182,7 +182,199 @@ ${res.data.toString()}
 return m.reply(link)
 }
 break
+case "bible": {
+    if (!text) return m.reply("Example: .bible john 3:16")
+    try {
+        let res = await fetch(`https://bible-api.com/${encodeURIComponent(text)}`)
+        let json = await res.json()
+        if (json.error) return m.reply("Verse not found")
 
+        let verse = json.verses.map(v => 
+            `${v.book_name} ${v.chapter}:${v.verse}\n${v.text}`
+        ).join("\n")
+
+        m.reply(`📖 *Bible*\n\n${verse}`)
+    } catch {
+        m.reply("Error fetching Bible verse")
+    }
+}
+break
+case "biblelist": {
+    m.reply(`📖 *Bible Books*
+
+Old Testament:
+Genesis, Exodus, Leviticus, Numbers, Deuteronomy,
+Joshua, Judges, Ruth, 1 Samuel, 2 Samuel,
+1 Kings, 2 Kings, 1 Chronicles, 2 Chronicles,
+Ezra, Nehemiah, Esther, Job, Psalms,
+Proverbs, Ecclesiastes, Song of Solomon,
+Isaiah, Jeremiah, Lamentations, Ezekiel,
+Daniel, Hosea, Joel, Amos, Obadiah,
+Jonah, Micah, Nahum, Habakkuk, Zephaniah,
+Haggai, Zechariah, Malachi
+
+New Testament:
+Matthew, Mark, Luke, John, Acts,
+Romans, 1 Corinthians, 2 Corinthians,
+Galatians, Ephesians, Philippians, Colossians,
+1 Thessalonians, 2 Thessalonians,
+1 Timothy, 2 Timothy, Titus, Philemon,
+Hebrews, James, 1 Peter, 2 Peter,
+1 John, 2 John, 3 John, Jude, Revelation`)
+}
+break
+
+case "quran": {
+    if (!text) return m.reply("Example: .quran 1:1")
+    try {
+        let res = await fetch(`https://api.alquran.cloud/v1/ayah/${text}/en.asad`)
+        let json = await res.json()
+        if (json.status !== "OK") return m.reply("Verse not found")
+
+        m.reply(`📜 *Quran*
+Surah ${json.data.surah.englishName} (${json.data.surah.number})
+Ayah ${json.data.numberInSurah}
+
+${json.data.text}`)
+    } catch {
+        m.reply("Error fetching Quran verse")
+    }
+}
+break
+
+case "quranlist": {
+    try {
+        let res = await fetch("https://api.alquran.cloud/v1/surah")
+        let json = await res.json()
+
+        let list = json.data.map(s =>
+            `${s.number}. ${s.englishName} (${s.name})`
+        ).join("\n")
+
+        m.reply(`📜 *Quran Surahs*\n\n${list}`)
+    } catch {
+        m.reply("Error fetching surah list")
+    }
+}
+break
+
+case "joke": {
+    let res = await fetch("https://v2.jokeapi.dev/joke/Any?type=single")
+    let json = await res.json()
+    m.reply(`😂 ${json.joke}`)
+}
+break
+
+case "quote": {
+    let res = await fetch("https://api.quotable.io/random")
+    let json = await res.json()
+    m.reply(`💬 "${json.content}"\n— ${json.author}`)
+}
+break
+
+case "fact": {
+    let res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random")
+    let json = await res.json()
+    m.reply(`🧠 ${json.text}`)
+}
+break
+
+case "roast": {
+    let res = await fetch("https://evilinsult.com/generate_insult.php?lang=en&type=json")
+    let json = await res.json()
+    m.reply(`🔥 ${json.insult}`)
+}
+break
+
+case "compliment": {
+    let res = await fetch("https://complimentr.com/api")
+    let json = await res.json()
+    m.reply(`💖 ${json.compliment}`)
+}
+break
+
+case "truth": {
+    let res = await fetch("https://api.truthordarebot.xyz/v1/truth")
+    let json = await res.json()
+    m.reply(`🎯 Truth:\n${json.question}`)
+}
+break
+
+case "dare": {
+    let res = await fetch("https://api.truthordarebot.xyz/v1/dare")
+    let json = await res.json()
+    m.reply(`🎯 Dare:\n${json.question}`)
+}
+break
+
+case "riddle": {
+    let res = await fetch("https://riddles-api.vercel.app/random")
+    let json = await res.json()
+    m.reply(`🧩 Riddle:\n${json.riddle}\n\n💡 Answer:\n${json.answer}`)
+}
+break
+
+case "meme": {
+    let res = await fetch("https://meme-api.com/gimme")
+    let json = await res.json()
+    clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "🤣 Meme" }, { quoted: m })
+}
+break
+
+case "anime": {
+    let res = await fetch("https://api.waifu.pics/sfw/waifu")
+    let json = await res.json()
+    clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "🌸 Anime" }, { quoted: m })
+}
+break
+
+case "coin":
+    m.reply(Math.random() < 0.5 ? "🪙 Heads" : "🪙 Tails")
+break
+
+case "dice":
+    m.reply(`🎲 You rolled: ${Math.floor(Math.random() * 6) + 1}`)
+break
+
+case "8ball": {
+    let answers = [
+        "Yes", "No", "Maybe", "Definitely",
+        "Ask again later", "I don't think so"
+    ]
+    m.reply(`🎱 ${answers[Math.floor(Math.random() * answers.length)]}`)
+}
+break
+
+case "hug":
+case "kiss":
+case "cuddle":
+case "pat":
+case "poke":
+case "slap":
+case "bite":
+case "kill":
+case "blush":
+case "cry":
+case "smile": {
+
+    let target = m.mentionedJid[0] || m.quoted?.sender
+    if (!target) return m.reply("Tag or reply to someone")
+
+    let action = command.toLowerCase()
+    let res = await fetch(`https://api.waifu.pics/sfw/${action}`)
+    let json = await res.json()
+
+    clutch.sendMessage(
+        m.chat,
+        {
+            image: { url: json.url },
+            caption: `😆 *${action.toUpperCase()}* @${target.split("@")[0]}`,
+            mentions: [target]
+        },
+        { quoted: m }
+    )
+}
+break
 case "vv": {
         try {
             let mediaMessage;
