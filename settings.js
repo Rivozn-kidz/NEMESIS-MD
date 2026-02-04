@@ -9,7 +9,7 @@ global.namaOwner = "Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ"
 global.packname = 'ɴᴇᴍᴇsɪs ᴍᴅ'
 global.botname = 'ɴᴇᴍᴇsɪs ᴍᴅ'
 global.botname2 = 'ɴᴇᴍᴇsɪs ᴍᴅ'
-global.password = "kayiza"; 
+global.botNumber = "" 
 global.custompairing = "NEMESISX";
 
 // ===== DATABASE / LINKS =====
