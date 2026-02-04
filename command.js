@@ -170,24 +170,6 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
-case "ask":
-case "chat": {
-    if (!text) return m.reply("Ask something")
-
-    try {
-        let res = await fetch(
-            `https://meta-api.zone.id/ai/copilot?message=${encodeURIComponent(text)}&model=gpt-5`
-        )
-        let json = await res.json()
-
-        if (!json.result) return m.reply("No response from AI")
-
-        m.reply(`🤖 ${json.result}`)
-    } catch (e) {
-        m.reply("AI error, try again later")
-    }
-}
-break
 
 case "imagine":
 case "aiimage": {
@@ -1549,7 +1531,8 @@ reply(`${a}`)
 }
 }
 break
-
+case "ask"
+case chat"
 case "ai": {
     try {
         if (!text) return Reply("Please provide a message for the Ai.\nExample: `.andy what is going on`");
@@ -1561,10 +1544,10 @@ case "ai": {
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.message) {
-            return Reply("Andy failed to respond. Please try again later.");
+            return Reply("Nemesis failed to respond. Please try again later.");
         }
 
-        await m.reply(`🤖 *Andy Response:*\n\n${data.message}`);
+        await m.reply(`🤖 * Nemesis Response:*\n\n${data.message}`);
     } catch (e) {
         console.error("Error in AI command:", e);
         m.reply("An error occurred while communicating with the AI.");
