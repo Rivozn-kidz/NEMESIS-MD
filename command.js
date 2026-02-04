@@ -171,6 +171,43 @@ await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted:
 }
 break
 
+// Auto Typing
+case "autotyping": {
+    if (!global.isOwner(m.sender)) return m.reply(global.mess.owner)
+    if (!text) return m.reply("Usage: .autotyping on/off")
+    global.autoTyping = text.toLowerCase() === "on"
+    return m.reply(`Auto typing is now ${global.autoTyping ? "ENABLED" : "DISABLED"}`)
+}
+break
+
+// Auto Recording
+case "autorecording": {
+    if (!global.isOwner(m.sender)) return m.reply(global.mess.owner)
+    if (!text) return m.reply("Usage: .autorecording on/off")
+    global.autoRecording = text.toLowerCase() === "on"
+    return m.reply(`Auto recording is now ${global.autoRecording ? "ENABLED" : "DISABLED"}`)
+}
+break
+
+// Auto Status (view + react)
+case "autostatus": {
+    if (!global.isOwner(m.sender)) return m.reply(global.mess.owner)
+    if (!text) return m.reply("Usage: .autostatus on/off")
+    global.autoStatusView = text.toLowerCase() === "on"
+    global.autoStatusReact = text.toLowerCase() === "on"
+    return m.reply(`Auto status features are now ${global.autoStatusView ? "ENABLED" : "DISABLED"}`)
+}
+break
+
+// Auto Bio
+case "autobio": {
+    if (!global.isOwner(m.sender)) return m.reply(global.mess.owner)
+    if (!text) return m.reply("Usage: .autobio on/off")
+    global.autoBio = text.toLowerCase() === "on"
+    return m.reply(`Auto bio is now ${global.autoBio ? "ENABLED" : "DISABLED"}`)
+}
+break
+
 case "imagine":
 case "aiimage": {
     if (!text) return m.reply("Example: .imagine cyberpunk city at night")
