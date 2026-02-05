@@ -32,10 +32,10 @@ const list = JSON.parse(fs.readFileSync("./lib/database/list.json"))
 const { pinterest, pinterest2, remini, mediafire, tiktokDl } = require('./lib/scraper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, toIDR, capital } = require('./lib/function');
 
-module.exports = ridzcoder = async (ridzcoder, m, chatUpdate, store) => {
+module.exports = kayiza = async (kayiza, m, chatUpdate, store) => {
         try {
-                await LoadDataBase(ridzcoder, m)
-                const botNumber = await ridzcoder.decodeJid(ridzcoder.user.id)
+                await LoadDataBase(kayiza, m)
+                const botNumber = await kayiza.decodeJid(kayiza.user.id)
                 const body = (m.type === 'conversation') ? m.message.conversation : (m.type == 'imageMessage') ? m.message.imageMessage.caption : (m.type == 'videoMessage') ? m.message.videoMessage.caption : (m.type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
                 const budy = (typeof m.text == 'string' ? m.text : '')
                 const prefix = "."
@@ -71,33 +71,33 @@ module.exports = ridzcoder = async (ridzcoder, m, chatUpdate, store) => {
                 if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink == true) {
                         var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
                         if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-                                var gclink = (`https://chat.whatsapp.com/` + await ridzcoder.groupInviteCode(m.chat))
+                                var gclink = (`https://chat.whatsapp.com/` + await kayiza.groupInviteCode(m.chat))
                                 var isLinkThisGc = new RegExp(gclink, 'i')
                                 var isgclink = isLinkThisGc.test(m.text)
                                 if (isgclink) return
                                 let delet = m.key.participant
                                 let bang = m.key.id
-                                await ridzcoder.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+                                await kayiza.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
 
 @${m.sender.split("@")[0]} Sorry, I will kick you, because the admin/bot owner has activated the anti-link feature for other groups.!`, mentions: [m.sender]}, {quoted: m})
-                                await ridzcoder.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
+                                await kayiza.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
                                 await sleep(1000)
-                                await ridzcoder.groupParticipantsUpdate(m.chat, [m.sender], "remove")
+                                await kayiza.groupParticipantsUpdate(m.chat, [m.sender], "remove")
                         }}
 
                 if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink2 == true) {
                         var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
                         if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-                                var gclink = (`https://chat.whatsapp.com/` + await ridzcoder.groupInviteCode(m.chat))
+                                var gclink = (`https://chat.whatsapp.com/` + await kayiza.groupInviteCode(m.chat))
                                 var isLinkThisGc = new RegExp(gclink, 'i')
                                 var isgclink = isLinkThisGc.test(m.text)
                                 if (isgclink) return
                                 let delet = m.key.participant
                                 let bang = m.key.id
-                                await ridzcoder.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+                                await kayiza.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
 
 @${m.sender.split("@")[0]} Sorry, I deleted your message, because the admin/bot owner has activated the anti-link feature for other groups!`, mentions: [m.sender]}, {quoted: m})
-                                await ridzcoder.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
+                                await kayiza.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
                         }}
 
                 //============= [ FUNCTION ] ======================================================
@@ -107,7 +107,7 @@ module.exports = ridzcoder = async (ridzcoder, m, chatUpdate, store) => {
                 }
 
                 const Reply = async (teks) => {
-                        return ridzcoder.sendMessage(m.chat, {text: teks, mentions: [m.sender], contextInfo: {
+                        return kayiza.sendMessage(m.chat, {text: teks, mentions: [m.sender], contextInfo: {
                                 isForwarded: true, 
                                 forwardingScore: 9999, 
                                 businessMessageForwardInfo: { businessOwnerJid: global.owner+"@s.whatsapp.net" }, 
@@ -167,7 +167,7 @@ const {
 } = require('getscreenshot.js')
 const fs = require('fs')
 var data = await screenshotV2(text)
-await ridzcoder.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
+await kayiza.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
 
@@ -214,7 +214,7 @@ case "aiimage": {
 
     let url = `https://image.pollinations.ai/prompt/${encodeURIComponent(text)}`
 
-    ridzcoder.sendMessage(
+    kayiza.sendMessage(
         m.chat,
         {
             image: { url },
@@ -403,14 +403,14 @@ break
 case "meme": {
     let res = await fetch("https://meme-api.com/gimme")
     let json = await res.json()
-    ridzcoder.sendMessage(m.chat, { image: { url: json.url }, caption: "🤣 Meme" }, { quoted: m })
+    kayiza.sendMessage(m.chat, { image: { url: json.url }, caption: "🤣 Meme" }, { quoted: m })
 }
 break
 
 case "anime": {
     let res = await fetch("https://api.waifu.pics/sfw/waifu")
     let json = await res.json()
-    ridzcoder.sendMessage(m.chat, { image: { url: json.url }, caption: "🌸 Anime" }, { quoted: m })
+    kayiza.sendMessage(m.chat, { image: { url: json.url }, caption: "🌸 Anime" }, { quoted: m })
 }
 break
 
@@ -450,7 +450,7 @@ case "smile": {
     let res = await fetch(`https://api.waifu.pics/sfw/${action}`)
     let json = await res.json()
 
-    ridzcoder.sendMessage(
+    kayiza.sendMessage(
         m.chat,
         {
             image: { url: json.url },
@@ -494,22 +494,22 @@ case "vv": {
             if (!mediaMessage) {
                 return m.reply("❌ Reply to a view-once image, video, or audio.");
             }
-               await ridzcoder.sendMessage(m.chat, { 
+               await kayiza.sendMessage(m.chat, { 
                 react: { text: "☠️", key: m.key } 
             });
             const mime = mediaMessage.mimetype;
             if (!mime) return Reply("❌ Unable to detect media type.");
 
             if (mime.startsWith("image/")) {
-                return await handleImage(ridzcoder, m.chat, mediaMessage);
+                return await handleImage(kayiza, m.chat, mediaMessage);
             }
 
             if (mime.startsWith("video/")) {
-                return await handleVideo(ridzcoder, m.chat, mediaMessage);
+                return await handleVideo(kayiza, m.chat, mediaMessage);
             }
 
             if (mime.startsWith("audio/")) {
-                return await handleAudio(ridzcoder, m.chat, mediaMessage);
+                return await handleAudio(kayiza, m.chat, mediaMessage);
             }
 
             m.reply("❌ Unsupported media type.");
@@ -520,7 +520,7 @@ case "vv": {
         }
     }
 
-async function handleImage(ridzcoder, chatId, mediaMessage) {
+async function handleImage(kayiza, chatId, mediaMessage) {
     const stream = await downloadContentFromMessage(mediaMessage, 'image');
     let buffer = Buffer.from([]);
 
@@ -528,10 +528,10 @@ async function handleImage(ridzcoder, chatId, mediaMessage) {
         buffer = Buffer.concat([buffer, chunk]);
     }
 
-    await ridzcoder.sendMessage(chatId, { image: buffer });
+    await kayiza.sendMessage(chatId, { image: buffer });
 }
 
-async function handleVideo(ridzcoder, chatId, mediaMessage) {
+async function handleVideo(kayiza, chatId, mediaMessage) {
     const tempDir = path.join(__dirname, "../temp");
     if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir);
 
@@ -553,7 +553,7 @@ async function handleVideo(ridzcoder, chatId, mediaMessage) {
     fs.unlinkSync(filePath);
 }
 
-async function handleAudio(ridzcoder, chatId, mediaMessage) {
+async function handleAudio(kayiza, chatId, mediaMessage) {
     const stream = await downloadContentFromMessage(mediaMessage, 'audio');
     let buffer = Buffer.from([]);
 
@@ -570,13 +570,13 @@ break
 
                 case "tourl": {
 if (!/image/.test(mime)) return m.reply(example("𝚛𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚝𝚘𝚞𝚛𝚕"))
-let media = await ridzcoder.downloadAndSaveMediaMessage(qmsg)
+let media = await kayiza.downloadAndSaveMediaMessage(qmsg)
 const { ImageUploadService } = require('node-upload-images')
 const service = new ImageUploadService('pixhost.to');
 let { directLink } = await service.uploadFromBinary(fs.readFileSync(media), 'media.png');
 
 let teks = directLink.toString()
-await ridzcoder.sendMessage(m.chat, {text: teks}, {quoted: m})
+await kayiza.sendMessage(m.chat, {text: teks}, {quoted: m})
 await fs.unlinkSync(media)
 }
 break
@@ -585,7 +585,7 @@ case "play2": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid YouTube link")
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
 
 let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(text)}`
 let response = await fetch(apiUrl)
@@ -594,7 +594,7 @@ let json = await response.json()
 let audioUrl = json.audio?.url
 if (!audioUrl) return m.reply("Conversion failed")
 
-await ridzcoder.sendMessage(
+await kayiza.sendMessage(
 m.chat,
 {
 document: { url: audioUrl },
@@ -604,7 +604,7 @@ mimetype: "audio/mpeg"
 { quoted: m }
 )
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 
@@ -614,7 +614,7 @@ case "ytmp4": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid YouTube link")
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "🕖", key: m.key } })
 
 let apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(text)}`
 let response = await fetch(apiUrl)
@@ -623,7 +623,7 @@ let json = await response.json()
 let videoUrl = json.video?.url
 if (!videoUrl) return m.reply("Download failed")
 
-await ridzcoder.sendMessage(
+await kayiza.sendMessage(
 m.chat,
 {
 video: { url: videoUrl },
@@ -632,13 +632,13 @@ mimetype: "video/mp4"
 { quoted: m }
 )
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 case "playvid": {
 if (!text) return m.reply(example("faded by Alan Walker"))
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "🔎", key: m.key } })
 
 let ytsSearch = await yts(text)
 let res = ytsSearch.all[0]
@@ -651,7 +651,7 @@ let json = await response.json()
 let videoUrl = json.video?.url
 if (!videoUrl) return m.reply("Download failed")
 
-await ridzcoder.sendMessage(
+await kayiza.sendMessage(
 m.chat,
 {
 video: { url: videoUrl },
@@ -660,20 +660,20 @@ mimetype: "video/mp4"
 { quoted: m }
 )
 
-await ridzcoder.sendMessage(m.chat, { react: { text: "", key: m.key } })
+await kayiza.sendMessage(m.chat, { react: { text: "", key: m.key } })
 }
 break
 case "tt": case "tiktok": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 if (!text.startsWith("https://")) return m.reply(example("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 await tiktokDl(q).then(async (result) => {
-await ridzcoder.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
+await kayiza.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
 if (!result.status) return m.reply("Error!")
 if (result.durations == 0 && result.duration == "0 Seconds") {
 let araara = new Array()
 let urutan = 0
 for (let a of result.data) {
-let imgsc = await prepareWAMessageMedia({ image: {url: `${a.url}`}}, { upload: ridzcoder.waUploadToServer })
+let imgsc = await prepareWAMessageMedia({ image: {url: `${a.url}`}}, { upload: kayiza.waUploadToServer })
 await araara.push({
 header: proto.Message.InteractiveMessage.Header.fromObject({
 title: `𝙿𝚑𝚘𝚝𝚘 *${urutan += 1}*`, 
@@ -703,15 +703,15 @@ cards: araara
 })
 })}
 }}, {userJid: m.sender, quoted: m})
-await ridzcoder.relayMessage(m.chat, msgii.message, { 
+await kayiza.relayMessage(m.chat, msgii.message, { 
 messageId: msgii.key.id 
 })
 } else {
 let urlVid = await result.data.find(e => e.type == "nowatermark_hd" || e.type == "nowatermark")
-await ridzcoder.sendMessage(m.chat, {video: {url: urlVid.url}, mimetype: 'video/mp4', caption: `*𝚃𝙸𝙺𝚃𝙾𝙺 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁 ✅*`}, {quoted: m})
+await kayiza.sendMessage(m.chat, {video: {url: urlVid.url}, mimetype: 'video/mp4', caption: `*𝚃𝙸𝙺𝚃𝙾𝙺 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁 ✅*`}, {quoted: m})
 }
 }).catch(e => console.log(e))
-await ridzcoder.sendMessage(m.chat, {react: {text: '', key: m.key}})
+await kayiza.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
 
@@ -733,9 +733,9 @@ break
             return Reply(`⚠️ _𝚁𝚎𝚙𝚕𝚢 𝚟𝚒𝚍𝚎𝚘 𝚠𝚒𝚝𝚑 *${prefix}𝚜𝚠𝚐𝚌*_`);
         }
 
-        await ridzcoder.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
+        await kayiza.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
 
-        const allGroups = await ridzcoder.groupFetchAllParticipating();
+        const allGroups = await kayiza.groupFetchAllParticipating();
         const groupList = Object.values(allGroups);
 
         if (groupList.length === 0) return Reply("❌𝙽𝚘 𝚐𝚛𝚘𝚞𝚙 𝚏𝚘𝚞𝚗𝚍.");
@@ -746,7 +746,7 @@ break
             id: `${prefix}swgc_process ${g.id}`
         }));
 
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             image: { url: global.image.menu },
             caption: `📲 *GROUP SWGC*`,
             footer: `Total Grup: ${groupList.length}`,
@@ -791,17 +791,17 @@ case "swgc_process": {
 
     const data = global.swgcBuffer ? global.swgcBuffer[m.sender] : null;
     if (!data) return Reply("❌ 𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚖𝚎𝚍𝚒𝚊 𝚙𝚕𝚎𝚊𝚜𝚎");
-    await ridzcoder.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
+    await kayiza.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
 
     try {
         if (/image/.test(data.mime)) {
-            await ridzcoder.sendMessage(groupId, { groupStatusMessage: { image: data.buffer, caption: data.caption } });
+            await kayiza.sendMessage(groupId, { groupStatusMessage: { image: data.buffer, caption: data.caption } });
         } else if (/video/.test(data.mime)) {
-            await ridzcoder.sendMessage(groupId, { groupStatusMessage: { video: data.buffer, caption: data.caption } });
+            await kayiza.sendMessage(groupId, { groupStatusMessage: { video: data.buffer, caption: data.caption } });
         } else if (/audio/.test(data.mime)) {
-            await ridzcoder.sendMessage(groupId, { groupStatusMessage: { audio: data.buffer } });
+            await kayiza.sendMessage(groupId, { groupStatusMessage: { audio: data.buffer } });
         } else if (data.mime === "text" && data.caption) {
-            await ridzcoder.sendMessage(groupId, { groupStatusMessage: { text: data.caption } });
+            await kayiza.sendMessage(groupId, { groupStatusMessage: { text: data.caption } });
         } else {
             return Reply(`⚠️ _Reply video with  *${prefix}swgc*_`);
         }
@@ -819,13 +819,13 @@ case "play": {
         if (!text) {
             return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
         }
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: "🔍", key: m.key }
         });
 
         const { videos } = await yts(text);
         if (!videos || videos.length === 0) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: "❌", key: m.key }
             });
             return Reply("⚠️ No results found for your query!");
@@ -843,11 +843,11 @@ case "play": {
 ╰────────────────────────────
 > Cʀᴇᴀᴛᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ❦`;
 
-   await ridzcoder.sendMessage(m.chat, {
+   await kayiza.sendMessage(m.chat, {
     image: { url: video.thumbnail },
     caption
 }, { quoted: m });
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: "⬇️", key: m.key }
         });
 
@@ -855,15 +855,15 @@ case "play": {
         const { data } = await axios.get(apiUrl);
 
         if (!data?.status || !data.audio) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: "❌", key: m.key }
             });
             return Reply("🚫 Download failed. Try again later.");
         }
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: "✅", key: m.key }
         });
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             document: { url: data.audio },
             mimetype: "audio/mpeg",
             fileName: `${data.title || video.title}.mp3`
@@ -871,7 +871,7 @@ case "play": {
 
     } catch (err) {
         console.error("Play error:", err);
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: "❌", key: m.key }
         });
         Reply("❌ Download failed. Please try again later.");
@@ -881,7 +881,7 @@ break;
                 case "brat": {
     if (!text) 
         return m.reply('❌ Use: .𝚋𝚛𝚊𝚝 𝚑𝚎𝚕𝚕𝚘 𝚠𝚘𝚛𝚕𝚍');
-        await ridzcoder.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
+        await kayiza.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
     try {
         let encodedText = encodeURIComponent(text);
         let url = `https://alipai-api.vercel.app/imagecreator/bratv?apikey=alipaikey&text=${encodedText}`;
@@ -896,7 +896,7 @@ break;
             quality: 100
         });
         const stickerBuffer = await sticker.toBuffer();
-       await ridzcoder.sendMessage(m.chat, {
+       await kayiza.sendMessage(m.chat, {
             sticker: stickerBuffer,
             contextInfo: {
                 isForwarded: true, 
@@ -922,9 +922,9 @@ break;
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
                                 if (text || m.quoted) {
                                         const input = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text ? text.replace(/[^0-9]/g, "") + "@s.whatsapp.net" : false
-                                        var onWa = await ridzcoder.onWhatsApp(input.split("@")[0])
+                                        var onWa = await kayiza.onWhatsApp(input.split("@")[0])
                                         if (onWa.length < 1) return m.reply("𝙽𝚘 𝚙𝚊𝚛𝚝𝚒𝚌𝚒𝚙𝚊𝚗𝚝")
-                                        const res = await ridzcoder.groupParticipantsUpdate(m.chat, [input], 'remove')
+                                        const res = await kayiza.groupParticipantsUpdate(m.chat, [input], 'remove')
                                         await m.reply(`𝚄𝚜𝚎𝚛 ${input.split("@")[0]} 𝚛𝚎𝚖𝚘𝚟𝚎𝚍`)
                                 } else {
                                         return m.reply(example("𝚁𝚎𝚙𝚕𝚢 𝚘𝚛 𝚝𝚊𝚐 𝚞𝚜𝚎𝚛 𝚝𝚘 𝚛𝚎𝚖𝚘𝚟𝚎"))
@@ -939,7 +939,7 @@ break;
                                 if (!m.isGroup) return Reply(mess.group)
                                 await m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚎𝚏𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢")
                                 await sleep(4000)
-                                await ridzcoder.groupLeave(m.chat)
+                                await kayiza.groupLeave(m.chat)
                         }
                         break
 
@@ -949,7 +949,7 @@ break;
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
-                                await ridzcoder.groupRevokeInvite(m.chat)
+                                await kayiza.groupRevokeInvite(m.chat)
                                 m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚒𝚗𝚔 𝚛𝚎𝚜𝚎𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢✅")
                         }
                         break
@@ -965,7 +965,7 @@ break;
                                 await member.forEach((e) => {
                                         teks += `@${e.split("@")[0]}\n`
                                 })
-                                await ridzcoder.sendMessage(m.chat, {text: teks, mentions: [...member]}, {quoted: m})
+                                await kayiza.sendMessage(m.chat, {text: teks, mentions: [...member]}, {quoted: m})
                         }
                         break
 
@@ -974,11 +974,11 @@ break;
                         case "linkgc": {
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
-                                const urlGrup = "https://chat.whatsapp.com/" + await ridzcoder.groupInviteCode(m.chat)
+                                const urlGrup = "https://chat.whatsapp.com/" + await kayiza.groupInviteCode(m.chat)
                                 var teks = `
 ${urlGrup}
 `
-                                await ridzcoder.sendMessage(m.chat, {text: teks, matchedText: `${urlGrup}`}, {quoted: m})
+                                await kayiza.sendMessage(m.chat, {text: teks, matchedText: `${urlGrup}`}, {quoted: m})
                         }
                         break
 
@@ -990,7 +990,7 @@ ${urlGrup}
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
                                 if (!text) return m.reply(example("group"))
                                 let member = m.metadata.participants.map(v => v.id)
-                                await ridzcoder.sendMessage(m.chat, {text: text, mentions: [...member]}, {quoted: m})
+                                await kayiza.sendMessage(m.chat, {text: text, mentions: [...member]}, {quoted: m})
                         }
                         break
 
@@ -1002,7 +1002,7 @@ ${urlGrup}
                                 if (!text) return m.reply(example("linkgcnya"))
                                 if (!text.includes("chat.whatsapp.com")) return m.reply("Invalid WhatsApp group link")
                                 let result = text.split('https://chat.whatsapp.com/')[1]
-                                let id = await ridzcoder.groupAcceptInvite(result)
+                                let id = await kayiza.groupAcceptInvite(result)
                                 m.reply(`𝙶𝚛𝚘𝚞𝚙 𝚓𝚘𝚒𝚗𝚎𝚍 ${id}`)
                         }
                         break
@@ -1079,10 +1079,10 @@ break
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
                                 if (/open|opengc/.test(command)) {
                                         if (m.metadata.announce == false) return 
-                                        await ridzcoder.groupSettingUpdate(m.chat, 'not_announcement')
+                                        await kayiza.groupSettingUpdate(m.chat, 'not_announcement')
                                 } else if (/closegc|close/.test(command)) {
                                         if (m.metadata.announce == true) return 
-                                        await ridzcoder.groupSettingUpdate(m.chat, 'announcement')
+                                        await kayiza.groupSettingUpdate(m.chat, 'announcement')
                                 } else {}
                         }
                         break
@@ -1099,8 +1099,8 @@ break
                                         let target = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
                                         if (/demote/.test(command)) action = "Demote"
                                         if (/promote/.test(command)) action = "Promote"
-                                        await ridzcoder.groupParticipantsUpdate(m.chat, [target], action.toLowerCase()).then(async () => {
-                                                await ridzcoder.sendMessage(m.chat, {text: `Success ${action.toLowerCase()} @${target.split("@")[0]}`, mentions: [target]}, {quoted: m})
+                                        await kayiza.groupParticipantsUpdate(m.chat, [target], action.toLowerCase()).then(async () => {
+                                                await kayiza.sendMessage(m.chat, {text: `Success ${action.toLowerCase()} @${target.split("@")[0]}`, mentions: [target]}, {quoted: m})
                                         })
                                 } else {
                                         return m.reply(example("@tag/2567###"))
@@ -1230,7 +1230,7 @@ break;
                                         teks += `\n* ${i.split("@")[0]}
 * *Tag :* @${i.split("@")[0]}\n`
                                 }
-                                ridzcoder.sendMessage(m.chat, {text: teks, mentions: premium}, {quoted: m})
+                                kayiza.sendMessage(m.chat, {text: teks, mentions: premium}, {quoted: m})
                         }
                         break
 
@@ -1255,7 +1255,7 @@ break;
                         case "jpm": {
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!q) return m.reply(example("𝚑𝚎𝚕𝚕𝚘 𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
-                                let allgrup = await ridzcoder.groupFetchAllParticipating()
+                                let allgrup = await kayiza.groupFetchAllParticipating()
                                 let res = await Object.keys(allgrup)
                                 let count = 0
                                 const jid = m.chat
@@ -1264,12 +1264,12 @@ break;
                                 for (let i of res) {
                                         if (global.db.groups[i] && global.db.groups[i].blacklistjpm && global.db.groups[i].blacklistjpm == true) continue
                                         try {
-                                                await ridzcoder.sendMessage(i, {text: `${teks}`}, {quoted: qlocJpm})
+                                                await kayiza.sendMessage(i, {text: `${teks}`}, {quoted: qlocJpm})
                                                 count += 1
                                         } catch {}
                                         await sleep(global.delayJpm)
                                 }
-                                await ridzcoder.sendMessage(jid, {text: `*𝚂𝚎𝚗𝚝 𝚌𝚘𝚖𝚖𝚘𝚗 𝚖𝚎𝚜𝚜𝚊𝚐𝚎 𝚝𝚘 : ${count} 𝚐𝚛𝚘𝚞𝚙𝚜`}, {quoted: m})
+                                await kayiza.sendMessage(jid, {text: `*𝚂𝚎𝚗𝚝 𝚌𝚘𝚖𝚖𝚘𝚗 𝚖𝚎𝚜𝚜𝚊𝚐𝚎 𝚝𝚘 : ${count} 𝚐𝚛𝚘𝚞𝚙𝚜`}, {quoted: m})
                         }
                         break
 
@@ -1277,14 +1277,14 @@ break;
 
                         case "developerbot": 
                         case "owner": {
-                                await ridzcoder.sendContact(m.chat, [global.owner], m)
+                                await kayiza.sendContact(m.chat, [global.owner], m)
                         }
                         break
 
                         //================================================================================
                         case "self": {
                                 if (!isCreator) return
-                                ridzcoder.public = false
+                                kayiza.public = false
                                 m.reply("𝙱𝙾𝚃 𝙲𝙷𝙰𝙽𝙶𝙴𝙳 𝚃𝙾 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙼𝙾𝙳𝙴*")
                         }
                         break
@@ -1313,7 +1313,7 @@ break;
 
                         case "public": {
                                 if (!isCreator) return
-                                ridzcoder.public = true
+                                kayiza.public = true
                                 m.reply("𝙱𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎𝚍 𝚝𝚘 𝚙𝚞𝚋𝚕𝚒𝚌 𝚖𝚘𝚍𝚎*")
                         }
                         break
@@ -1342,7 +1342,7 @@ break;
                                                 pe != ""
                                         )
                                 const anu = await execSync(`zip -r ${name}.zip ${ls.join(" ")}`)
-                                await ridzcoder.sendMessage(m.sender, {document: await fs.readFileSync(`./${name}.zip`), fileName: `${name}.zip`, mimetype: "application/zip"}, {quoted: m})
+                                await kayiza.sendMessage(m.sender, {document: await fs.readFileSync(`./${name}.zip`), fileName: `${name}.zip`, mimetype: "application/zip"}, {quoted: m})
                                 await execSync(`rm -rf ${name}.zip`)
                                 if (m.chat !== m.sender) return m.reply("Script bot")
                         }
@@ -1365,10 +1365,10 @@ break;
                         case "setppbot": {
                                 if (!isCreator) return Reply(mess.owner)
                                 if (/image/g.test(mime)) {
-                                        var medis = await ridzcoder.downloadAndSaveMediaMessage(qmsg)
+                                        var medis = await kayiza.downloadAndSaveMediaMessage(qmsg)
                                         if (args[0] && args[0] == "panjang") {
                                                 const { img } = await generateProfilePicture(medis)
-                                                await ridzcoder.query({
+                                                await kayiza.query({
                                                         tag: 'iq',
                                                         attrs: {
                                                                 to: botNumber,
@@ -1386,7 +1386,7 @@ break;
                                                 await fs.unlinkSync(medis)
                                                 m.reply("𝙳𝙿 𝚂𝙴𝚃 𝚂𝚄𝙲𝙲𝙴𝚂𝚂𝙵𝚄𝙻𝙻𝚈 ✅")
                                         } else {
-                                                await ridzcoder.updateProfilePicture(botNumber, {content: medis})
+                                                await kayiza.updateProfilePicture(botNumber, {content: medis})
                                                 await fs.unlinkSync(medis)
                                                 m.reply("𝚁𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚜𝚎𝚝𝚋𝚘𝚝𝚙𝚙✅")
                                         }
@@ -1399,7 +1399,7 @@ break;
                         case "clearchat": 
                         case "clc": {
                                 if (!isCreator) return Reply(mess.owner)
-                                ridzcoder.chatModify({ delete: true, lastMessages: [{ key: m.key, messageTimestamp: m.timestamp }]}, m.chat)
+                                kayiza.chatModify({ delete: true, lastMessages: [{ key: m.key, messageTimestamp: m.timestamp }]}, m.chat)
                         }
                         break
 
@@ -1413,7 +1413,7 @@ break;
                                         teks += `\n* ${i.split("@")[0]}
 * *Tag :* @${i.split("@")[0]}\n`
                                 }
-                                ridzcoder.sendMessage(m.chat, {text: teks, mentions: owners}, {quoted: m})
+                                kayiza.sendMessage(m.chat, {text: teks, mentions: owners}, {quoted: m})
                         }
                         break
 
@@ -1474,13 +1474,13 @@ break;
             // Try to get profile picture
             let profilePic;
             try {
-                profilePic = await ridzcoder.profilePictureUrl(userToAnalyze, "image");
+                profilePic = await kayiza.profilePictureUrl(userToAnalyze, "image");
             } catch {
                 profilePic = "https://files.catbox.moe/lvcwnf.jpg"; // fallback image
             }
 
             // Send profile picture
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 image: { url: profilePic },
                 caption: `Profile picture of @${userToAnalyze.split('@')[0]}`,
                 mentions: [userToAnalyze]
@@ -1513,7 +1513,7 @@ break;
     }
 
     try {
-        await ridzcoder.updateBlockStatus(jid, "block");
+        await kayiza.updateBlockStatus(jid, "block");
   //put succecc reaction
         m.reply(`Successfully blocked @${jid.split("@")[0]}`, { mentions: [jid] });
     } catch (error) {
@@ -1565,7 +1565,7 @@ case "movieinfo": {
 `;
 
         // Send message with the requested format
-        await ridzcoder.sendMessage(
+        await kayiza.sendMessage(
             m.chat,
             {
                 image: { 
@@ -1600,7 +1600,7 @@ if(!text) return Reply("Need some text.")
   slow: false,
   host: 'https://translate.google.com',
 })
-await ridzcoder.sendMessage(m.chat, { audio: { url: url }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m })
+await kayiza.sendMessage(m.chat, { audio: { url: url }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m })
     }catch(a){
 reply(`${a}`)
 }
@@ -1609,7 +1609,7 @@ break
 case "ai": {
     try {
         if (!text) return Reply("Please provide a message for the Ai.\nExample: `.andy what is going on`");
-             await ridzcoder.sendMessage(m.chat, { 
+             await kayiza.sendMessage(m.chat, { 
                 react: { text: "📡", key: m.key } 
             });
 
@@ -1630,7 +1630,7 @@ break
 case "bible": {
   try {
     if (!q) {
-      return await ridzcoder.sendMessage(
+      return await kayiza.sendMessage(
         m.chat,
         {
           text: `⚠️ *Please provide a Bible reference.*\n\n📝 *Example:*\n.bible John 1:1`
@@ -1663,10 +1663,10 @@ case "bible": {
         `🗂️ *Translation:* ${translation_name}\n\n` +
         `> ©Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`;
 
-      await ridzcoder.sendMessage(m.chat, { text: verseMessage
+      await kayiza.sendMessage(m.chat, { text: verseMessage
       }, { quoted: m });
     } else {
-      await ridzcoder.sendMessage(
+      await kayiza.sendMessage(
         m.chat,
         { text: "❌ *Verse not found.* Please check the reference and try again."
          },
@@ -1675,7 +1675,7 @@ case "bible": {
     }
   } catch (error) {
     console.error("Bible command error:", error.message || error);
-    await ridzcoder.sendMessage(
+    await kayiza.sendMessage(
       m.chat,
       { text: "⚠️ *An error occurred while fetching the Bible verse.* Please try again."
        },
@@ -1714,7 +1714,7 @@ case "msg": {
 
     for (let i = 0; i < count; i++) {
       const hiddenMsg = message + zws.repeat(i); // visually same, technically unique
-      await ridzcoder.sendMessage(m.chat, { text: hiddenMsg }, { quoted: null });
+      await kayiza.sendMessage(m.chat, { text: hiddenMsg }, { quoted: null });
       if (i < count - 1) await new Promise(res => setTimeout(res, 1000)); // 1 sec delay
     }
 
@@ -1768,7 +1768,7 @@ case "ttstalk":{
 
     const profileImage = { image: { url: user.avatarLarger }, caption: profileInfo };
 
-    await ridzcoder.sendMessage(m.chat, profileImage, { quoted: m });
+    await kayiza.sendMessage(m.chat, profileImage, { quoted: m });
   } catch (error) {
     console.error("❌ Error in TikTok stalk command:", error);
     m.reply("⚠️ An error occurred while fetching TikTok profile data.");
@@ -1803,10 +1803,10 @@ break
         articles.forEach((article, index) => {
             newsMessage += `${index + 1}. *${article.title}*\n${article.description}\n\n`;
         });
-        await ridzcoder.sendMessage(m.chat, { text: newsMessage });
+        await kayiza.sendMessage(m.chat, { text: newsMessage });
     } catch (error) {
         console.error('Error fetching news:', error);
-        await ridzcoder.sendMessage(m.chat, { text: 'Sorry, I could not fetch news right now.' });
+        await kayiza.sendMessage(m.chat, { text: 'Sorry, I could not fetch news right now.' });
     }
 } 
 break
@@ -1815,27 +1815,27 @@ break
 case "requests":
  {
     try {
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '⏳', key: m.key }
         });
 
         if (!m.isGroup) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply("❌ This command can only be used in groups.");
         }
         if (!m.isBotAdmin) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply("❌ I need to be an admin to view join requests.");
         }
 
-        const requests = await ridzcoder.groupRequestParticipantsList(m.chat);
+        const requests = await kayiza.groupRequestParticipantsList(m.chat);
 
         if (requests.length === 0) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
             });
             return Reply("ℹ️ No pending join requests.");
@@ -1846,13 +1846,13 @@ case "requests":
             text += `${i+1}. @${user.jid.split('@')[0]}\n`;
         });
 
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '✅', key: m.key }
         });
         return Reply(text, { mentions: requests.map(u => u.jid) });
     } catch (error) {
         console.error("Request list error:", error);
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '❌', key: m.key }
         });
         return Reply("❌ Failed to fetch join requests.");
@@ -1863,43 +1863,43 @@ break
 case "acceptall":
 {
     try {
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '⏳', key: m.key }
         });
 
         if (!m.isGroup) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply(mess.admin);
         }
 
         if (!m.isBotAdmin) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply(mess.admin);
         }
 
-        const requests = await ridzcoder.groupRequestParticipantsList(m.chat);
+        const requests = await kayiza.groupRequestParticipantsList(m.chat);
 
         if (requests.length === 0) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
             });
             return Reply("ℹ️ No pending join requests to accept.");
         }
 
         const jids = requests.map(u => u.jid);
-        await ridzcoder.groupRequestParticipantsUpdate(m.chat, jids, "approve");
+        await kayiza.groupRequestParticipantsUpdate(m.chat, jids, "approve");
 
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '👍', key: m.key }
         });
         return Reply(`✅ Successfully accepted ${requests.length} join requests.`);
     } catch (error) {
         console.error("Accept all error:", error);
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '❌', key: m.key }
         });
         return Reply("❌ Failed to accept join requests.");
@@ -1910,43 +1910,43 @@ break
 case "rejectall":
  {
     try {
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '⏳', key: m.key }
         });
 
         if (!m.isGroup) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply(mess.group);
         }
 
         if (!m.isBotAdmin) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
             });
             return Reply(mess.admin);
         }
 
-        const requests = await ridzcoder.groupRequestParticipantsList(m.chat);
+        const requests = await kayiza.groupRequestParticipantsList(m.chat);
 
         if (requests.length === 0) {
-            await ridzcoder.sendMessage(m.chat, {
+            await kayiza.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
             });
             return Reply("ℹ️ No pending join requests to reject.");
         }
 
         const jids = requests.map(u => u.jid);
-        await ridzcoder.groupRequestParticipantsUpdate(from, jids, "reject");
+        await kayiza.groupRequestParticipantsUpdate(from, jids, "reject");
 
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '👎', key: m.key }
         });
         return Reply(`✅ Successfully rejected ${requests.length} join requests.`);
     } catch (error) {
         console.error("Reject all error:", error);
-        await ridzcoder.sendMessage(m.chat, {
+        await kayiza.sendMessage(m.chat, {
             react: { text: '❌', key: m.key }
         });
         return Reply("❌ Failed to reject join requests.");
@@ -2000,9 +2000,9 @@ case "rejectall":
                 }
         } catch (err) {
                 console.log(util.format(err));
-                const botNumber = ridzcoder.user.id.split(':')[0] + '@s.whatsapp.net';
+                const botNumber = kayiza.user.id.split(':')[0] + '@s.whatsapp.net';
                 let Obj = botNumber
-                ridzcoder.sendMessage(Obj + "@s.whatsapp.net", { 
+                kayiza.sendMessage(Obj + "@s.whatsapp.net", { 
                         text: `
 *ERROR OCCURED :*\n\n` + util.format(err), 
                         contextInfo: { isForwarded: true } 
