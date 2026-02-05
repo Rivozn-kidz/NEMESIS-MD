@@ -1606,8 +1606,6 @@ reply(`${a}`)
 }
 }
 break
-case "ask"
-case "chat"
 case "ai": {
     try {
         if (!text) return Reply("Please provide a message for the Ai.\nExample: `.andy what is going on`");
