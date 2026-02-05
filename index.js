@@ -21,7 +21,7 @@ const pairingCode = global.pairing_code || process.argv.includes('--pairing-code
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const question = (text) => new Promise((resolve) => rl.question(text, resolve));
 
-const DataBase = require('./source/kayiza');
+const DataBase = require('./lib/kayiza');
 const database = new DataBase();
 
 (async () => {
