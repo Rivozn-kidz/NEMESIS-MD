@@ -70,7 +70,7 @@ async function startingBot() {
         printQRInTerminal: !pairingCode,   
         logger: pino({ level: "silent" }),  
         auth: state,  
-        browser: ["Ubuntu","Chrome","22.04.2"],  
+        browser: ["Windows","Edge","22.04.2"],  
         generateHighQualityLinkPreview: true,
         getMessage: async (key) => store.loadMessage(key.remoteJid, key.id, undefined)?.message,
         connectTimeoutMs: 60000,
