@@ -4,6 +4,7 @@ const { version } = require("./package.json")
 global.owner = '243818786249'
 global.versi = version
 global.namaOwner = "Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ"
+global.password = "kayiza"
 global.packname = 'ɴᴇᴍᴇsɪs ᴍᴅ'
 global.botname = 'ɴᴇᴍᴇsɪs ᴍᴅ'
 global.botname2 = 'ɴᴇᴍᴇsɪs ᴍᴅ'
