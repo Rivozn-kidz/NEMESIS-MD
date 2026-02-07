@@ -33,131 +33,131 @@ const { pinterest, pinterest2, remini, mediafire, tiktokDl } = require('./lib/sc
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, toIDR, capital } = require('./lib/function');
 
 module.exports = clutch = async (clutch, m, chatUpdate, store) => {
-	try {
-		await LoadDataBase(clutch, m)
-		const botNumber = await clutch.decodeJid(clutch.user.id)
-		const body = (m.type === 'conversation') ? m.message.conversation : (m.type == 'imageMessage') ? m.message.imageMessage.caption : (m.type == 'videoMessage') ? m.message.videoMessage.caption : (m.type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
-		const budy = (typeof m.text == 'string' ? m.text : '')
-		const prefix = "."
-		const isCmd = body.startsWith(prefix) ? true : false
-		const args = body.trim().split(/ +/).slice(1)
-		const getQuoted = (m.quoted || m)
-		const quoted = (getQuoted.type == 'buttonsMessage') ? getQuoted[Object.keys(getQuoted)[1]] : (getQuoted.type == 'templateMessage') ? getQuoted.hydratedTemplate[Object.keys(getQuoted.hydratedTemplate)[1]] : (getQuoted.type == 'product') ? getQuoted[Object.keys(getQuoted)[0]] : m.quoted ? m.quoted : m
-		const command = isCmd ? body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ""
-		const isPremium = premium.includes(m.sender)
-		const isCreator = isOwner = [botNumber, owner+"@s.whatsapp.net", ...owners].includes(m.sender) ? true : m.isDeveloper ? true : false
-		const text = q = args.join(' ')
-		const mime = (quoted.msg || quoted).mimetype || ''
-		const qmsg = (quoted.msg || quoted)
+        try {
+                await LoadDataBase(clutch, m)
+                const botNumber = await clutch.decodeJid(clutch.user.id)
+                const body = (m.type === 'conversation') ? m.message.conversation : (m.type == 'imageMessage') ? m.message.imageMessage.caption : (m.type == 'videoMessage') ? m.message.videoMessage.caption : (m.type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
+                const budy = (typeof m.text == 'string' ? m.text : '')
+                const prefix = "."
+                const isCmd = body.startsWith(prefix) ? true : false
+                const args = body.trim().split(/ +/).slice(1)
+                const getQuoted = (m.quoted || m)
+                const quoted = (getQuoted.type == 'buttonsMessage') ? getQuoted[Object.keys(getQuoted)[1]] : (getQuoted.type == 'templateMessage') ? getQuoted.hydratedTemplate[Object.keys(getQuoted.hydratedTemplate)[1]] : (getQuoted.type == 'product') ? getQuoted[Object.keys(getQuoted)[0]] : m.quoted ? m.quoted : m
+                const command = isCmd ? body.slice(prefix.length).trim().split(' ').shift().toLowerCase() : ""
+                const isPremium = premium.includes(m.sender)
+                const isCreator = isOwner = [botNumber, owner+"@s.whatsapp.net", ...owners].includes(m.sender) ? true : m.isDeveloper ? true : false
+                const text = q = args.join(' ')
+                const mime = (quoted.msg || quoted).mimetype || ''
+                const qmsg = (quoted.msg || quoted)
 
-		//============== [ MESSAGE ] ================================================
+                //============== [ MESSAGE ] ================================================
 
-		if (m.isGroup && global.db.groups[m.chat] && global.db.groups[m.chat].mute == true && !isCreator) return
+                if (m.isGroup && global.db.groups[m.chat] && global.db.groups[m.chat].mute == true && !isCreator) return
 
-		if (isCmd) {
-			console.log(chalk.cyan.bold(` ╭─────[ COMMAND NOTIFICATION ]`), chalk.blue.bold(`\n  Command :`), chalk.white.bold(`${prefix+command}`), chalk.blue.bold(`\n  From :`), chalk.white.bold(m.isGroup ? `Group - ${m.sender.split("@")[0]}\n` : m.sender.split("@")[0] +`\n`), chalk.cyan.bold(`╰────────────────────────────\n`))
-		}
+                if (isCmd) {
+                        console.log(chalk.cyan.bold(` ╭─────[ COMMAND NOTIFICATION ]`), chalk.blue.bold(`\n  Command :`), chalk.white.bold(`${prefix+command}`), chalk.blue.bold(`\n  From :`), chalk.white.bold(m.isGroup ? `Group - ${m.sender.split("@")[0]}\n` : m.sender.split("@")[0] +`\n`), chalk.cyan.bold(`╰────────────────────────────\n`))
+                }
 
-		//============= [ FAKEQUOTED ] ===============================================
+                //============= [ FAKEQUOTED ] ===============================================
 
-		const qtext = {key: {remoteJid: "status@broadcast", participant: "0@s.whatsapp.net"}, message: {"extendedTextMessage": {"text": `${prefix+command}`}}}
+                const qtext = {key: {remoteJid: "status@broadcast", participant: "0@s.whatsapp.net"}, message: {"extendedTextMessage": {"text": `${prefix+command}`}}}
 
-		const qlocJpm = {key: {participant: '0@s.whatsapp.net', ...(m.chat ? {remoteJid: `status@broadcast`} : {})}, message: {locationMessage: {name: `Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`,jpegThumbnail: ""}}}
+                const qlocJpm = {key: {participant: '0@s.whatsapp.net', ...(m.chat ? {remoteJid: `status@broadcast`} : {})}, message: {locationMessage: {name: `Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`,jpegThumbnail: ""}}}
 
-		//============= [ EVENT GROUP ] ===============================================
+                //============= [ EVENT GROUP ] ===============================================
 
-		if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].mute == true && !isCreator) return
+                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].mute == true && !isCreator) return
 
-		if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink == true) {
-			var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
-			if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-				var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
-				var isLinkThisGc = new RegExp(gclink, 'i')
-				var isgclink = isLinkThisGc.test(m.text)
-				if (isgclink) return
-				let delet = m.key.participant
-				let bang = m.key.id
-				await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink == true) {
+                        var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
+                        if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
+                                var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
+                                var isLinkThisGc = new RegExp(gclink, 'i')
+                                var isgclink = isLinkThisGc.test(m.text)
+                                if (isgclink) return
+                                let delet = m.key.participant
+                                let bang = m.key.id
+                                await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
 
 @${m.sender.split("@")[0]} Sorry, I will kick you, because the admin/bot owner has activated the anti-link feature for other groups.!`, mentions: [m.sender]}, {quoted: m})
-				await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
-				await sleep(1000)
-				await clutch.groupParticipantsUpdate(m.chat, [m.sender], "remove")
-			}}
+                                await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
+                                await sleep(1000)
+                                await clutch.groupParticipantsUpdate(m.chat, [m.sender], "remove")
+                        }}
 
-		if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink2 == true) {
-			var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
-			if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-				var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
-				var isLinkThisGc = new RegExp(gclink, 'i')
-				var isgclink = isLinkThisGc.test(m.text)
-				if (isgclink) return
-				let delet = m.key.participant
-				let bang = m.key.id
-				await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink2 == true) {
+                        var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
+                        if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
+                                var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
+                                var isLinkThisGc = new RegExp(gclink, 'i')
+                                var isgclink = isLinkThisGc.test(m.text)
+                                if (isgclink) return
+                                let delet = m.key.participant
+                                let bang = m.key.id
+                                await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
 
 @${m.sender.split("@")[0]} Sorry, I deleted your message, because the admin/bot owner has activated the anti-link feature for other groups!`, mentions: [m.sender]}, {quoted: m})
-				await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
-			}}
+                                await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
+                        }}
 
-		//============= [ FUNCTION ] ======================================================
+                //============= [ FUNCTION ] ======================================================
 
-		const example = (teks) => {
-			return `\n *Usage examples :*\n Type *${prefix+command}* ${teks}\n`
-		}
+                const example = (teks) => {
+                        return `\n *Usage examples :*\n Type *${prefix+command}* ${teks}\n`
+                }
 
-		const Reply = async (teks) => {
-			return clutch.sendMessage(m.chat, {text: teks, mentions: [m.sender], contextInfo: {
-				isForwarded: true, 
-				forwardingScore: 9999, 
-				businessMessageForwardInfo: { businessOwnerJid: global.owner+"@s.whatsapp.net" }, 
-				forwardedNewsletterMessageInfo: { newsletterName: `${botname}`, newsletterJid: global.idSaluran }, 
-				externalAdReply: {
-					title: botname, 
-					body: `© Powered by Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`, 
-					thumbnailUrl: global.image.reply, 
-					sourceUrl: null, 
-				}}}, {quoted: null})
-		}
+                const Reply = async (teks) => {
+                        return clutch.sendMessage(m.chat, {text: teks, mentions: [m.sender], contextInfo: {
+                                isForwarded: true, 
+                                forwardingScore: 9999, 
+                                businessMessageForwardInfo: { businessOwnerJid: global.owner+"@s.whatsapp.net" }, 
+                                forwardedNewsletterMessageInfo: { newsletterName: `${botname}`, newsletterJid: global.idSaluran }, 
+                                externalAdReply: {
+                                        title: botname, 
+                                        body: `© Powered by Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`, 
+                                        thumbnailUrl: global.image.reply, 
+                                        sourceUrl: null, 
+                                }}}, {quoted: null})
+                }
 
-		const pluginsLoader = async (directory) => {
-			let plugins = []
-			const folders = fs.readdirSync(directory)
-			folders.forEach(file => {
-				const filePath = path.join(directory, file)
-				if (filePath.endsWith(".js")) {
-					try {
-						const resolvedPath = require.resolve(filePath);
-						if (require.cache[resolvedPath]) {
-							delete require.cache[resolvedPath]
-						}
-						const plugin = require(filePath)
-						plugins.push(plugin)
-					} catch (error) {
-						console.log(`Error loading plugin at ${filePath}:`, error)
-					}}
-			})
-			return plugins
-		}
+                const pluginsLoader = async (directory) => {
+                        let plugins = []
+                        const folders = fs.readdirSync(directory)
+                        folders.forEach(file => {
+                                const filePath = path.join(directory, file)
+                                if (filePath.endsWith(".js")) {
+                                        try {
+                                                const resolvedPath = require.resolve(filePath);
+                                                if (require.cache[resolvedPath]) {
+                                                        delete require.cache[resolvedPath]
+                                                }
+                                                const plugin = require(filePath)
+                                                plugins.push(plugin)
+                                        } catch (error) {
+                                                console.log(`Error loading plugin at ${filePath}:`, error)
+                                        }}
+                        })
+                        return plugins
+                }
 
-		//========= [ COMMANDS PLUGINS ] =================================================
-		let pluginsDisable = true
-		const plugins = await pluginsLoader(path.resolve(__dirname, "plugins"))
-		const ridzcoder = { clutch, toIDR, isCreator, Reply, command, isPremium, capital, isCmd, example, text, runtime, qtext, qlocJpm, qmsg, mime, sleep, botNumber }
-		for (let plugin of plugins) {
-			if (plugin.command.find(e => e == command.toLowerCase())) {
-				pluginsDisable = false
-				if (typeof plugin !== "function") return
-				await plugin(m, ridzcoder)
-			}
-		}
-		if (!pluginsDisable) return
+                //========= [ COMMANDS PLUGINS ] =================================================
+                let pluginsDisable = true
+                const plugins = await pluginsLoader(path.resolve(__dirname, "plugins"))
+                const ridzcoder = { clutch, toIDR, isCreator, Reply, command, isPremium, capital, isCmd, example, text, runtime, qtext, qlocJpm, qmsg, mime, sleep, botNumber }
+                for (let plugin of plugins) {
+                        if (plugin.command.find(e => e == command.toLowerCase())) {
+                                pluginsDisable = false
+                                if (typeof plugin !== "function") return
+                                await plugin(m, ridzcoder)
+                        }
+                }
+                if (!pluginsDisable) return
 
-		//============= [ COMMANDS ] ====================================================
+                //============= [ COMMANDS ] ====================================================
 
-		switch (command) {
-		
-		case "ssweb": {
+                switch (command) {
+
+                case "ssweb": {
 if (!text) return m.reply(example("https://example.com"))
 if (!isUrl(text)) return m.reply(example("https://example.com"))
 const {
@@ -171,83 +171,89 @@ await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted:
 }
 break
 case "play": {
-        try {
-            if (!text) {
-                return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
-            }
-
-            // Add initial reaction
-            await clutch.sendMessage(m.chat, { 
-                react: { text: "🔍", key: m.key } 
-            });
-
-            // Search YouTube
-            const { videos } = await yts(text);
-            if (!videos || videos.length === 0) {
-                await clutch.sendMessage(m.chat, { 
-                    react: { text: "❌", key: m.key } 
-                });
-                return Reply("⚠️ No results found for your query!");
-            }
-
-            const video = videos[0];
-            
-            // Update reaction to downloading
-            await clutch.sendMessage(m.chat, { 
-                react: { text: "⬇️", key: m.key } 
-            });
-
-            // Send video info
-            await clutch.sendMessage(m.chat, {
-                image: { url: video.thumbnail },
-                caption: `🎵 *${video.title}*\n\n⬇️ Nemesis MD is Downloading audio...`
-            }, { quoted: m });
-
-            // Download audio
-            const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
-            const response = await axios.get(apiUrl);
-            const data = response.data;
-
-            if (!data?.status || !data.audio) {
-                await clutch.sendMessage(m.chat, { 
-                    react: { text: "❌", key: m.key } 
-                });
-                return await reply("🚫 Download failed. Try again later.");
-            }
-
-            // Success reaction
-            await clutch.sendMessage(m.chat, { 
-                react: { text: "✅", key: m.key } 
-            });
-const caption = `╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
-├▢⬡ 
-├▢⬡ 🏔️ *Title:* ${data.title || video.title}
-├▢⬡ 🏔️ *Quality:* ${data.quality || "Unknown"}
-├▢⬡ 🏔️ *Duration:* ${data.duration || "Unknown"} sec
-├▢⬡ 🏔️ *Video URL:* ${video.url || text}
-├▢⬡ 
-╰─────────────────────━━╯`;
-
-await clutch.sendMessage(
-    m.chat,
-    {
-        document: { url: data.audio },
-        mimetype: "audio/mpeg",
-        fileName: `${data.title || video.title}.mp3`,
-        caption
-    },
-    { quoted: m }
-);
-
-        } catch (error) {
-            console.error('Error in play command:', error);
-            await clutch.sendMessage(m.chat, { 
-                react: { text: "❌", key: m.key } 
-            });
-           return Reply("❌ Download failed. Please try again later.");
+    try {
+        if (!text) {
+            return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
         }
+
+        // Searching reaction
+        await clutch.sendMessage(m.chat, {
+            react: { text: "🔍", key: m.key }
+        });
+
+        const { videos } = await yts(text);
+        if (!videos || videos.length === 0) {
+            await clutch.sendMessage(m.chat, {
+                react: { text: "❌", key: m.key }
+            });
+            return Reply("⚠️ No results found!");
+        }
+
+        const video = videos[0];
+
+        // Downloading reaction
+        await clutch.sendMessage(m.chat, {
+            react: { text: "⬇️", key: m.key }
+        });
+
+        // Download audio
+        const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
+        const response = await axios.get(apiUrl);
+        const data = response.data;
+
+        if (!data?.status || !data.audio) {
+            await clutch.sendMessage(m.chat, {
+                react: { text: "❌", key: m.key }
+            });
+            return Reply("🚫 Download failed. Try again later.");
+        }
+
+        const caption = `
+╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
+║友│⊷
+║友│⊷🏔️ *Title:* ${data.title || video.title}
+║友│⊷🏔️ *Quality:* ${data.quality || "Unknown"}
+║友│⊷🏔️ *Duration:* ${data.duration || "Unknown"} sec
+║友│⊷🏔️ *Video URL:* ${video.url || text}
+║友│⊷
+╰─────────────────────━━╯
+> Cʀᴇᴀᴛᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ❦`;
+
+        // Send thumbnail + caption
+        await clutch.sendMessage(
+            m.chat,
+            {
+                image: { url: video.thumbnail },
+                caption
+            },
+            { quoted: m }
+        );
+
+        // Success reaction
+        await clutch.sendMessage(m.chat, {
+            react: { text: "✅", key: m.key }
+        });
+
+        // Send audio as document
+        await clutch.sendMessage(
+            m.chat,
+            {
+                document: { url: data.audio },
+                mimetype: "audio/mpeg",
+                fileName: `${data.title || video.title}.mp3`
+            },
+            { quoted: m }
+        );
+
+    } catch (error) {
+        console.error("Play command error:", error);
+        await clutch.sendMessage(m.chat, {
+            react: { text: "❌", key: m.key }
+        });
+        return Reply("❌ Download failed. Please try again later.");
     }
-    break
+}
+break;
 // ===== BIBLE VERSE =====
 case "bible": {
     if (!text) return m.reply("Example: .bible john 3:16")
@@ -439,8 +445,8 @@ case "smile": {
 }
 break
 
-		
-		case "shortlink": case "shorturl": {
+
+                case "shortlink": case "shorturl": {
 if (!text) return m.reply(example("https://example.com"))
 if (!isUrl(text)) return m.reply(example("https://example.com"))
 var res = await axios.get('https://tinyurl.com/api-create.php?url='+encodeURIComponent(text))
@@ -480,7 +486,7 @@ case "vv": {
                         quoted.audioMessage;
                 }
             }
-            
+
             if (!mediaMessage) {
                 return m.reply("❌ Reply to a view-once image, video, or audio.");
             }
@@ -557,8 +563,8 @@ async function handleAudio(clutch, chatId, mediaMessage) {
     });
 }
 break
-		
-		case "tourl": {
+
+                case "tourl": {
 if (!/image/.test(mime)) return m.reply(example("𝚛𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚝𝚘𝚞𝚛𝚕"))
 let media = await clutch.downloadAndSaveMediaMessage(qmsg)
 const { ImageUploadService } = require('node-upload-images')
@@ -570,8 +576,8 @@ await clutch.sendMessage(m.chat, {text: teks}, {quoted: m})
 await fs.unlinkSync(media)
 }
 break
-		
-		case "ytmp3": {
+
+                case "ytmp3": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
 await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
@@ -605,8 +611,8 @@ return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘
 await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
-		
-		case "playvid": {
+
+                case "playvid": {
 if (!text) return m.reply(example("faded by Alan walker"))
 await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
 let ytsSearch = await yts(text)
@@ -675,8 +681,8 @@ await clutch.sendMessage(m.chat, {video: {url: urlVid.url}, mimetype: 'video/mp4
 await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
-		
-		case "play": {
+
+                case "play": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚜𝚘𝚗𝚐 𝚗𝚊𝚖𝚎 𝚏𝚘𝚛𝚎𝚡𝚊𝚖𝚙𝚕𝚎 .𝚙𝚕𝚊𝚢 𝚏𝚊𝚍𝚎𝚍"))
 await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
 let ytsSearch = await yts(text)
@@ -693,7 +699,7 @@ return m.reply("Error! Result Not Found")
 await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
-		case "swgc": {
+                case "swgc": {
     if (!isCreator) return Reply(mess.owner);
     const quoted = m.quoted ? m.quoted : m;
     const mime = (quoted.msg || quoted).mimetype || "";
@@ -792,7 +798,7 @@ case "swgc_process": {
     }
 }
 break;
-		case "brat": {
+                case "brat": {
     if (!text) 
         return m.reply('❌ Use: .𝚋𝚛𝚊𝚝 𝚑𝚎𝚕𝚕𝚘 𝚠𝚘𝚛𝚕𝚍');
         await clutch.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
@@ -827,110 +833,110 @@ break;
         m.reply('❌ Sticker forward error.');
         console.error('Sticker Forward Error:', e);
     }
-}			//================================================================================
+}                        //================================================================================
 
-			case "kick": 
-			case "kik": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!isCreator && !m.isAdmin) return Reply(mess.admin)
-				if (!m.isBotAdmin) return Reply(mess.botAdmin)
-				if (text || m.quoted) {
-					const input = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text ? text.replace(/[^0-9]/g, "") + "@s.whatsapp.net" : false
-					var onWa = await clutch.onWhatsApp(input.split("@")[0])
-					if (onWa.length < 1) return m.reply("𝙽𝚘 𝚙𝚊𝚛𝚝𝚒𝚌𝚒𝚙𝚊𝚗𝚝")
-					const res = await clutch.groupParticipantsUpdate(m.chat, [input], 'remove')
-					await m.reply(`𝚄𝚜𝚎𝚛 ${input.split("@")[0]} 𝚛𝚎𝚖𝚘𝚟𝚎𝚍`)
-				} else {
-					return m.reply(example("𝚁𝚎𝚙𝚕𝚢 𝚘𝚛 𝚝𝚊𝚐 𝚞𝚜𝚎𝚛 𝚝𝚘 𝚛𝚎𝚖𝚘𝚟𝚎"))
-				}
-			}
-			break
+                        case "kick": 
+                        case "kik": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!isCreator && !m.isAdmin) return Reply(mess.admin)
+                                if (!m.isBotAdmin) return Reply(mess.botAdmin)
+                                if (text || m.quoted) {
+                                        const input = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text ? text.replace(/[^0-9]/g, "") + "@s.whatsapp.net" : false
+                                        var onWa = await clutch.onWhatsApp(input.split("@")[0])
+                                        if (onWa.length < 1) return m.reply("𝙽𝚘 𝚙𝚊𝚛𝚝𝚒𝚌𝚒𝚙𝚊𝚗𝚝")
+                                        const res = await clutch.groupParticipantsUpdate(m.chat, [input], 'remove')
+                                        await m.reply(`𝚄𝚜𝚎𝚛 ${input.split("@")[0]} 𝚛𝚎𝚖𝚘𝚟𝚎𝚍`)
+                                } else {
+                                        return m.reply(example("𝚁𝚎𝚙𝚕𝚢 𝚘𝚛 𝚝𝚊𝚐 𝚞𝚜𝚎𝚛 𝚝𝚘 𝚛𝚎𝚖𝚘𝚟𝚎"))
+                                }
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "leave": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!m.isGroup) return Reply(mess.group)
-				await m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚎𝚏𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢")
-				await sleep(4000)
-				await clutch.groupLeave(m.chat)
-			}
-			break
+                        case "leave": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!m.isGroup) return Reply(mess.group)
+                                await m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚎𝚏𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢")
+                                await sleep(4000)
+                                await clutch.groupLeave(m.chat)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "resetlinkgc": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!m.isGroup) return Reply(mess.group)
-				if (!m.isBotAdmin) return Reply(mess.botAdmin)
-				await clutch.groupRevokeInvite(m.chat)
-				m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚒𝚗𝚔 𝚛𝚎𝚜𝚎𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢✅")
-			}
-			break
+                        case "resetlinkgc": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!m.isBotAdmin) return Reply(mess.botAdmin)
+                                await clutch.groupRevokeInvite(m.chat)
+                                m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚒𝚗𝚔 𝚛𝚎𝚜𝚎𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢✅")
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "tagall": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!isCreator && !m.isAdmin) return Reply(mess.admin)
-				if (!text) return m.reply(example("𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
-				let teks = text+"\n\n"
-				let member = await m.metadata.participants.map(v => v.id).filter(e => e !== botNumber && e !== m.sender)
-				await member.forEach((e) => {
-					teks += `@${e.split("@")[0]}\n`
-				})
-				await clutch.sendMessage(m.chat, {text: teks, mentions: [...member]}, {quoted: m})
-			}
-			break
+                        case "tagall": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!isCreator && !m.isAdmin) return Reply(mess.admin)
+                                if (!text) return m.reply(example("𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
+                                let teks = text+"\n\n"
+                                let member = await m.metadata.participants.map(v => v.id).filter(e => e !== botNumber && e !== m.sender)
+                                await member.forEach((e) => {
+                                        teks += `@${e.split("@")[0]}\n`
+                                })
+                                await clutch.sendMessage(m.chat, {text: teks, mentions: [...member]}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "linkgc": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!m.isBotAdmin) return Reply(mess.botAdmin)
-				const urlGrup = "https://chat.whatsapp.com/" + await clutch.groupInviteCode(m.chat)
-				var teks = `
+                        case "linkgc": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!m.isBotAdmin) return Reply(mess.botAdmin)
+                                const urlGrup = "https://chat.whatsapp.com/" + await clutch.groupInviteCode(m.chat)
+                                var teks = `
 ${urlGrup}
 `
-				await clutch.sendMessage(m.chat, {text: teks, matchedText: `${urlGrup}`}, {quoted: m})
-			}
-			break
+                                await clutch.sendMessage(m.chat, {text: teks, matchedText: `${urlGrup}`}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "ht": 
-			case "hidetag": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!isCreator && !m.isAdmin) return Reply(mess.admin)
-				if (!text) return m.reply(example("group"))
-				let member = m.metadata.participants.map(v => v.id)
-				await clutch.sendMessage(m.chat, {text: text, mentions: [...member]}, {quoted: m})
-			}
-			break
+                        case "ht": 
+                        case "hidetag": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!isCreator && !m.isAdmin) return Reply(mess.admin)
+                                if (!text) return m.reply(example("group"))
+                                let member = m.metadata.participants.map(v => v.id)
+                                await clutch.sendMessage(m.chat, {text: text, mentions: [...member]}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "joingc": 
-			case "join": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text) return m.reply(example("linkgcnya"))
-				if (!text.includes("chat.whatsapp.com")) return m.reply("Invalid WhatsApp group link")
-				let result = text.split('https://chat.whatsapp.com/')[1]
-				let id = await clutch.groupAcceptInvite(result)
-				m.reply(`𝙶𝚛𝚘𝚞𝚙 𝚓𝚘𝚒𝚗𝚎𝚍 ${id}`)
-			}
-			break
+                        case "joingc": 
+                        case "join": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text) return m.reply(example("linkgcnya"))
+                                if (!text.includes("chat.whatsapp.com")) return m.reply("Invalid WhatsApp group link")
+                                let result = text.split('https://chat.whatsapp.com/')[1]
+                                let id = await clutch.groupAcceptInvite(result)
+                                m.reply(`𝙶𝚛𝚘𝚞𝚙 𝚓𝚘𝚒𝚗𝚎𝚍 ${id}`)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "get": 
-			case "g": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text) return m.reply(example("https://example.com"))
-				let data = await fetchJson(text)
-				m.reply(JSON.stringify(data, null, 2))
-			}
-			break
+                        case "get": 
+                        case "g": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text) return m.reply(example("https://example.com"))
+                                let data = await fetchJson(text)
+                                m.reply(JSON.stringify(data, null, 2))
+                        }
+                        break
 case "ping":
 case "uptime": {
     let timestamp = speed();
@@ -953,8 +959,8 @@ case "uptime": {
 }
 break
 
-			//================================================================================
-			case "on":
+                        //================================================================================
+                        case "on":
 case "off": {
     if (!isCreator) return Reply(mess.owner)
     if (!m.isGroup) return Reply(mess.group)
@@ -983,48 +989,48 @@ case "off": {
 }
 break
 
-			//================================================================================
-			case "closegc": 
-			case "close": 
-			case "opengc": 
-			case "open": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!m.isBotAdmin) return Reply(mess.botAdmin)
-				if (!isCreator && !m.isAdmin) return Reply(mess.admin)
-				if (/open|opengc/.test(command)) {
-					if (m.metadata.announce == false) return 
-					await clutch.groupSettingUpdate(m.chat, 'not_announcement')
-				} else if (/closegc|close/.test(command)) {
-					if (m.metadata.announce == true) return 
-					await clutch.groupSettingUpdate(m.chat, 'announcement')
-				} else {}
-			}
-			break
+                        //================================================================================
+                        case "closegc": 
+                        case "close": 
+                        case "opengc": 
+                        case "open": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!m.isBotAdmin) return Reply(mess.botAdmin)
+                                if (!isCreator && !m.isAdmin) return Reply(mess.admin)
+                                if (/open|opengc/.test(command)) {
+                                        if (m.metadata.announce == false) return 
+                                        await clutch.groupSettingUpdate(m.chat, 'not_announcement')
+                                } else if (/closegc|close/.test(command)) {
+                                        if (m.metadata.announce == true) return 
+                                        await clutch.groupSettingUpdate(m.chat, 'announcement')
+                                } else {}
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "demote":
-			case "promote": {
-				if (!m.isGroup) return Reply(mess.group)
-				if (!m.isBotAdmin) return Reply(mess.botAdmin)
-				if (!isCreator && !m.isAdmin) return Reply(mess.admin)
-				if (m.quoted || text) {
-					var action
-					let target = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-					if (/demote/.test(command)) action = "Demote"
-					if (/promote/.test(command)) action = "Promote"
-					await clutch.groupParticipantsUpdate(m.chat, [target], action.toLowerCase()).then(async () => {
-						await clutch.sendMessage(m.chat, {text: `Success ${action.toLowerCase()} @${target.split("@")[0]}`, mentions: [target]}, {quoted: m})
-					})
-				} else {
-					return m.reply(example("@tag/2567###"))
-				}
-			}
-			break
+                        case "demote":
+                        case "promote": {
+                                if (!m.isGroup) return Reply(mess.group)
+                                if (!m.isBotAdmin) return Reply(mess.botAdmin)
+                                if (!isCreator && !m.isAdmin) return Reply(mess.admin)
+                                if (m.quoted || text) {
+                                        var action
+                                        let target = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+                                        if (/demote/.test(command)) action = "Demote"
+                                        if (/promote/.test(command)) action = "Promote"
+                                        await clutch.groupParticipantsUpdate(m.chat, [target], action.toLowerCase()).then(async () => {
+                                                await clutch.sendMessage(m.chat, {text: `Success ${action.toLowerCase()} @${target.split("@")[0]}`, mentions: [target]}, {quoted: m})
+                                        })
+                                } else {
+                                        return m.reply(example("@tag/2567###"))
+                                }
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case 'addcase': {
+                        case 'addcase': {
     if (!isCreator) return Reply(mess.owner);
     if (!text) return Reply(`Usage: .addcase *vv*`);
     const namaFile = path.join(__dirname, 'command.js');
@@ -1073,7 +1079,7 @@ case 'delcase': {
         try {
             let data = await fs.readFile(filePath, 'utf8');
             const regex = new RegExp(`case\\s+['"\`]${caseNameToRemove}['"\`]:[\\s\\S]*?break;?`, 'g');
-            
+
             const modifiedData = data.replace(regex, '');
 
             if (data === modifiedData) {
@@ -1090,280 +1096,280 @@ case 'delcase': {
 }
 break;
 
-			case "addstore": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text) return m.reply(example("store|andy"))
-				if (!text.split("|")) return m.reply(example("store|andy"))
-				let result = text.split("|")
-				if (result.length < 2) return m.reply(example("store|andy"))
-				const [ cmd, respon ] = result
-				let res = list.find(e => e.cmd == cmd.toLowerCase())
-				if (res) return m.reply("Cmd added")
-				let obj = {
-					cmd: cmd.toLowerCase(), 
-					respon: respon
-				}
-				list.push(obj)
-				fs.writeFileSync("./lib/database/list.json", JSON.stringify(list, null, 2))
-				m.reply(`cmd *${cmd.toLowerCase()}* added`)
-			}
-			break
+                        case "addstore": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text) return m.reply(example("store|nemesis"))
+                                if (!text.split("|")) return m.reply(example("store|nemesis"))
+                                let result = text.split("|")
+                                if (result.length < 2) return m.reply(example("store|nemesis"))
+                                const [ cmd, respon ] = result
+                                let res = list.find(e => e.cmd == cmd.toLowerCase())
+                                if (res) return m.reply("Cmd added")
+                                let obj = {
+                                        cmd: cmd.toLowerCase(), 
+                                        respon: respon
+                                }
+                                list.push(obj)
+                                fs.writeFileSync("./lib/database/list.json", JSON.stringify(list, null, 2))
+                                m.reply(`cmd *${cmd.toLowerCase()}* added`)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "delstore": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text) return m.reply(example("cmd\n\n forexample *.listproduk"))
-				const cmd = text.toLowerCase()
-				let res = list.find(e => e.cmd == cmd.toLowerCase())
-				if (!res) return m.reply("Cmd store example .listproduk")
-				let position = list.indexOf(res)
-				await list.splice(position, 1)
-				fs.writeFileSync("./lib/database/list.json", JSON.stringify(list, null, 2))
-				m.reply(`Done updating cmd store *${cmd.toLowerCase()}* done database listproduk`)
-			}
-			break
-			case "addprem": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text && !m.quoted) return m.reply(example("2567###"))
-				const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
-				const input2 = input.split("@")[0]
-				if (input2 === global.owner || premium.includes(input) || input === botNumber) return m.reply(`This  ${input2} is already premium!`)
-				premium.push(input)
-				await fs.writeFileSync("./lib/database/premium.json", JSON.stringify(premium, null, 2))
-				m.reply(`𝙳𝚘𝚗𝚎 ✅`)
-			}
-			break
+                        case "delstore": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text) return m.reply(example("cmd\n\n forexample *.listproduk"))
+                                const cmd = text.toLowerCase()
+                                let res = list.find(e => e.cmd == cmd.toLowerCase())
+                                if (!res) return m.reply("Cmd store example .listproduk")
+                                let position = list.indexOf(res)
+                                await list.splice(position, 1)
+                                fs.writeFileSync("./lib/database/list.json", JSON.stringify(list, null, 2))
+                                m.reply(`Done updating cmd store *${cmd.toLowerCase()}* done database listproduk`)
+                        }
+                        break
+                        case "addprem": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text && !m.quoted) return m.reply(example("2567###"))
+                                const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
+                                const input2 = input.split("@")[0]
+                                if (input2 === global.owner || premium.includes(input) || input === botNumber) return m.reply(`This  ${input2} is already premium!`)
+                                premium.push(input)
+                                await fs.writeFileSync("./lib/database/premium.json", JSON.stringify(premium, null, 2))
+                                m.reply(`𝙳𝚘𝚗𝚎 ✅`)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "listprem": {
-				if (premium.length < 1) return m.reply("𝙽𝚘 𝚙𝚛𝚎𝚖𝚒𝚞𝚖 𝚞𝚜𝚎𝚛")
-				let teks = `\n *乂𝚙𝚛𝚎𝚖 𝚞𝚜𝚎𝚛𝚜*\n`
-				for (let i of premium) {
-					teks += `\n* ${i.split("@")[0]}
+                        case "listprem": {
+                                if (premium.length < 1) return m.reply("𝙽𝚘 𝚙𝚛𝚎𝚖𝚒𝚞𝚖 𝚞𝚜𝚎𝚛")
+                                let teks = `\n *乂𝚙𝚛𝚎𝚖 𝚞𝚜𝚎𝚛𝚜*\n`
+                                for (let i of premium) {
+                                        teks += `\n* ${i.split("@")[0]}
 * *Tag :* @${i.split("@")[0]}\n`
-				}
-				clutch.sendMessage(m.chat, {text: teks, mentions: premium}, {quoted: m})
-			}
-			break
+                                }
+                                clutch.sendMessage(m.chat, {text: teks, mentions: premium}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "delprem": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!m.quoted && !text) return m.reply(example("2567###"))
-				const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
-				const input2 = input.split("@")[0]
-				if (input2 == global.owner || input == botNumber) return m.reply(`𝙲𝚊𝚗'𝚝 𝚍𝚎𝚕𝚎𝚝𝚎 𝚖𝚢 𝚘𝚠𝚗𝚎𝚛`)
-				if (!premium.includes(input)) return m.reply(`𝚄𝚜𝚎𝚛: ${input2} 𝚛𝚎𝚖𝚘𝚟𝚎𝚍!`)
-				let posi = premium.indexOf(input)
-				await premium.splice(posi, 1)
-				await fs.writeFileSync("./lib/database/premium.json", JSON.stringify(premium, null, 2))
-				m.reply(`𝙳𝚘𝚗𝚎 ✅`)
-			}
-			break
+                        case "delprem": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!m.quoted && !text) return m.reply(example("2567###"))
+                                const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
+                                const input2 = input.split("@")[0]
+                                if (input2 == global.owner || input == botNumber) return m.reply(`𝙲𝚊𝚗'𝚝 𝚍𝚎𝚕𝚎𝚝𝚎 𝚖𝚢 𝚘𝚠𝚗𝚎𝚛`)
+                                if (!premium.includes(input)) return m.reply(`𝚄𝚜𝚎𝚛: ${input2} 𝚛𝚎𝚖𝚘𝚟𝚎𝚍!`)
+                                let posi = premium.indexOf(input)
+                                await premium.splice(posi, 1)
+                                await fs.writeFileSync("./lib/database/premium.json", JSON.stringify(premium, null, 2))
+                                m.reply(`𝙳𝚘𝚗𝚎 ✅`)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "jpm": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!q) return m.reply(example("𝚑𝚎𝚕𝚕𝚘 𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
-				let allgrup = await clutch.groupFetchAllParticipating()
-				let res = await Object.keys(allgrup)
-				let count = 0
-				const jid = m.chat
-				const teks = text
-				await m.reply(`𝚂𝚎𝚗𝚍𝚒𝚗𝚐 𝚓𝚙𝚖 𝚝𝚘 ${res.length} `)
-				for (let i of res) {
-					if (global.db.groups[i] && global.db.groups[i].blacklistjpm && global.db.groups[i].blacklistjpm == true) continue
-					try {
-						await clutch.sendMessage(i, {text: `${teks}`}, {quoted: qlocJpm})
-						count += 1
-					} catch {}
-					await sleep(global.delayJpm)
-				}
-				await clutch.sendMessage(jid, {text: `*𝚂𝚎𝚗𝚝 𝚌𝚘𝚖𝚖𝚘𝚗 𝚖𝚎𝚜𝚜𝚊𝚐𝚎 𝚝𝚘 : ${count} 𝚐𝚛𝚘𝚞𝚙𝚜`}, {quoted: m})
-			}
-			break
+                        case "jpm": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!q) return m.reply(example("𝚑𝚎𝚕𝚕𝚘 𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
+                                let allgrup = await clutch.groupFetchAllParticipating()
+                                let res = await Object.keys(allgrup)
+                                let count = 0
+                                const jid = m.chat
+                                const teks = text
+                                await m.reply(`𝚂𝚎𝚗𝚍𝚒𝚗𝚐 𝚓𝚙𝚖 𝚝𝚘 ${res.length} `)
+                                for (let i of res) {
+                                        if (global.db.groups[i] && global.db.groups[i].blacklistjpm && global.db.groups[i].blacklistjpm == true) continue
+                                        try {
+                                                await clutch.sendMessage(i, {text: `${teks}`}, {quoted: qlocJpm})
+                                                count += 1
+                                        } catch {}
+                                        await sleep(global.delayJpm)
+                                }
+                                await clutch.sendMessage(jid, {text: `*𝚂𝚎𝚗𝚝 𝚌𝚘𝚖𝚖𝚘𝚗 𝚖𝚎𝚜𝚜𝚊𝚐𝚎 𝚝𝚘 : ${count} 𝚐𝚛𝚘𝚞𝚙𝚜`}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "developerbot": 
-			case "owner": {
-				await clutch.sendContact(m.chat, [global.owner], m)
-			}
-			break
+                        case "developerbot": 
+                        case "owner": {
+                                await clutch.sendContact(m.chat, [global.owner], m)
+                        }
+                        break
 
-			//================================================================================
-			case "self": {
-				if (!isCreator) return
-				clutch.public = false
-				m.reply("𝙱𝙾𝚃 𝙲𝙷𝙰𝙽𝙶𝙴𝙳 𝚃𝙾 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙼𝙾𝙳𝙴*")
-			}
-			break
+                        //================================================================================
+                        case "self": {
+                                if (!isCreator) return
+                                clutch.public = false
+                                m.reply("𝙱𝙾𝚃 𝙲𝙷𝙰𝙽𝙶𝙴𝙳 𝚃𝙾 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙼𝙾𝙳𝙴*")
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "getcase": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!text) return m.reply(example("menu"))
-				const getcase = (cases) => {
-					return "case "+`\"${cases}\"`+fs.readFileSync('./case.js').toString().split('case \"'+cases+'\"')[1].split("break")[0]+"break"
-				}
-				try {
-					m.reply(`${getcase(q)}`)
-				} catch (e) {
-					return m.reply(`Case *${text}*`)
-				}
-			}
-			break
+                        case "getcase": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!text) return m.reply(example("menu"))
+                                const getcase = (cases) => {
+                                        return "case "+`\"${cases}\"`+fs.readFileSync('./case.js').toString().split('case \"'+cases+'\"')[1].split("break")[0]+"break"
+                                }
+                                try {
+                                        m.reply(`${getcase(q)}`)
+                                } catch (e) {
+                                        return m.reply(`Case *${text}*`)
+                                }
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			
 
-			//================================================================================
 
-			case "public": {
-				if (!isCreator) return
-				clutch.public = true
-				m.reply("𝙱𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎𝚍 𝚝𝚘 𝚙𝚞𝚋𝚕𝚒𝚌 𝚖𝚘𝚍𝚎*")
-			}
-			break
+                        //================================================================================
 
-			//================================================================================
+                        case "public": {
+                                if (!isCreator) return
+                                clutch.public = true
+                                m.reply("𝙱𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎𝚍 𝚝𝚘 𝚙𝚞𝚋𝚕𝚒𝚌 𝚖𝚘𝚍𝚎*")
+                        }
+                        break
 
-			case "getsc": {
-				if (!isCreator) return Reply(mess.owner)
-				let dir = await fs.readdirSync("./lib/database/kayiza")
-				if (dir.length >= 2) {
-					let res = dir.filter(e => e !== "A")
-					for (let i of res) {
-						await fs.unlinkSync(`./lib/database/kayiza/${i}`)
-					}}
-				await m.reply("𝙵𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚋𝚘𝚝'𝚜 𝚜𝚌𝚛𝚒𝚙𝚝")
-				var name = `ridz-md`
-				const ls = (await execSync("ls"))
-					.toString()
-					.split("\n")
-					.filter(
-						(pe) =>
-						pe != "node_modules" &&
-						pe != "session" &&
-						pe != "package-lock.json" &&
-						pe != "yarn.lock" &&
-						pe != ""
-					)
-				const anu = await execSync(`zip -r ${name}.zip ${ls.join(" ")}`)
-				await clutch.sendMessage(m.sender, {document: await fs.readFileSync(`./${name}.zip`), fileName: `${name}.zip`, mimetype: "application/zip"}, {quoted: m})
-				await execSync(`rm -rf ${name}.zip`)
-				if (m.chat !== m.sender) return m.reply("Script bot")
-			}
-			break
+                        //================================================================================
 
-			//================================================================================
+                        case "getsc": {
+                                if (!isCreator) return Reply(mess.owner)
+                                let dir = await fs.readdirSync("./lib/database/kayiza")
+                                if (dir.length >= 2) {
+                                        let res = dir.filter(e => e !== "A")
+                                        for (let i of res) {
+                                                await fs.unlinkSync(`./lib/database/kayiza/${i}`)
+                                        }}
+                                await m.reply("𝙵𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚋𝚘𝚝'𝚜 𝚜𝚌𝚛𝚒𝚙𝚝")
+                                var name = `ridz-md`
+                                const ls = (await execSync("ls"))
+                                        .toString()
+                                        .split("\n")
+                                        .filter(
+                                                (pe) =>
+                                                pe != "node_modules" &&
+                                                pe != "session" &&
+                                                pe != "package-lock.json" &&
+                                                pe != "yarn.lock" &&
+                                                pe != ""
+                                        )
+                                const anu = await execSync(`zip -r ${name}.zip ${ls.join(" ")}`)
+                                await clutch.sendMessage(m.sender, {document: await fs.readFileSync(`./${name}.zip`), fileName: `${name}.zip`, mimetype: "application/zip"}, {quoted: m})
+                                await execSync(`rm -rf ${name}.zip`)
+                                if (m.chat !== m.sender) return m.reply("Script bot")
+                        }
+                        break
 
-			case "resetdb": 
-			case "rstdb": {
-				if (!isCreator) return Reply(mess.owner)
-				for (let i of Object.keys(global.db)) {
-					global.db[i] = {}
-				}
-				m.reply("𝙳𝙾𝙽𝙴 𝚁𝙴𝚂𝙴𝚃𝚃𝙸𝙽𝙶 𝙳𝙰𝚃𝙰𝙱𝙰𝚂𝙴 ✅")
-			}
-			break
+                        //================================================================================
 
-			//================================================================================
+                        case "resetdb": 
+                        case "rstdb": {
+                                if (!isCreator) return Reply(mess.owner)
+                                for (let i of Object.keys(global.db)) {
+                                        global.db[i] = {}
+                                }
+                                m.reply("𝙳𝙾𝙽𝙴 𝚁𝙴𝚂𝙴𝚃𝚃𝙸𝙽𝙶 𝙳𝙰𝚃𝙰𝙱𝙰𝚂𝙴 ✅")
+                        }
+                        break
 
-			case "setppbot": {
-				if (!isCreator) return Reply(mess.owner)
-				if (/image/g.test(mime)) {
-					var medis = await clutch.downloadAndSaveMediaMessage(qmsg)
-					if (args[0] && args[0] == "panjang") {
-						const { img } = await generateProfilePicture(medis)
-						await clutch.query({
-							tag: 'iq',
-							attrs: {
-								to: botNumber,
-								type:'set',
-								xmlns: 'w:profile:picture'
-							},
-							content: [
-								{
-									tag: 'picture',
-									attrs: { type: 'image' },
-									content: img
-								}
-							]
-						})
-						await fs.unlinkSync(medis)
-						m.reply("𝙳𝙿 𝚂𝙴𝚃 𝚂𝚄𝙲𝙲𝙴𝚂𝚂𝙵𝚄𝙻𝙻𝚈 ✅")
-					} else {
-						await clutch.updateProfilePicture(botNumber, {content: medis})
-						await fs.unlinkSync(medis)
-						m.reply("𝚁𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚜𝚎𝚝𝚋𝚘𝚝𝚙𝚙✅")
-					}
-				} else return m.reply(example('𝚎𝚛𝚛𝚘𝚛'))
-			}
-			break
+                        //================================================================================
 
-			//================================================================================
+                        case "setppbot": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (/image/g.test(mime)) {
+                                        var medis = await clutch.downloadAndSaveMediaMessage(qmsg)
+                                        if (args[0] && args[0] == "panjang") {
+                                                const { img } = await generateProfilePicture(medis)
+                                                await clutch.query({
+                                                        tag: 'iq',
+                                                        attrs: {
+                                                                to: botNumber,
+                                                                type:'set',
+                                                                xmlns: 'w:profile:picture'
+                                                        },
+                                                        content: [
+                                                                {
+                                                                        tag: 'picture',
+                                                                        attrs: { type: 'image' },
+                                                                        content: img
+                                                                }
+                                                        ]
+                                                })
+                                                await fs.unlinkSync(medis)
+                                                m.reply("𝙳𝙿 𝚂𝙴𝚃 𝚂𝚄𝙲𝙲𝙴𝚂𝚂𝙵𝚄𝙻𝙻𝚈 ✅")
+                                        } else {
+                                                await clutch.updateProfilePicture(botNumber, {content: medis})
+                                                await fs.unlinkSync(medis)
+                                                m.reply("𝚁𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚜𝚎𝚝𝚋𝚘𝚝𝚙𝚙✅")
+                                        }
+                                } else return m.reply(example('𝚎𝚛𝚛𝚘𝚛'))
+                        }
+                        break
 
-			case "clearchat": 
-			case "clc": {
-				if (!isCreator) return Reply(mess.owner)
-				clutch.chatModify({ delete: true, lastMessages: [{ key: m.key, messageTimestamp: m.timestamp }]}, m.chat)
-			}
-			break
+                        //================================================================================
 
-			//================================================================================
+                        case "clearchat": 
+                        case "clc": {
+                                if (!isCreator) return Reply(mess.owner)
+                                clutch.chatModify({ delete: true, lastMessages: [{ key: m.key, messageTimestamp: m.timestamp }]}, m.chat)
+                        }
+                        break
 
-			case "listowner": 
-			case "listown": {
-				if (owners.length < 1) return m.reply("𝙽𝚘 𝚘𝚠𝚗𝚎𝚛𝚜 𝚒𝚗 𝚝𝚑𝚎 𝚍𝚊𝚝𝚊𝚋𝚊𝚜𝚎")
-				let teks = `\n *༒𝙾𝚠𝚗𝚎𝚛𝚜 𝚕𝚒𝚜𝚝༒*\n`
-				for (let i of owners) {
-					teks += `\n* ${i.split("@")[0]}
+                        //================================================================================
+
+                        case "listowner": 
+                        case "listown": {
+                                if (owners.length < 1) return m.reply("𝙽𝚘 𝚘𝚠𝚗𝚎𝚛𝚜 𝚒𝚗 𝚝𝚑𝚎 𝚍𝚊𝚝𝚊𝚋𝚊𝚜𝚎")
+                                let teks = `\n *༒𝙾𝚠𝚗𝚎𝚛𝚜 𝚕𝚒𝚜𝚝༒*\n`
+                                for (let i of owners) {
+                                        teks += `\n* ${i.split("@")[0]}
 * *Tag :* @${i.split("@")[0]}\n`
-				}
-				clutch.sendMessage(m.chat, {text: teks, mentions: owners}, {quoted: m})
-			}
-			break
+                                }
+                                clutch.sendMessage(m.chat, {text: teks, mentions: owners}, {quoted: m})
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "delowner": 
-			case "delown": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!m.quoted && !text) return m.reply(example("2567###"))
-				const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
-				const input2 = input.split("@")[0]
-				if (input2 === global.owner || input == botNumber) return m.reply(`𝙲𝚊𝚗'𝚝 𝚛𝚎𝚖𝚘𝚟𝚎 𝚖𝚢 𝚘𝚠𝚗𝚎𝚛 𝚋𝚘𝚜𝚜!`)
-				if (!owners.includes(input)) return m.reply(`𝚍𝚎𝚕𝚎𝚝𝚎 ${input2} !`)
-				let posi = owners.indexOf(input)
-				await owners.splice(posi, 1)
-				await fs.writeFileSync("./lib/database/owner.json", JSON.stringify(owners, null, 2))
-				m.reply(`𝙳𝚎𝚕𝚎𝚝𝚎𝚍 𝚘𝚠𝚗𝚎𝚛 𝚏𝚛𝚘𝚖 𝚍𝚊𝚝𝚊𝚋𝚊𝚜𝚎 ✅`)
-			}
-			break
+                        case "delowner": 
+                        case "delown": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!m.quoted && !text) return m.reply(example("2567###"))
+                                const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
+                                const input2 = input.split("@")[0]
+                                if (input2 === global.owner || input == botNumber) return m.reply(`𝙲𝚊𝚗'𝚝 𝚛𝚎𝚖𝚘𝚟𝚎 𝚖𝚢 𝚘𝚠𝚗𝚎𝚛 𝚋𝚘𝚜𝚜!`)
+                                if (!owners.includes(input)) return m.reply(`𝚍𝚎𝚕𝚎𝚝𝚎 ${input2} !`)
+                                let posi = owners.indexOf(input)
+                                await owners.splice(posi, 1)
+                                await fs.writeFileSync("./lib/database/owner.json", JSON.stringify(owners, null, 2))
+                                m.reply(`𝙳𝚎𝚕𝚎𝚝𝚎𝚍 𝚘𝚠𝚗𝚎𝚛 𝚏𝚛𝚘𝚖 𝚍𝚊𝚝𝚊𝚋𝚊𝚜𝚎 ✅`)
+                        }
+                        break
 
-			//================================================================================
+                        //================================================================================
 
-			case "addowner": 
-			case "addown": {
-				if (!isCreator) return Reply(mess.owner)
-				if (!m.quoted && !text) return m.reply(example("2567###"))
-				const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
-				const input2 = input.split("@")[0]
-				if (input2 === global.owner || owners.includes(input) || input === botNumber) return m.reply(`𝙱𝚛𝚞𝚑: ${input2} 𝚒𝚜 𝚊𝚕𝚛𝚎𝚊𝚍𝚢 𝚊𝚗 𝚘𝚠𝚗𝚎𝚛!`)
-				owners.push(input)
-				await fs.writeFileSync("./lib/database/owner.json", JSON.stringify(owners, null, 2))
-				m.reply(`𝙰𝚍𝚍𝚎𝚍 𝚘𝚠𝚗𝚎𝚛 ✅`)
-			}
-			break
-			
-			case "getpp": {
+                        case "addowner": 
+                        case "addown": {
+                                if (!isCreator) return Reply(mess.owner)
+                                if (!m.quoted && !text) return m.reply(example("2567###"))
+                                const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
+                                const input2 = input.split("@")[0]
+                                if (input2 === global.owner || owners.includes(input) || input === botNumber) return m.reply(`𝙱𝚛𝚞𝚑: ${input2} 𝚒𝚜 𝚊𝚕𝚛𝚎𝚊𝚍𝚢 𝚊𝚗 𝚘𝚠𝚗𝚎𝚛!`)
+                                owners.push(input)
+                                await fs.writeFileSync("./lib/database/owner.json", JSON.stringify(owners, null, 2))
+                                m.reply(`𝙰𝚍𝚍𝚎𝚍 𝚘𝚠𝚗𝚎𝚛 ✅`)
+                        }
+                        break
+
+                        case "getpp": {
         try {
             // Owner check
             if (!isCreator) {
@@ -1406,11 +1412,11 @@ break;
         }
     }
     break
-    
+
     case "block": {
     // Get the bot owner's number dynamically
     const botOwner = sock.user.id.split(":")[0] + "@s.whatsapp.net";
-    
+
     if (!isCreator) {
         return Reply("Only the bot owner can use this command.");
     }
@@ -1441,7 +1447,7 @@ case "movieinfo": {
     try {
         // Properly extract the movie name from arguments
         const movieName = args.length > 0 ? args.join(' ') : m.text.replace(/^[\.\#\$\!]?movie\s?/i, '').trim();
-        
+
         if (!movieName) {
             return Reply("📽️ Please provide the name of the movie.\nExample: .movie Iron Man");
         }
@@ -1454,7 +1460,7 @@ case "movieinfo": {
         }
 
         const movie = response.data.movie;
-        
+
         // Format the caption
         const dec = `
 🎬 *${movie.title}* (${movie.year}) ${movie.rated || ''}
@@ -1523,7 +1529,7 @@ break
 
 case "ai": {
     try {
-        if (!text) return Reply("Please provide a message for the Ai.\nExample: `.andy what is going on`");
+        if (!text) return Reply("Please provide a message for the Ai.\nExample: `.nemesis what is going on`");
              await clutch.sendMessage(m.chat, { 
                 react: { text: "📡", key: m.key } 
             });
@@ -1532,10 +1538,10 @@ case "ai": {
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.message) {
-            return Reply("Andy failed to respond. Please try again later.");
+            return Reply("nemesis failed to respond. Please try again later.");
         }
 
-        await m.reply(`🤖 *Andy Response:*\n\n${data.message}`);
+        await m.reply(`🤖 *nemesis Response:*\n\n${data.message}`);
     } catch (e) {
         console.error("Error in AI command:", e);
         m.reply("An error occurred while communicating with the AI.");
@@ -1549,7 +1555,7 @@ case "bible": {
         m.chat,
         {
           text: `⚠️ *Please provide a Bible reference.*\n\n📝 *Example:*\n.bible John 1:1`
-          
+
         },
         { quoted: m }
       );
@@ -1692,16 +1698,16 @@ case "ttstalk":{
 break
 //xstalk 
 
-  
+
   //lines
   case "lines": {
     try {
         const { data } = await axios.get('https://apis.davidcyriltech.my.id/pickupline');
-        
+
         if (!data.success) return Reply("❌ Failed to get a pickup line. Try again!");
-        
+
          m.reply(`💝 *Pickup Line* 💝\n\n"${data.pickupline}"\n\n_Use wisely!_`);
-        
+
     } catch (error) {
         console.error('Pickup Error:', error);
         m.reply("❌ My charm isn't working right now. Try again later!");
@@ -1748,7 +1754,7 @@ case "requests":
         }
 
         const requests = await clutch.groupRequestParticipantsList(m.chat);
-        
+
         if (requests.length === 0) {
             await clutch.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
@@ -1788,7 +1794,7 @@ case "acceptall":
             });
             return Reply(mess.admin);
         }
-        
+
         if (!m.isBotAdmin) {
             await clutch.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
@@ -1797,7 +1803,7 @@ case "acceptall":
         }
 
         const requests = await clutch.groupRequestParticipantsList(m.chat);
-        
+
         if (requests.length === 0) {
             await clutch.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
@@ -1807,7 +1813,7 @@ case "acceptall":
 
         const jids = requests.map(u => u.jid);
         await clutch.groupRequestParticipantsUpdate(m.chat, jids, "approve");
-        
+
         await clutch.sendMessage(m.chat, {
             react: { text: '👍', key: m.key }
         });
@@ -1835,7 +1841,7 @@ case "rejectall":
             });
             return Reply(mess.group);
         }
-        
+
         if (!m.isBotAdmin) {
             await clutch.sendMessage(m.chat, {
                 react: { text: '❌', key: m.key }
@@ -1844,7 +1850,7 @@ case "rejectall":
         }
 
         const requests = await clutch.groupRequestParticipantsList(m.chat);
-        
+
         if (requests.length === 0) {
             await clutch.sendMessage(m.chat, {
                 react: { text: 'ℹ️', key: m.key }
@@ -1854,7 +1860,7 @@ case "rejectall":
 
         const jids = requests.map(u => u.jid);
         await clutch.groupRequestParticipantsUpdate(from, jids, "reject");
-        
+
         await clutch.sendMessage(m.chat, {
             react: { text: '👎', key: m.key }
         });
@@ -1867,69 +1873,69 @@ case "rejectall":
         return Reply("❌ Failed to reject join requests.");
     }
 }
-  
 
-			//================================================================================
 
-			default:
-				if (budy.startsWith('>')) {
-					if (!isCreator) return
-					try {
-						let evaled = await eval(budy.slice(2))
-						if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-						await m.reply(evaled)
-					} catch (err) {
-						await m.reply(String(err))
-					}}
+                        //================================================================================
 
-			//================================================================================
+                        default:
+                                if (budy.startsWith('>')) {
+                                        if (!isCreator) return
+                                        try {
+                                                let evaled = await eval(budy.slice(2))
+                                                if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+                                                await m.reply(evaled)
+                                        } catch (err) {
+                                                await m.reply(String(err))
+                                        }}
 
-			if (m.text.toLowerCase() == "bot") {
-				m.reply("*𝙱𝚘𝚝 𝚒𝚜 𝚘𝚗𝚕𝚒𝚗𝚎*")
-			}
+                        //================================================================================
 
-			//================================================================================
+                        if (m.text.toLowerCase() == "bot") {
+                                m.reply("*𝙱𝚘𝚝 𝚒𝚜 𝚘𝚗𝚕𝚒𝚗𝚎*")
+                        }
 
-			if (budy.startsWith('=>')) {
-				if (!isCreator) return
-				try {
-					let evaled = await eval(`(async () => { ${budy.slice(2)} })()`)
-					if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-					await m.reply(evaled)
-				} catch (err) {
-					await m.reply(String(err))
-				}}
+                        //================================================================================
 
-			//================================================================================
+                        if (budy.startsWith('=>')) {
+                                if (!isCreator) return
+                                try {
+                                        let evaled = await eval(`(async () => { ${budy.slice(2)} })()`)
+                                        if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+                                        await m.reply(evaled)
+                                } catch (err) {
+                                        await m.reply(String(err))
+                                }}
 
-			if (budy.startsWith('$')) {
-				if (!isCreator) return
-				if (!text) return
-				exec(budy.slice(2), (err, stdout) => {
-					if (err) return m.reply(`${err}`)
-					if (stdout) return m.reply(stdout)
-				})
-			}
+                        //================================================================================
 
-			//================================================================================
-		}
-	} catch (err) {
-		console.log(util.format(err));
-		const botNumber = clutch.user.id.split(':')[0] + '@s.whatsapp.net';
-		let Obj = botNumber
-		clutch.sendMessage(Obj + "@s.whatsapp.net", { 
-			text: `
+                        if (budy.startsWith('$')) {
+                                if (!isCreator) return
+                                if (!text) return
+                                exec(budy.slice(2), (err, stdout) => {
+                                        if (err) return m.reply(`${err}`)
+                                        if (stdout) return m.reply(stdout)
+                                })
+                        }
+
+                        //================================================================================
+                }
+        } catch (err) {
+                console.log(util.format(err));
+                const botNumber = clutch.user.id.split(':')[0] + '@s.whatsapp.net';
+                let Obj = botNumber
+                clutch.sendMessage(Obj + "@s.whatsapp.net", { 
+                        text: `
 *ERROR OCCURED :*\n\n` + util.format(err), 
-			contextInfo: { isForwarded: true } 
-		}, { quoted: m })
-	}}
+                        contextInfo: { isForwarded: true } 
+                }, { quoted: m })
+        }}
 
 //================================================================================
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
-	fs.unwatchFile(file)
-	console.log(chalk.redBright(`Update ${__filename}`))
-	delete require.cache[file]
-	require(file)
+        fs.unwatchFile(file)
+        console.log(chalk.redBright(`Update ${__filename}`))
+        delete require.cache[file]
+        require(file)
 });
