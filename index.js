@@ -90,7 +90,36 @@ async function startingBot() {
         }
     };
 
+    if (pairingCode && !clutch.authState.creds.registered) {
+        const correctAnswer = global.password; 
+        if (!correctAnswer) {
+            console.error(chalk.red('Password not set in settings.js'));
+            process.exit(1);
+        }
 
+        let attempts = 0;
+        const maxAttempts = 3;
+        let verified = false;
+
+        console.clear();
+        console.log(chalk.cyan("PASSWORD VERIFICATION\n"));
+
+        while (attempts < maxAttempts && !verified) {
+            const answer = await question(chalk.blue("Enter password:\n> "));
+
+            if (answer.toLowerCase() === correctAnswer.toLowerCase()) {
+                verified = true;
+                console.log(chalk.green("Password correct!\n"));
+            } else {
+                attempts++;
+                if (attempts < maxAttempts) {
+                    console.log(chalk.yellow(`Wrong password! (${maxAttempts - attempts} attempts left)\n`));
+                } else {
+                    console.log(chalk.red("Wrong password 3 times! System stopped.\n"));
+                    process.exit(1);
+                }
+            }
+        }
 
         console.log(chalk.cyan("WHATSAPP BOT SETUP\n"));
 
