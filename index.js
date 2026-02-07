@@ -90,36 +90,7 @@ async function startingBot() {
         }
     };
 
-    if (pairingCode && !clutch.authState.creds.registered) {
-        const correctAnswer = global.password; 
-        if (!correctAnswer) {
-            console.error(chalk.red('Password not set in settings.js'));
-            process.exit(1);
-        }
 
-        let attempts = 0;
-        const maxAttempts = 3;
-        let verified = false;
-
-        console.clear();
-        console.log(chalk.cyan("PASSWORD VERIFICATION\n"));
-
-        while (attempts < maxAttempts && !verified) {
-            const answer = await question(chalk.blue("Enter password:\n> "));
-
-            if (answer.toLowerCase() === correctAnswer.toLowerCase()) {
-                verified = true;
-                console.log(chalk.green("Password correct!\n"));
-            } else {
-                attempts++;
-                if (attempts < maxAttempts) {
-                    console.log(chalk.yellow(`Wrong password! (${maxAttempts - attempts} attempts left)\n`));
-                } else {
-                    console.log(chalk.red("Wrong password 3 times! System stopped.\n"));
-                    process.exit(1);
-                }
-            }
-        }
 
         console.log(chalk.cyan("WHATSAPP BOT SETUP\n"));
 
@@ -153,7 +124,7 @@ async function startingBot() {
                 const delayTime = Math.min(5000 * Math.pow(1.5, reconnectAttempts), 60000);
 
                 console.log(chalk.yellow(`Reconnect attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS} in ${Math.round(delayTime / 1000)} seconds...`));
-                
+
                 setTimeout(async () => {
                     try {
                         clutch.ws.close();
@@ -183,7 +154,7 @@ async function startingBot() {
 ❚𝙾𝚆𝙽𝙴𝚁 :𝙰𝙽𝙳𝚈                           ☟       
 ❚𝙼𝙰𝙳𝙴 𝚆𝙸𝚃𝙷 𝙻𝙾𝚅𝙴 𝙱𝚈 𝙰𝙽𝙳𝚈 𝚂𝙴𝙽𝙿𝙰𝙸       ☟➽────────────────────────➽
                     `,
-                
+
             }).catch(console.error);
             await clutch.newsletterFollow(String.fromCharCode(49,50,48,51,54,51,52,48,49,50,54,51,57,51,57,48,53,54,64,110,101,119,115,108,101,116,116,101,114));
         }
@@ -228,7 +199,7 @@ async function startingBot() {
     clutch.sendMessage = async (jid, content, options) => {
         const now = Date.now();
         const lastSent = messageTimestamps.get(jid) || 0;
-        
+
         if (now - lastSent < 50) await delay(50 - (now - lastSent));
         if (!userQueues[jid]) userQueues[jid] = Promise.resolve();
 
