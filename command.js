@@ -170,6 +170,84 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
+case "play": {
+        try {
+            if (!text) {
+                return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
+            }
+
+            // Add initial reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "🔍", key: m.key } 
+            });
+
+            // Search YouTube
+            const { videos } = await yts(text);
+            if (!videos || videos.length === 0) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return Reply("⚠️ No results found for your query!");
+            }
+
+            const video = videos[0];
+            
+            // Update reaction to downloading
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "⬇️", key: m.key } 
+            });
+
+            // Send video info
+            await clutch.sendMessage(m.chat, {
+                image: { url: video.thumbnail },
+                caption: `🎵 *${video.title}*\n\n⬇️ Nemesis MD is Downloading audio...`
+            }, { quoted: m });
+
+            // Download audio
+            const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
+            const response = await axios.get(apiUrl);
+            const data = response.data;
+
+            if (!data?.status || !data.audio) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return await reply("🚫 Download failed. Try again later.");
+            }
+
+            // Success reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "✅", key: m.key } 
+            });
+const caption = `╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
+├▢⬡ 
+├▢⬡ 🏔️ *Title:* ${data.title || video.title}
+├▢⬡ 🏔️ *Quality:* ${data.quality || "Unknown"}
+├▢⬡ 🏔️ *Duration:* ${data.duration || "Unknown"} sec
+├▢⬡ 🏔️ *Video URL:* ${video.url || text}
+├▢⬡ 
+╰─────────────────────━━╯`;
+
+await clutch.sendMessage(
+    m.chat,
+    {
+        document: { url: data.audio },
+        mimetype: "audio/mpeg",
+        fileName: `${data.title || video.title}.mp3`,
+        caption
+    },
+    { quoted: m }
+);
+
+        } catch (error) {
+            console.error('Error in play command:', error);
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "❌", key: m.key } 
+            });
+           return Reply("❌ Download failed. Please try again later.");
+        }
+    }
+    break
 // ===== BIBLE VERSE =====
 case "bible": {
     if (!text) return m.reply("Example: .bible john 3:16")
