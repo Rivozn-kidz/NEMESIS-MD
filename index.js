@@ -34,9 +34,9 @@ const database = new DataBase();
         };
         if (Object.keys(loadData || {}).length === 0) {
             await database.write(global.db);
-            console.log(chalk.green('Database initialized'));
+            console.log(chalk.green('NEMESIS MD DATABASE INITIALIZED'));
         } else {
-            console.log(chalk.green('Database loaded'));
+            console.log(chalk.green('NEMESIS MD DATABASE LOADED'));
         }
 
         setInterval(async () => {
@@ -91,7 +91,7 @@ async function startingBot() {
 
     if (pairingCode && !clutch.authState.creds.registered) {
         console.clear();
-        console.log(chalk.cyan("WHATSAPP BOT SETUP\n"));
+        console.log(chalk.cyan("NEMESIS MD SETUP WIZARD\n"));
 
         const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
         const question = (q) => new Promise(res => rl.question(q, res));
@@ -144,15 +144,22 @@ async function startingBot() {
             }
         } else if (connection === 'open') {
             reconnectAttempts = 0;
-            console.log(chalk.green('ANDY-MD CONNECTED'));
+            console.log(chalk.green('NEMESIS MD WA BOT CONNECTED SUCCESSFULLY'));
 
             const botNumber = clutch.user.id.split(':')[0] + '@s.whatsapp.net';
             clutch.sendMessage(botNumber, {
-                text: `
-ANDY-MD CONNECTED
-Version : 1.0
-Mode    : Public
-Owner   : ANDY
+                text: ` 
+
+
+╭───𓊈🏔️ *NEMESIS MD CONNECTED* 🏔️𓊉───▢
+│┃➪ Bᴏᴛ ɴᴀᴍᴇ : ɴᴇᴍᴇsɪs ᴍᴅ
+│┃➪Oᴡɴᴇʀs    : Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ
+│┃➪ ᴍᴏᴅᴇ      : Pᴜʙʟɪᴄ 
+│┃➪ Vᴇʀsɪᴏɴ   : 1.0.0
+╰───────Rɪᴅᴢ Cᴏᴅᴇʀ❦────────▢
+
+> ʙʀᴏᴜɢʜᴛ ᴛᴏ ʏᴏᴜ ʙʏ Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ
+                    
                 `
             }).catch(console.error);
 
