@@ -1827,7 +1827,138 @@ case "acceptall":
     }
 }
 break
+case "lyrics": {
+    if (!text) return Reply("❌ Give song name");
+    const { data } = await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(text)}`);
+    if (!data?.lyrics) return Reply("❌ Lyrics not found");
+    Reply(data.lyrics.slice(0, 4000));
+}
+break;
+case "yts": {
+    if (!text) return Reply("❌ Give search text");
+    const { videos } = await yts(text);
+    if (!videos.length) return Reply("❌ No results");
 
+    let msg = `🔍 *YouTube Search*\n\n`;
+    videos.slice(0, 5).forEach((v, i) => {
+        msg += `${i + 1}. ${v.title}\n⏱ ${v.timestamp}\n🔗 ${v.url}\n\n`;
+    });
+    Reply(msg);
+}
+break;
+
+/* ================= GROUP COMMANDS ================= */
+
+case "link":
+case "setdesc":
+case "jid":
+case "open":
+case "opentime":
+case "close":
+case "closetime":
+case "setgcpp":
+case "antilink":
+case "antitagadmin":
+case "invite": {
+
+    if (!m.isGroup) return Reply("❌ Group only");
+
+    const metadata = await clutch.groupMetadata(m.chat);
+    const groupAdmins = metadata.participants
+        .filter(p => p.admin)
+        .map(p => p.id);
+
+    const isAdmin = groupAdmins.includes(m.sender);
+
+    /* 🔗 GROUP LINK */
+    if (command === "link") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        const code = await clutch.groupInviteCode(m.chat);
+        return Reply(`🔗 Group Link:\nhttps://chat.whatsapp.com/${code}`);
+    }
+
+    /* ✏️ SET DESCRIPTION */
+    if (command === "setdesc") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        if (!text) return Reply("❌ Provide description");
+        await clutch.groupUpdateDescription(m.chat, text);
+        return Reply("✅ Description updated");
+    }
+
+    /* 🆔 USER JID */
+    if (command === "jid") {
+        const jid = m.mentionedJid?.[0] || m.sender;
+        return Reply(`🆔 ${jid}`);
+    }
+
+    /* 🟢 OPEN GROUP */
+    if (command === "open" || command === "opentime") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        await clutch.groupSettingUpdate(m.chat, "not_announcement");
+        return Reply("✅ Group opened");
+    }
+
+    /* 🔴 CLOSE GROUP */
+    if (command === "close" || command === "closetime") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        await clutch.groupSettingUpdate(m.chat, "announcement");
+        return Reply("🔒 Group closed");
+    }
+
+    /* 🖼️ SET GROUP PICTURE */
+    if (command === "setgcpp") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        if (!m.quoted || !m.quoted.image)
+            return Reply("❌ Reply to an image");
+
+        const img = await m.quoted.download();
+        await clutch.updateProfilePicture(m.chat, img);
+        return Reply("✅ Group picture updated");
+    }
+
+    /* 🚫 ANTI-LINK TOGGLE */
+    if (command === "antilink") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        global.antilink = global.antilink || {};
+        global.antilink[m.chat] = !global.antilink[m.chat];
+        return Reply(`✅ Anti-link: ${global.antilink[m.chat] ? "ON" : "OFF"}`);
+    }
+
+    /* 🚫 ANTI-TAG-ADMIN TOGGLE */
+    if (command === "antitagadmin") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        global.antitagadmin = global.antitagadmin || {};
+        global.antitagadmin[m.chat] = !global.antitagadmin[m.chat];
+        return Reply(
+            `✅ Anti-tag-admin: ${global.antitagadmin[m.chat] ? "ON" : "OFF"}`
+        );
+    }
+
+    /* 📩 INVITE */
+    if (command === "invite") {
+        if (!isAdmin) return Reply("❌ Admin only");
+        const code = await clutch.groupInviteCode(m.chat);
+        await clutch.sendMessage(m.chat, {
+            react: { text: "📩", key: m.key }
+        });
+        return Reply(`📩 Invite Link:\nhttps://chat.whatsapp.com/${code}`);
+    }
+}
+break;
+
+/* ============ GROUP PROTECTION HANDLERS ============ */
+
+if (m.isGroup && global.antilink?.[m.chat]) {
+    if (/chat\.whatsapp\.com/i.test(m.text) && !isAdmin) {
+        await clutch.sendMessage(m.chat, { delete: m.key });
+    }
+}
+
+if (m.isGroup && global.antitagadmin?.[m.chat]) {
+    if (m.mentionedJid?.some(j => groupAdmins.includes(j)) && !isAdmin) {
+        await clutch.sendMessage(m.chat, { delete: m.key });
+    }
+}
 case "rejectall":
  {
     try {
