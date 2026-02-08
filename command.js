@@ -1526,7 +1526,8 @@ reply(`${a}`)
 }
 }
 break
-
+case "ask":
+case "chat":
 case "ai": {
     try {
         if (!text) return Reply("Please provide a message for the Ai.\nExample: `.nemesis what is going on`");
@@ -1827,11 +1828,25 @@ case "acceptall":
     }
 }
 break
-case "lyrics": {
-    if (!text) return Reply("❌ Give song name");
-    const { data } = await axios.get(`https://api.lyrics.ovh/v1/${encodeURIComponent(text)}`);
-    if (!data?.lyrics) return Reply("❌ Lyrics not found");
-    Reply(data.lyrics.slice(0, 4000));
+case "repo": {
+    try {
+        const repo = "Ridz-coder01/NEMESIS-MD"; // change if needed
+        const { data } = await axios.get(`https://api.github.com/repos/${repo}`);
+
+        const caption = `╭━━〔 🔎 *Repository Info* 〕━━⬣
+┃ 🏔️ *Bot Name:* ${data.name}
+┃ 🏔️ *Owner:* ${data.owner.login}
+┃ 🏔️ *Stars:* ${data.stargazers_count}
+┃ 🏔️ *Forks:* ${data.forks_count}
+┃ 🏔️ *Link:* ${data.html_url}
+┃ 🏔️ *Description:* ${data.description || 'No description'}
+╰━━━━━━━━━━━━━━━━━━━━⬣
+🏔️ *Don't forget to ★ and fork!*`;
+
+        Reply(caption);
+    } catch (err) {
+        Reply("❌ Failed to fetch repository info");
+    }
 }
 break;
 case "yts": {
@@ -1840,7 +1855,7 @@ case "yts": {
     if (!videos.length) return Reply("❌ No results");
 
     let msg = `🔍 *YouTube Search*\n\n`;
-    videos.slice(0, 5).forEach((v, i) => {
+    videos.slice(0, 9).forEach((v, i) => {
         msg += `${i + 1}. ${v.title}\n⏱ ${v.timestamp}\n🔗 ${v.url}\n\n`;
     });
     Reply(msg);
