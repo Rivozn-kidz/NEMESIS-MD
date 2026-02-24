@@ -7,15 +7,16 @@ const readline = require('readline');
 const { exec } = require('child_process');
 const { Boom } = require('@hapi/boom');
 const NodeCache = require('node-cache');
-
 const {
     default: makeWASocket,
     useMultiFileAuthState,
     DisconnectReason,
-    makeInMemoryStore,
     fetchLatestBaileysVersion,
     delay
 } = require('@whiskeysockets/baileys');
+
+// Import makeInMemoryStore separately
+const { makeInMemoryStore } = require('@whiskeysockets/baileys/lib/Store');
 
 const pairingCode = global.pairing_code || process.argv.includes('--pairing-code');
 
