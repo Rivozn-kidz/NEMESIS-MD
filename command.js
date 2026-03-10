@@ -170,18 +170,15 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
-case "support":
-case "version": {
+case "support": {
 try {
 
 let dec = `    
 ⟣──────────────────⟢
 ▧ *ᴄʀᴇᴀᴛᴏʀ* : *Ridz Coder (🇺🇬🇿🇼)*
-▧ *ᴍᴏᴅᴇ* : *${config.MODE}*
-▧ *ᴘʀᴇғɪx* : *${config.PREFIX}*
-▧ *ʀᴀᴍ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem() / 1024 / 1024)}MB
-▧ *ᴠᴇʀsɪᴏɴ* : *1.0.0*
-▧ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())}
+▧ *ᴍᴏᴅᴇ* : *public*
+▧ *ᴘʀᴇғɪx* : .
+▧ *ᴠᴇʀsɪᴏɴ* : *2.0.0*
 
 ⟣──────────────────⟢
 
@@ -215,21 +212,12 @@ serverMessageId:143
 {quoted:m}
 )
 
-await clutch.sendMessage(m.chat,{
-audio:{url:'https://files.catbox.moe/a1sh4u.mp3'},
-mimetype:'audio/mp4',
-ptt:true
-},{quoted:m})
-
 } catch(e){
 console.log(e)
 m.reply("Error")
 }
 }
 break
-
-
-
 case "instagram":
 case "insta":
 case "ig": {
@@ -415,14 +403,13 @@ break
 
 
 case "ridzcoder":
-case "coder":
-case "ridz": {
+case "kayiza": {
 try {
 
 let caption=`
 ╭━━〔 ʀɪᴅᴢ ᴄᴏᴅᴇʀ ɪɴғᴏ〕━━┈⊷
 ┃★
-┃★ •ʜᴇʟʟᴏ ${pushname} 👋, ɪ ᴀᴍ ʀɪᴅᴢ ᴄᴏᴅᴇʀ.
+┃★ •ʜᴇʟʟᴏ There 👋, ɪ ᴀᴍ ʀɪᴅᴢ ᴄᴏᴅᴇʀ.
 ┃★ •ɪ ʟᴀᴜɢʜ ᴀᴛ ᴇᴠᴇʀʏᴏɴᴇ ᴡʜᴏ ʟᴀᴜɢʜs ᴀᴛ ᴍᴇ.
 ┃★ •ɪ ᴀᴍ ᴛʜᴇ ʟᴀsᴛ ᴛʜɪᴇғ, ʙᴜᴛ ᴅᴏɴ'ᴛ ᴄʜᴀsᴇ ᴀғᴛᴇʀ ᴍᴇ
 ┃★ •ʙᴇᴄᴀᴜsᴇ ɪ ᴡɪʟʟ ᴄʜᴀɴɢᴇ ᴍʏsᴇʟғ
@@ -474,9 +461,8 @@ m.reply("Error")
 }
 }
 break
-case "ridzcoder":
-case "coder":
-case "ridz": {
+case "pair":
+case "pair2": {
 try {
 
 let caption=`
@@ -2118,6 +2104,8 @@ case "acceptall":
 break
 case "repo": {
     try {
+        const sender = m.sender;
+
         const repo = "Ridzcoder/NEMESIS-MD";
         const { data } = await axios.get(`https://api.github.com/repos/${repo}`);
 
@@ -2156,26 +2144,34 @@ case "repo": {
     }
 }
 break;
+
+
 case "yts": {
     if (!text) return Reply("❌ Give search text");
+
     const { videos } = await yts(text);
     if (!videos.length) return Reply("❌ No results");
 
     let msg = `🔍 *YouTube Search*\n\n`;
+
     videos.slice(0, 9).forEach((v, i) => {
         msg += `${i + 1}. ${v.title}\n⏱ ${v.timestamp}\n🔗 ${v.url}\n\n`;
     });
+
     Reply(msg);
 }
 break;
 case "ping":
 case "uptime": {
-    let timestamp = speed();
-    let latensi = speed() - timestamp;
-    let tio = await nou.os.oos();
-    var tot = await nou.drive.info();
+    try {
+        const sender = m.sender;
 
-    let respon =
+        let timestamp = speed();
+        let latensi = speed() - timestamp;
+        let tio = await nou.os.oos();
+        var tot = await nou.drive.info();
+
+        let respon =
 `╭═══⬡𝑁𝐸𝑀𝐸𝑆𝐼𝑆 𝑀𝐷 ⬡═══⬡ 
 ║友│⊷• 𝙿𝙻𝙰𝚃𝙵𝙾𝚁𝙼     : ${nou.os.type()}
 ║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚁𝙰𝙼    : ${formatp(os.totalmem())}
@@ -2186,24 +2182,29 @@ case "uptime": {
 ║友│⊷• 𝙱𝙾𝚃 𝚁𝚄𝙽𝚃𝙸𝙼𝙴  : ${runtime(process.uptime())}
 ╰═══════════════════⬡`;
 
-    await clutch.sendMessage(
-        m.chat,
-        {
-            image: { url: "https://files.catbox.moe/qva4tf.jpg" },
-            caption: respon,
-            contextInfo: {
-                mentionedJid: [sender],
-                forwardingScore: 999,
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363404529319592@newsletter",
-                    newsletterName: "Airbyte Synergetic Labs 🏔️",
-                    serverMessageId: 143
+        await clutch.sendMessage(
+            m.chat,
+            {
+                image: { url: "https://files.catbox.moe/qva4tf.jpg" },
+                caption: respon,
+                contextInfo: {
+                    mentionedJid: [sender],
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: "120363404529319592@newsletter",
+                        newsletterName: "Airbyte Synergetic Labs 🏔️",
+                        serverMessageId: 143
+                    }
                 }
-            }
-        },
-        { quoted: m }
-    );
+            },
+            { quoted: m }
+        );
+
+    } catch (e) {
+        console.log(e)
+        m.reply("Error")
+    }
 }
 break;
 /* ================= GROUP COMMANDS ================= */
