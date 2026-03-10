@@ -170,6 +170,348 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
+case "support":
+case "version": {
+try {
+
+let dec = `    
+⟣──────────────────⟢
+▧ *ᴄʀᴇᴀᴛᴏʀ* : *Ridz Coder (🇺🇬🇿🇼)*
+▧ *ᴍᴏᴅᴇ* : *${config.MODE}*
+▧ *ᴘʀᴇғɪx* : *${config.PREFIX}*
+▧ *ʀᴀᴍ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem() / 1024 / 1024)}MB
+▧ *ᴠᴇʀsɪᴏɴ* : *1.0.0*
+▧ *ᴜᴘᴛɪᴍᴇ* : ${runtime(process.uptime())}
+
+⟣──────────────────⟢
+
+> MAWRLD MD 
+https://github.com/Ridzcoder/NEMESIS-MD
+
+⟣──────────────────⟢
+> CHANNEL
+https://whatsapp.com/channel/0029VajohKp5a2498c8Dbl2Y
+
+> GROUP
+https://chat.whatsapp.com/JgaAxg3I2Oy35Gdbk3Zvv2
+`
+
+await clutch.sendMessage(
+m.chat,
+{
+image:{url:"https://files.catbox.moe/qwpimr.png"},
+caption:dec,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:143
+}
+}
+},
+{quoted:m}
+)
+
+await clutch.sendMessage(m.chat,{
+audio:{url:'https://files.catbox.moe/a1sh4u.mp3'},
+mimetype:'audio/mp4',
+ptt:true
+},{quoted:m})
+
+} catch(e){
+console.log(e)
+m.reply("Error")
+}
+}
+break
+
+
+
+case "instagram":
+case "insta":
+case "ig": {
+try {
+
+const url = text || m.quoted?.text
+if(!url || !url.includes("instagram.com")) return m.reply("Provide Instagram link")
+
+let api=`https://api-aswin-sparky.koyeb.app/api/downloader/igdl?url=${encodeURIComponent(url)}`
+let res=await axios.get(api)
+
+for(const item of res.data.data){
+
+let caption=`📶 *Instagram Downloader*
+
+❤‍🩹 Quality: HD
+
+> © Powered by Ridz Coder`
+
+await clutch.sendMessage(
+m.chat,
+{
+[item.type==='video'?'video':'image']:{url:item.url},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:143
+}
+}
+},
+{quoted:m}
+)
+
+}
+
+}catch(e){
+console.log(e)
+m.reply("Download failed")
+}
+}
+break
+
+
+
+case "instagram2":
+case "ig2": {
+try {
+
+const url = text
+if(!url || !url.includes("instagram.com")) return m.reply("Invalid link")
+
+const api=`https://jawad-tech.vercel.app/downloader?url=${encodeURIComponent(url)}`
+const {data}=await axios.get(api)
+
+const video=data.result[0]
+
+let caption=`📥 *Instagram Reel Downloader*
+
+> Powered by Ridz Coder`
+
+await clutch.sendMessage(
+m.chat,
+{
+video:{url:video},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:143
+}
+}
+},
+{quoted:m}
+)
+
+}catch(e){
+console.log(e)
+m.reply("Failed")
+}
+}
+break
+
+
+
+case "facebook":
+case "fbdl": {
+try {
+
+const url=text
+if(!url || !url.includes("facebook.com")) return m.reply("Invalid Facebook link")
+
+const api=`https://apis.davidcyriltech.my.id/facebook?url=${encodeURIComponent(url)}`
+const {data}=await axios.get(api)
+
+const dl=data.result.downloads.hd?.url||data.result.downloads.sd.url
+const quality=data.result.downloads.hd?"HD":"SD"
+
+let caption=`🎥 *Facebook Video Downloader*
+
+Quality: ${quality}
+
+> Powered by Ridz Coder`
+
+await clutch.sendMessage(
+m.chat,
+{
+video:{url:dl},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:143
+}
+}
+},
+{quoted:m}
+)
+
+}catch(e){
+console.log(e)
+m.reply("Failed downloading video")
+}
+}
+break
+
+
+
+case "family": {
+try {
+
+let caption=`
+      *╭┈──[ • RIDZ TECH 𝖥𝖠𝖬𝖨𝖫𝖸 • ]───•*
+      *│  ◦* *▢➠*
+      *│  ◦* *▢➠ Kelvin tech*
+      *│  ◦* *▢➠ Jinx*
+      *│  ◦* *▢➠ Terri Dev*
+      *│  ◦* *▢➠ Rivozn Coder*
+      *│  ◦* *▢➠ And You*
+      *╰┈───────────────•*
+        *•────────────•⟢*
+      Family is not about blood,It's about the people who choose to be there for you, support you, and love you unconditionally, no matter what. They're the ones who show up, who listen, and who care 🤗
+`
+
+await clutch.sendMessage(
+m.chat,
+{
+image:{url:"https://files.catbox.moe/qwpimr.png"},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:143
+}
+}
+},
+{quoted:m}
+)
+
+}catch(e){
+console.log(e)
+m.reply("Error")
+}
+}
+break
+
+
+
+case "ridzcoder":
+case "coder":
+case "ridz": {
+try {
+
+let caption=`
+╭━━〔 ʀɪᴅᴢ ᴄᴏᴅᴇʀ ɪɴғᴏ〕━━┈⊷
+┃★
+┃★ •ʜᴇʟʟᴏ ${pushname} 👋, ɪ ᴀᴍ ʀɪᴅᴢ ᴄᴏᴅᴇʀ.
+┃★ •ɪ ʟᴀᴜɢʜ ᴀᴛ ᴇᴠᴇʀʏᴏɴᴇ ᴡʜᴏ ʟᴀᴜɢʜs ᴀᴛ ᴍᴇ.
+┃★ •ɪ ᴀᴍ ᴛʜᴇ ʟᴀsᴛ ᴛʜɪᴇғ, ʙᴜᴛ ᴅᴏɴ'ᴛ ᴄʜᴀsᴇ ᴀғᴛᴇʀ ᴍᴇ
+┃★ •ʙᴇᴄᴀᴜsᴇ ɪ ᴡɪʟʟ ᴄʜᴀɴɢᴇ ᴍʏsᴇʟғ
+┃★ •ᴀsᴋ ᴛʜᴇᴍ ᴀʟʟ ᴀɴᴅ ᴛʜᴇʏ ᴡɪʟʟ ᴛᴇʟʟ ʏᴏᴜ:
+┃★ •ɪғ ʏᴏᴜ sᴛᴀɴᴅ ʙᴇʜɪɴᴅ ᴍᴇ, ɪ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜ.
+┃★ •ɪғ ʏᴏᴜ sᴛᴀɴᴅ ʙᴇsɪᴅᴇ ᴍᴇ, ɪ ʀᴇsᴘᴇᴄᴛ ʏᴏᴜ.
+┃★ •ʙᴜᴛ ɪғ ʏᴏᴜ sᴛᴀɴᴅ ᴀɢᴀɪɴsᴛ ᴍᴇ, ɪ sʜᴏᴡ ɴᴏ ᴍᴇʀᴄʏ.
+┃★
+╰━━━━━━━━━━━━━━━┈⊷
+
+> *ᴀ sɪᴍᴘʟᴇ ᴡʜᴀᴛsᴀᴘᴘ ᴅᴇᴠᴇʟᴘᴏʀ*
+
+*╭━━━〔 • MY TOP FRIENDS• 〕━━━┈⊷*
+*┃★╭──────────────*
+*┃★│* *▢KEVIN TECH*
+*┃★│* *▢JINX*
+*┃★│* *▢TERRI DEV*
+*┃★│* *▢KING ORMAN*
+*┃★╰──────────────*
+*╰━━━━━━━━━━━━━━━┈⊷*
+
+*•────────────•⟢*
+> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ
+*•────────────•⟢*
+`
+
+await clutch.sendMessage(
+m.chat,
+{
+image:{url:"https://files.catbox.moe/qwpimr.png"},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:999
+}
+}
+},
+{quoted:m}
+)
+
+}catch(e){
+console.log(e)
+m.reply("Error")
+}
+}
+break
+case "ridzcoder":
+case "coder":
+case "ridz": {
+try {
+
+let caption=`
+ohh 😯 No, to pair your number contact Ridz Coder on +237678687593
+
+*•────────────•⟢*
+> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ
+*•────────────•⟢*
+`
+
+await clutch.sendMessage(
+m.chat,
+{
+image:{url:"https://files.catbox.moe/qwpimr.png"},
+caption:caption,
+contextInfo:{
+mentionedJid:[m.sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs🪀",
+serverMessageId:999
+}
+}
+},
+{quoted:m}
+)
+
+}catch(e){
+console.log(e)
+m.reply("Error")
+}
+}
+break
 case "play": {
     try {
         if (!text) {
@@ -1017,44 +1359,7 @@ ${urlGrup}
                                 m.reply(JSON.stringify(data, null, 2))
                         }
                         break
-case "ping":
-case "uptime": {
-    let timestamp = speed();
-    let latensi = speed() - timestamp;
-    let tio = await nou.os.oos();
-    var tot = await nou.drive.info();
 
-    let respon =
-`╭═══⬡𝑁𝐸𝑀𝐸𝑆𝐼𝑆 𝑀𝐷 ⬡═══⬡ 
-║友│⊷• 𝙿𝙻𝙰𝚃𝙵𝙾𝚁𝙼     : ${nou.os.type()}
-║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚁𝙰𝙼    : ${formatp(os.totalmem())}
-║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚂𝚃𝙾𝚁𝙰𝙶𝙴 : ${tot.totalGb} GB
-║友│⊷• 𝙲𝙿𝚄 𝙲𝙾𝚁𝙴𝚂    : ${os.cpus().length}
-║友│⊷• 𝚅𝙿𝚂 𝚄𝙿𝚃𝙸𝙼𝙴   : ${runtime(os.uptime())}
-║友│⊷• 𝙿𝙸𝙽𝙶         : ${latensi.toFixed(4)} sec
-║友│⊷• 𝙱𝙾𝚃 𝚁𝚄𝙽𝚃𝙸𝙼𝙴  : ${runtime(process.uptime())}
-╰═══════════════════⬡`;
-
-    await clutch.sendMessage(
-        m.chat,
-        {
-            image: { url: "https://files.catbox.moe/qva4tf.jpg" },
-            caption: respon,
-            contextInfo: {
-                mentionedJid: [sender],
-                forwardingScore: 999,
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363404529319592@newsletter",
-                    newsletterName: "Airbyte Synergetic Labs 🏔️",
-                    serverMessageId: 143
-                }
-            }
-        },
-        { quoted: m }
-    );
-}
-break;
 
                         //================================================================================
                         case "on":
@@ -1863,7 +2168,44 @@ case "yts": {
     Reply(msg);
 }
 break;
+case "ping":
+case "uptime": {
+    let timestamp = speed();
+    let latensi = speed() - timestamp;
+    let tio = await nou.os.oos();
+    var tot = await nou.drive.info();
 
+    let respon =
+`╭═══⬡𝑁𝐸𝑀𝐸𝑆𝐼𝑆 𝑀𝐷 ⬡═══⬡ 
+║友│⊷• 𝙿𝙻𝙰𝚃𝙵𝙾𝚁𝙼     : ${nou.os.type()}
+║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚁𝙰𝙼    : ${formatp(os.totalmem())}
+║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚂𝚃𝙾𝚁𝙰𝙶𝙴 : ${tot.totalGb} GB
+║友│⊷• 𝙲𝙿𝚄 𝙲𝙾𝚁𝙴𝚂    : ${os.cpus().length}
+║友│⊷• 𝚅𝙿𝚂 𝚄𝙿𝚃𝙸𝙼𝙴   : ${runtime(os.uptime())}
+║友│⊷• 𝙿𝙸𝙽𝙶         : ${latensi.toFixed(4)} sec
+║友│⊷• 𝙱𝙾𝚃 𝚁𝚄𝙽𝚃𝙸𝙼𝙴  : ${runtime(process.uptime())}
+╰═══════════════════⬡`;
+
+    await clutch.sendMessage(
+        m.chat,
+        {
+            image: { url: "https://files.catbox.moe/qva4tf.jpg" },
+            caption: respon,
+            contextInfo: {
+                mentionedJid: [sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: "120363404529319592@newsletter",
+                    newsletterName: "Airbyte Synergetic Labs 🏔️",
+                    serverMessageId: 143
+                }
+            }
+        },
+        { quoted: m }
+    );
+}
+break;
 /* ================= GROUP COMMANDS ================= */
 
 case "link":
