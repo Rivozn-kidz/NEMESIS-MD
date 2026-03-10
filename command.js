@@ -499,89 +499,84 @@ m.reply("Error")
 }
 break
 case "play": {
-    try {
-        if (!text) {
-            return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
-        }
+try {
 
-        // Searching reaction
-        await clutch.sendMessage(m.chat, {
-            react: { text: "🔍", key: m.key }
-        });
+const sender = m.sender
 
-        const { videos } = await yts(text);
-        if (!videos || videos.length === 0) {
-            await clutch.sendMessage(m.chat, {
-                react: { text: "❌", key: m.key }
-            });
-            return Reply("⚠️ No results found!");
-        }
+if (!text) {
+return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`")
+}
 
-        const video = videos[0];
+await clutch.sendMessage(m.chat,{react:{text:"🔍",key:m.key}})
 
-        // Downloading reaction
-        await clutch.sendMessage(m.chat, {
-            react: { text: "⬇️", key: m.key }
-        });
+const { videos } = await yts(text)
+if (!videos || videos.length === 0) {
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
+return Reply("⚠️ No results found!")
+}
 
-        // Download audio
-        const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
-        const response = await axios.get(apiUrl);
-        const data = response.data;
+const video = videos[0]
 
-        if (!data?.status || !data.audio) {
-            await clutch.sendMessage(m.chat, {
-                react: { text: "❌", key: m.key }
-            });
-            return Reply("🚫 Download failed. Try again later.");
-        }
+await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
 
-        const caption = `
+const api = `https://api-aswin-sparky.koyeb.app/api/downloader/song?search=${encodeURIComponent(video.url)}`
+const { data } = await axios.get(api)
+
+if (!data || !data.data) {
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
+return Reply("🚫 Download failed")
+}
+
+const song = data.data
+
+const caption = `
 ╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
 ║友│⊷
-║友│⊷🏔️ *Title:* ${data.title || video.title}
-║友│⊷🏔️ *Quality:* ${data.quality || "Unknown"}
-║友│⊷🏔️ *Duration:* ${data.duration || "Unknown"} sec
-║友│⊷🏔️ *Video URL:* ${video.url || text}
+║友│⊷🏔️ *Title:* ${song.title || video.title}
+║友│⊷🏔️ *Duration:* ${song.duration || video.timestamp}
+║友│⊷🏔️ *Link:* ${video.url}
 ║友│⊷
 ╰─────────────────────━━╯
-> Cʀᴇᴀᴛᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ❦`;
+> Cʀᴇᴀᴛᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ❦`
 
-        // Send thumbnail + caption
-        await clutch.sendMessage(
-            m.chat,
-            {
-                image: { url: video.thumbnail },
-                caption
-            },
-            { quoted: m }
-        );
-
-        // Success reaction
-        await clutch.sendMessage(m.chat, {
-            react: { text: "✅", key: m.key }
-        });
-
-        // Send audio as document
-        await clutch.sendMessage(
-            m.chat,
-            {
-                document: { url: data.audio },
-                mimetype: "audio/mpeg",
-                fileName: `${data.title || video.title}.mp3`
-            },
-            { quoted: m }
-        );
-
-    } catch (error) {
-        console.error("Play command error:", error);
-        await clutch.sendMessage(m.chat, {
-            react: { text: "❌", key: m.key }
-        });
-        return Reply("❌ Download failed. Please try again later.");
-    }
+await clutch.sendMessage(
+m.chat,
+{
+image:{url:video.thumbnail},
+caption:caption,
+contextInfo:{
+mentionedJid:[sender],
+forwardingScore:999,
+isForwarded:true,
+forwardedNewsletterMessageInfo:{
+newsletterJid:"120363404529319592@newsletter",
+newsletterName:"Airbyte Synergetic Labs 🏔️",
+serverMessageId:143
 }
-break;
+}
+},
+{quoted:m}
+)
+
+await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
+
+await clutch.sendMessage(
+m.chat,
+{
+document:{url:song.download},
+mimetype:"audio/mpeg",
+fileName:`${song.title || video.title}.mp3`
+},
+{quoted:m}
+)
+
+} catch(e) {
+console.log(e)
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
+Reply("❌ Download failed. Try again later.")
+}
+}
+break
 // ===== BIBLE VERSE =====
 case "bible": {
     if (!text) return m.reply("Example: .bible john 3:16")
@@ -607,7 +602,7 @@ case "biblelist": {
 
 ╭──⧼♛ *Old Testament* ♛⧽──≽
 │┃ ♛Genesis
-│┃ ♛ Exodus│┃ ♛ 
+│┃ ♛ Exodus
 │┃ ♛Leviticus
 │┃ ♛Numbers
 │┃ ♛ Deuteronomy
