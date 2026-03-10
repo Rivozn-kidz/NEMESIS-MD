@@ -158,8 +158,8 @@ module.exports = clutch = async (clutch, m, chatUpdate, store) => {
                 switch (command) {
 
                 case "ssweb": {
-if (!text) return m.reply(example("https://example.com"))
-if (!isUrl(text)) return m.reply(example("https://example.com"))
+if (!text) return m.reply(example("https://ridzcoder.zone.id"))
+if (!isUrl(text)) return m.reply(example("https://ridzcoder.zone.id"))
 const {
   screenshotV1, 
   screenshotV2,
@@ -275,27 +275,80 @@ break
 
 // ===== BIBLE BOOK LIST (FULL) =====
 case "biblelist": {
-    m.reply(`📖 *Bible Books*
+    m.reply(`📖 *NEMESIS MD BIBLE BOOKS*
 
-Old Testament:
-Genesis, Exodus, Leviticus, Numbers, Deuteronomy,
-Joshua, Judges, Ruth, 1 Samuel, 2 Samuel,
-1 Kings, 2 Kings, 1 Chronicles, 2 Chronicles,
-Ezra, Nehemiah, Esther, Job, Psalms,
-Proverbs, Ecclesiastes, Song of Solomon,
-Isaiah, Jeremiah, Lamentations, Ezekiel,
-Daniel, Hosea, Joel, Amos, Obadiah,
-Jonah, Micah, Nahum, Habakkuk, Zephaniah,
-Haggai, Zechariah, Malachi
+╭──⧼♛ *Old Testament* ♛⧽──≽
+│┃ ♛Genesis
+│┃ ♛ Exodus│┃ ♛ 
+│┃ ♛Leviticus
+│┃ ♛Numbers
+│┃ ♛ Deuteronomy
+│┃ ♛Joshua
+│┃ ♛Judges
+│┃ ♛Ruth
+│┃ ♛1 Samuel
+│┃ ♛ 2 Samuel
+│┃ ♛1 Kings
+│┃ ♛ 2 Kings
+│┃ ♛ 1 Chronicles
+│┃ ♛ 2 Chronicles
+│┃ ♛Ezra
+│┃ ♛ Nehemiah
+│┃ ♛ Esther
+│┃ ♛ Job
+│┃ ♛ Psalms
+│┃ ♛Proverbs
+│┃ ♛ Ecclesiastes
+│┃ ♛ Song of Solomon
+│┃ ♛Isaiah
+│┃ ♛ Jeremiah
+│┃ ♛ Lamentations
+│┃ ♛ Ezekiel
+│┃ ♛Daniel
+│┃ ♛ Hosea
+│┃ ♛ Joel
+│┃ ♛ Amos
+│┃ ♛ Obadiah
+│┃ ♛Jonah
+│┃ ♛ Micah
+│┃ ♛ Nahum
+│┃ ♛ Habakkuk
+│┃ ♛ Zephaniah
+│┃ ♛Haggai
+│┃ ♛ Zechariah
+│┃ ♛ Malachi
+╰──────────────────≽
 
-New Testament:
-Matthew, Mark, Luke, John, Acts,
-Romans, 1 Corinthians, 2 Corinthians,
-Galatians, Ephesians, Philippians, Colossians,
-1 Thessalonians, 2 Thessalonians,
-1 Timothy, 2 Timothy, Titus, Philemon,
-Hebrews, James, 1 Peter, 2 Peter,
-1 John, 2 John, 3 John, Jude, Revelation`)
+╭──⧼ *♛New Testament* ♛⧽──≽
+│┃ ♛Matthew
+│┃ ♛ Mark
+│┃ ♛ Luke
+│┃ ♛ John
+│┃ ♛ Act
+│┃ ♛Romans
+│┃ ♛ 1 Corinthians
+│┃ ♛ 2 Corinthians
+│┃ ♛Galatians
+│┃ ♛ Ephesians
+│┃ ♛ Philippians
+│┃ ♛ Colossians
+│┃ ♛1 Thessalonians
+│┃ ♛ 2 Thessalonians
+│┃ ♛1 Timothy
+│┃ ♛ 2 Timothy
+│┃ ♛ Titus
+│┃ ♛ Philemon
+│┃ ♛Hebrews
+│┃ ♛ James
+│┃ ♛ 1 Peter
+│┃ ♛ 2 Peter
+│┃ ♛1 John
+│┃ ♛ 2 John
+│┃ ♛ 3 John
+│┃ ♛ Jude
+│┃ ♛ Revelation
+╰──────────────────≽
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ`)
 }
 break
 // ===== QURAN VERSE =====
@@ -310,7 +363,8 @@ case "quran": {
 Surah ${json.data.surah.englishName} (${json.data.surah.number})
 Ayah ${json.data.numberInSurah}
 
-${json.data.text}`)
+${json.data.text}
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ`)
     } catch {
         m.reply("Error fetching Quran verse")
     }
@@ -331,13 +385,6 @@ case "quranlist": {
     } catch {
         m.reply("Error fetching surah list")
     }
-}
-break
-
-case "quote": {
-    let res = await fetch("https://api.quotable.io/random")
-    let json = await res.json()
-    m.reply(`💬 "${json.content}"\n— ${json.author}`)
 }
 break
 
@@ -403,7 +450,7 @@ break
 case "meme": {
     let res = await fetch("https://meme-api.com/gimme")
     let json = await res.json()
-    clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "🤣 Meme" }, { quoted: m })
+    clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ" }, { quoted: m })
 }
 break
 
@@ -447,8 +494,8 @@ break
 
 
                 case "shortlink": case "shorturl": {
-if (!text) return m.reply(example("https://example.com"))
-if (!isUrl(text)) return m.reply(example("https://example.com"))
+if (!text) return m.reply(example("https://ridzcoder.zone.id"))
+if (!isUrl(text)) return m.reply(example("https://ridzcoder.zone.id"))
 var res = await axios.get('https://tinyurl.com/api-create.php?url='+encodeURIComponent(text))
 var link = `
 * *𝙷𝚎𝚛𝚎 𝚒𝚜 𝚢𝚘𝚞𝚛 𝚜𝚑𝚘𝚛𝚢 𝚕𝚒𝚗𝚔*
@@ -577,56 +624,106 @@ await fs.unlinkSync(media)
 }
 break
 
-                case "ytmp3": {
+case "play2": {
 if (!text) return m.reply(example("the link"))
-if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
+if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
+
 await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
 
-var anu = await ytdl.ytmp3(`${text}`)
+try {
+
+let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=mp3`
+let res = await fetch(api)
+let anu = await res.json()
 
 if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {audio: {url: urlMp3}, mimetype: "audio/mpeg"}, {quoted: m})
+
+let audioUrl = anu.result.download
+await clutch.sendMessage(m.chat,{
+audio: { url: audioUrl },
+mimetype: "audio/mpeg"
+},{ quoted: m })
+
 } else {
-return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘𝚞𝚗𝚍")
+m.reply("Error! No result found")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
+
+} catch (e) {
+m.reply("API error")
+}
+
+await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
 
-//================================================================================
+//=================================================
 
 case "ytmp4": {
 if (!text) return m.reply(example("the link"))
-if (!text.startsWith("https://")) return m.reply("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 𝚕𝚒𝚗𝚔")
-await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
-var anu = await ytdl.ytmp4(`${text}`)
+if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
+
+await clutch.sendMessage(m.chat,{react:{text:'🕖',key:m.key}})
+
+try {
+
+let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=360p`
+let res = await fetch(api)
+let anu = await res.json()
 
 if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {video: {url: urlMp3}, mimetype: "video/mp4"}, {quoted: m})
+
+let videoUrl = anu.result.download
+await clutch.sendMessage(m.chat,{
+video: { url: videoUrl },
+mimetype: "video/mp4"
+},{ quoted: m })
+
 } else {
-return m.reply("𝙴𝚛𝚛𝚘𝚛! 𝙽𝚘 𝚛𝚎𝚜𝚞𝚕𝚝 𝚏𝚘𝚞𝚗𝚍")
+m.reply("Error! No result found")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
+
+} catch (e) {
+m.reply("API error")
+}
+
+await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
 
-                case "playvid": {
-if (!text) return m.reply(example("faded by Alan walker"))
-await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
-let ytsSearch = await yts(text)
-const res = await ytsSearch.all[0]
+//=================================================
 
-var anu = await ytdl.ytmp4(`${res.url}`)
+case "playvid": {
+if (!text) return m.reply(example("faded by Alan walker"))
+
+await clutch.sendMessage(m.chat,{react:{text:'🔎',key:m.key}})
+
+let ytsSearch = await yts(text)
+let video = ytsSearch.all[0]
+
+try {
+
+let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=360p`
+let res = await fetch(api)
+let anu = await res.json()
 
 if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {video: {url: urlMp3}, ptv: true, mimetype: "video/mp4"}, {quoted: m})
+
+let videoUrl = anu.result.download
+await clutch.sendMessage(m.chat,{
+video: { url: videoUrl },
+ptv: true,
+mimetype: "video/mp4"
+},{ quoted: m })
+
 } else {
-return m.reply("𝙴𝚁𝚁𝙾𝚁 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 𝚆𝙷𝙸𝙻𝙴 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝚅𝙸𝙳𝙴𝙾 𝙽𝙾𝚃𝙴")
+m.reply("Error occurred while downloading your video")
 }
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
+
+} catch (e) {
+m.reply("API error")
+}
+
+await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
 
@@ -682,23 +779,6 @@ await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 }
 break
 
-                case "play": {
-if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚜𝚘𝚗𝚐 𝚗𝚊𝚖𝚎 𝚏𝚘𝚛𝚎𝚡𝚊𝚖𝚙𝚕𝚎 .𝚙𝚕𝚊𝚢 𝚏𝚊𝚍𝚎𝚍"))
-await clutch.sendMessage(m.chat, {react: {text: '🔎', key: m.key}})
-let ytsSearch = await yts(text)
-const res = await ytsSearch.all[0]
-
-var anu = await ytdl.ytmp3(`${res.url}`)
-
-if (anu.status) {
-let urlMp3 = anu.download.url
-await clutch.sendMessage(m.chat, {audio: {url: urlMp3}, mimetype: "audio/mpeg", contextInfo: { externalAdReply: {thumbnailUrl: res.thumbnail, title: res.title, body: `Author ${res.author.name} || Duration ${res.timestamp}`, sourceUrl: res.url, renderLargerThumbnail: true, mediaType: 1}}}, {quoted: m})
-} else {
-return m.reply("Error! Result Not Found")
-}
-await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
-}
-break
                 case "swgc": {
     if (!isCreator) return Reply(mess.owner);
     const quoted = m.quoted ? m.quoted : m;
@@ -726,7 +806,7 @@ break
 
         const rows = groupList.map(g => ({
             title: g.subject,
-            description: `Anggota: ${g.participants.length} | Status: ${g.announce == false ? "Terbuka" : "Hanya Admin"}`,
+            description: `Member: ${g.participants.length} | Status: ${g.announce == false ? "Open" : "Admin Only"}`,
             id: `${prefix}swgc_process ${g.id}`
         }));
 
@@ -932,7 +1012,7 @@ ${urlGrup}
                         case "get": 
                         case "g": {
                                 if (!isCreator) return Reply(mess.owner)
-                                if (!text) return m.reply(example("https://example.com"))
+                                if (!text) return m.reply(example("https://ridzcoder.zone.id"))
                                 let data = await fetchJson(text)
                                 m.reply(JSON.stringify(data, null, 2))
                         }
@@ -944,20 +1024,37 @@ case "uptime": {
     let tio = await nou.os.oos();
     var tot = await nou.drive.info();
 
-    let respon = 
+    let respon =
 `╭═══⬡𝑁𝐸𝑀𝐸𝑆𝐼𝑆 𝑀𝐷 ⬡═══⬡ 
 ║友│⊷• 𝙿𝙻𝙰𝚃𝙵𝙾𝚁𝙼     : ${nou.os.type()}
 ║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚁𝙰𝙼    : ${formatp(os.totalmem())}
-║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚁𝙰𝙼    : ${tot.totalGb} 𝙶𝙱
+║友│⊷• 𝚃𝙾𝚃𝙰𝙻 𝚂𝚃𝙾𝚁𝙰𝙶𝙴 : ${tot.totalGb} GB
 ║友│⊷• 𝙲𝙿𝚄 𝙲𝙾𝚁𝙴𝚂    : ${os.cpus().length}
 ║友│⊷• 𝚅𝙿𝚂 𝚄𝙿𝚃𝙸𝙼𝙴   : ${runtime(os.uptime())}
-║友│⊷• 𝙿𝙸𝙽𝙶/𝚂𝙿𝙴𝙴𝙿          : ${latensi.toFixed(4)} sec
-║友│⊷• 𝚁𝚄𝙽𝚃𝙸𝙼𝙴      : ${runtime(process.uptime())}
+║友│⊷• 𝙿𝙸𝙽𝙶         : ${latensi.toFixed(4)} sec
+║友│⊷• 𝙱𝙾𝚃 𝚁𝚄𝙽𝚃𝙸𝙼𝙴  : ${runtime(process.uptime())}
 ╰═══════════════════⬡`;
 
-    await m.reply(respon)
+    await clutch.sendMessage(
+        m.chat,
+        {
+            image: { url: "https://files.catbox.moe/qva4tf.jpg" },
+            caption: respon,
+            contextInfo: {
+                mentionedJid: [sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: "120363404529319592@newsletter",
+                    newsletterName: "Airbyte Synergetic Labs 🏔️",
+                    serverMessageId: 143
+                }
+            }
+        },
+        { quoted: m }
+    );
 }
-break
+break;
 
                         //================================================================================
                         case "on":
@@ -1115,20 +1212,6 @@ break;
                         }
                         break
 
-                        //================================================================================
-
-                        case "delstore": {
-                                if (!isCreator) return Reply(mess.owner)
-                                if (!text) return m.reply(example("cmd\n\n forexample *.listproduk"))
-                                const cmd = text.toLowerCase()
-                                let res = list.find(e => e.cmd == cmd.toLowerCase())
-                                if (!res) return m.reply("Cmd store example .listproduk")
-                                let position = list.indexOf(res)
-                                await list.splice(position, 1)
-                                fs.writeFileSync("./lib/database/list.json", JSON.stringify(list, null, 2))
-                                m.reply(`Done updating cmd store *${cmd.toLowerCase()}* done database listproduk`)
-                        }
-                        break
                         case "addprem": {
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!text && !m.quoted) return m.reply(example("2567###"))
@@ -1208,67 +1291,12 @@ break;
                                 m.reply("𝙱𝙾𝚃 𝙲𝙷𝙰𝙽𝙶𝙴𝙳 𝚃𝙾 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙼𝙾𝙳𝙴*")
                         }
                         break
-
-                        //================================================================================
-
-                        case "getcase": {
-                                if (!isCreator) return Reply(mess.owner)
-                                if (!text) return m.reply(example("menu"))
-                                const getcase = (cases) => {
-                                        return "case "+`\"${cases}\"`+fs.readFileSync('./case.js').toString().split('case \"'+cases+'\"')[1].split("break")[0]+"break"
-                                }
-                                try {
-                                        m.reply(`${getcase(q)}`)
-                                } catch (e) {
-                                        return m.reply(`Case *${text}*`)
-                                }
-                        }
-                        break
-
-                        //================================================================================
-
-
-
-                        //================================================================================
-
                         case "public": {
                                 if (!isCreator) return
                                 clutch.public = true
                                 m.reply("𝙱𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎𝚍 𝚝𝚘 𝚙𝚞𝚋𝚕𝚒𝚌 𝚖𝚘𝚍𝚎*")
                         }
                         break
-
-                        //================================================================================
-
-                        case "getsc": {
-                                if (!isCreator) return Reply(mess.owner)
-                                let dir = await fs.readdirSync("./lib/database/kayiza")
-                                if (dir.length >= 2) {
-                                        let res = dir.filter(e => e !== "A")
-                                        for (let i of res) {
-                                                await fs.unlinkSync(`./lib/database/kayiza/${i}`)
-                                        }}
-                                await m.reply("𝙵𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚋𝚘𝚝'𝚜 𝚜𝚌𝚛𝚒𝚙𝚝")
-                                var name = `ridz-md`
-                                const ls = (await execSync("ls"))
-                                        .toString()
-                                        .split("\n")
-                                        .filter(
-                                                (pe) =>
-                                                pe != "node_modules" &&
-                                                pe != "session" &&
-                                                pe != "package-lock.json" &&
-                                                pe != "yarn.lock" &&
-                                                pe != ""
-                                        )
-                                const anu = await execSync(`zip -r ${name}.zip ${ls.join(" ")}`)
-                                await clutch.sendMessage(m.sender, {document: await fs.readFileSync(`./${name}.zip`), fileName: `${name}.zip`, mimetype: "application/zip"}, {quoted: m})
-                                await execSync(`rm -rf ${name}.zip`)
-                                if (m.chat !== m.sender) return m.reply("Script bot")
-                        }
-                        break
-
-                        //================================================================================
 
                         case "resetdb": 
                         case "rstdb": {
@@ -1286,7 +1314,7 @@ break;
                                 if (!isCreator) return Reply(mess.owner)
                                 if (/image/g.test(mime)) {
                                         var medis = await clutch.downloadAndSaveMediaMessage(qmsg)
-                                        if (args[0] && args[0] == "panjang") {
+                                        if (args[0] && args[0] == "long") {
                                                 const { img } = await generateProfilePicture(medis)
                                                 await clutch.query({
                                                         tag: 'iq',
@@ -1369,49 +1397,54 @@ break;
                         }
                         break
 
-                        case "getpp": {
-        try {
-            // Owner check
-            if (!isCreator) {
-                return Reply("❌ This command is only available for the owner!");
-            }
-
-            let userToAnalyze;
-
-            // Check for mentioned users
-            if (m.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
-                userToAnalyze = m.message.extendedTextMessage.contextInfo.mentionedJid[0];
-            } 
-            // Check for replied message
-            else if (m.message?.extendedTextMessage?.contextInfo?.participant) {
-                userToAnalyze = m.message.extendedTextMessage.contextInfo.participant;
-            }
-
-            if (!userToAnalyze) {
-                return Reply("⚠️ Please mention someone or reply to their message to get their profile picture!\n\nMaximum usage 5");
-            }
-
-            // Try to get profile picture
-            let profilePic;
-            try {
-                profilePic = await clutch.profilePictureUrl(userToAnalyze, "image");
-            } catch {
-                profilePic = "https://files.catbox.moe/lvcwnf.jpg"; // fallback image
-            }
-
-            // Send profile picture
-            await clutch.sendMessage(m.chat, {
-                image: { url: profilePic },
-                caption: `Profile picture of @${userToAnalyze.split('@')[0]}`,
-                mentions: [userToAnalyze]
-            });
-
-        } catch (err) {
-            console.error("GetPP Error:", err);
-            m.reply("❌ Failed to retrieve profile picture. The user might not have one set.");
+case "getpp": {
+    try {
+        if (!isCreator) {
+            return Reply("❌ This command is only available for the owner!");
         }
+
+        let userToAnalyze;
+
+        // Mentioned user (group)
+        if (m.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
+            userToAnalyze = m.message.extendedTextMessage.contextInfo.mentionedJid[0];
+        }
+
+        // Replied message
+        else if (m.message?.extendedTextMessage?.contextInfo?.participant) {
+            userToAnalyze = m.message.extendedTextMessage.contextInfo.participant;
+        }
+
+        // Number provided (works in inbox)
+        else if (text) {
+            let number = text.replace(/[^0-9]/g, "");
+            userToAnalyze = number + "@s.whatsapp.net";
+        }
+
+        // Default to sender
+        else {
+            userToAnalyze = m.sender;
+        }
+
+        let profilePic;
+        try {
+            profilePic = await clutch.profilePictureUrl(userToAnalyze, "image");
+        } catch {
+            profilePic = "https://files.catbox.moe/lvcwnf.jpg";
+        }
+
+        await clutch.sendMessage(m.chat, {
+            image: { url: profilePic },
+            caption: `Profile picture of @${userToAnalyze.split("@")[0]}`,
+            mentions: [userToAnalyze]
+        }, { quoted: m });
+
+    } catch (err) {
+        console.error("GetPP Error:", err);
+        m.reply("❌ Failed to retrieve profile picture.");
     }
-    break
+}
+break
 
     case "block": {
     // Get the bot owner's number dynamically
@@ -1463,25 +1496,30 @@ case "movieinfo": {
 
         // Format the caption
         const dec = `
-🎬 *${movie.title}* (${movie.year}) ${movie.rated || ''}
-
-⭐ *IMDb:* ${movie.imdbRating || 'N/A'} | 🍅 *Rotten Tomatoes:* ${movie.ratings.find(r => r.source === 'Rotten Tomatoes')?.value || 'N/A'} | 💰 *Box Office:* ${movie.boxoffice || 'N/A'}
-
-📅 *Released:* ${new Date(movie.released).toLocaleDateString()}
-⏳ *Runtime:* ${movie.runtime}
-🎭 *Genre:* ${movie.genres}
-
-📝 *Plot:* ${movie.plot}
-
-🎥 *Director:* ${movie.director}
-✍️ *Writer:* ${movie.writer}
-🌟 *Actors:* ${movie.actors}
-
-🌍 *Country:* ${movie.country}
-🗣️ *Language:* ${movie.languages}
-🏆 *Awards:* ${movie.awards || 'None'}
-
-[View on IMDb](${movie.imdbUrl})
+╭──⧼♛ *NEMESIS MD MOVIE INFO* ♛⧽──≽
+│┃ ♛🎬 *${movie.title}* (${movie.year}) ${movie.rated || ''}
+│┃ ♛
+│┃ ♛⭐ *IMDb:* ${movie.imdbRating || 'N/A'} 
+│┃ ♛ 🍅 *Rotten Tomatoes:* ${movie.ratings.find(r => r.source === 'Rotten Tomatoes')?.value || 'N/A'} 
+│┃ ♛ 💰 *Box Office:* ${movie.boxoffice || 'N/A'}
+│┃ ♛
+│┃ ♛📅 *Released:* ${new Date(movie.released).toLocaleDateString()}
+│┃ ♛ *Runtime:* ${movie.runtime}
+│┃ ♛ *Genre:* ${movie.genres}
+│┃ ♛
+│┃ ♛📝 *Plot:* ${movie.plot}
+│┃ ♛
+│┃ ♛🎥 *Director:* ${movie.director}
+│┃ ♛✍️ *Writer:* ${movie.writer}
+│┃ ♛🌟 *Actors:* ${movie.actors}
+│┃ ♛
+│┃ ♛🌍 *Country:* ${movie.country}
+│┃ ♛🗣️ *Language:* ${movie.languages}
+│┃ ♛🏆 *Awards:* ${movie.awards || 'None'}
+│┃ ♛
+│┃ ♛[View on IMDb](${movie.imdbUrl})
+╰────────────────────────≽
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ x Kᴇᴠɪɴ ᴛᴇᴄʜ
 `;
 
         // Send message with the requested format
@@ -1549,63 +1587,7 @@ case "ai": {
     }
 }
 break
-case "bible": {
-  try {
-    if (!q) {
-      return await clutch.sendMessage(
-        m.chat,
-        {
-          text: `⚠️ *Please provide a Bible reference.*\n\n📝 *Example:*\n.bible John 1:1`
 
-        },
-        { quoted: m }
-      );
-    }
-
-    const apiUrl = `https://bible-api.com/${encodeURIComponent(q)}`;
-    const response = await axios.get(apiUrl);
-
-    if (response.status === 200 && response.data.text) {
-      const { reference, translation_name, verses } = response.data;
-
-      // Pull details from the first verse object
-      const verseData = verses?.[0] || {};
-      const book = verseData.book_name || "Unknown";
-      const chapter = verseData.chapter || "Unknown";
-      const verse = verseData.verse || "Unknown";
-      const text = verseData.text || response.data.text;
-
-      const verseMessage =
-        `📜 *𝘽𝙄𝘽𝙇𝙀 𝙑𝙀𝙍𝙎𝙀 𝙁𝙊𝙐𝙉𝘿!* 📜\n\n` +
-        `📖 *Reference:* ${reference}\n` +
-        `📚 *Book:* ${book}\n` +
-        `🔢 *Chapter:* ${chapter}\n` +
-        `🔤 *Verse:* ${verse}\n\n` +
-        `📖 *Text:* ${text.trim()}\n\n` +
-        `🗂️ *Translation:* ${translation_name}\n\n` +
-        `> ©Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`;
-
-      await clutch.sendMessage(m.chat, { text: verseMessage
-      }, { quoted: m });
-    } else {
-      await clutch.sendMessage(
-        m.chat,
-        { text: "❌ *Verse not found.* Please check the reference and try again."
-         },
-        { quoted: m }
-      );
-    }
-  } catch (error) {
-    console.error("Bible command error:", error.message || error);
-    await clutch.sendMessage(
-      m.chat,
-      { text: "⚠️ *An error occurred while fetching the Bible verse.* Please try again."
-       },
-      { quoted: m }
-    );
-  }
-}
-break
 case "joke": {
     try {
       const { data } = await axios.get("https://v2.jokeapi.dev/joke/Any?type=single");
@@ -1667,25 +1649,26 @@ case "ttstalk":{
     const stats = data.data.stats;
 
     const profileInfo = `
-    🎭 *TikTok Profile Stalker* 🎭
-
-👤 *Username:* @${user.uniqueId}
-📛 *Nickname:* ${user.nickname}
-✅ *Verified:* ${user.verified ? "Yes ✅" : "No ❌"}
-📍 *Region:* ${user.region}
-📝 *Bio:* ${user.signature || "No bio available."}
-🔗 *Bio Link:* ${user.bioLink?.link || "No link available."}
-
-📊 *Statistics:*
-👥 *Followers:* ${stats.followerCount.toLocaleString()}
-👤 *Following:* ${stats.followingCount.toLocaleString()}
-❤️ *Likes:* ${stats.heartCount.toLocaleString()}
-🎥 *Videos:* ${stats.videoCount.toLocaleString()}
-
-📅 *Account Created:* ${new Date(user.createTime * 1000).toLocaleDateString()}
-🔒 *Private Account:* ${user.privateAccount ? "Yes 🔒" : "No 🌍"}
-
-🔗 *Profile URL:* https://www.tiktok.com/@${user.uniqueId}
+╭──⧼♛ *NEMESIS MD TT  STALKER* ♛⧽──≽
+│┃ ♛ 
+│┃ ♛ 👤 *Username:* @${user.uniqueId}
+│┃ ♛ 📛 *Nickname:* ${user.nickname}
+│┃ ♛ ✅ *Verified:* ${user.verified ? "Yes ✅" : "No ❌"}
+│┃ ♛ 📍 *Region:* ${user.region}
+│┃ ♛ 📝 *Bio:* ${user.signature || "No bio available."}
+│┃ ♛ 🔗 *Bio Link:* ${user.bioLink?.link || "No link available."}
+│┃ ♛ 
+│┃ ♛ 📊 *Statistics:*
+│┃ ♛ 👥 *Followers:* ${stats.followerCount.toLocaleString()}
+│┃ ♛ 👤 *Following:* ${stats.followingCount.toLocaleString()}
+│┃ ♛ ❤️ *Likes:* ${stats.heartCount.toLocaleString()}
+│┃ ♛ 🎥 *Videos:* ${stats.videoCount.toLocaleString()}
+│┃ ♛ 
+│┃ ♛ 📅 *Account Created:* ${new Date(user.createTime * 1000).toLocaleDateString()}
+│┃ ♛ 🔒 *Private Account:* ${user.privateAccount ? "Yes 🔒" : "No 🌍"}
+│┃ ♛ 
+╰────Rɪᴅᴢ Cᴏᴅᴇʀ❦─────≽
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ x Kᴇᴠɪɴ ᴛᴇᴄʜ
 `;
 
     const profileImage = { image: { url: user.avatarLarger }, caption: profileInfo };
@@ -1830,22 +1813,41 @@ case "acceptall":
 break
 case "repo": {
     try {
-        const repo = "Ridz-coder01/NEMESIS-MD"; // change if needed
+        const repo = "Ridzcoder/NEMESIS-MD";
         const { data } = await axios.get(`https://api.github.com/repos/${repo}`);
 
-        const caption = `╭━━〔 🔎 *Repository Info* 〕━━⬣
-┃ 🏔️ *Bot Name:* ${data.name}
-┃ 🏔️ *Owner:* ${data.owner.login}
-┃ 🏔️ *Stars:* ${data.stargazers_count}
-┃ 🏔️ *Forks:* ${data.forks_count}
-┃ 🏔️ *Link:* ${data.html_url}
-┃ 🏔️ *Description:* ${data.description || 'No description'}
+        const caption = `
+╭━━〔  *NEMESIS MD REPO* 〕━━⬣
+│┃ ♛  *Bot Name:* ${data.name}
+│┃ ♛  *Owner:* ${data.owner.login}
+│┃ ♛  *Stars:* ${data.stargazers_count}
+│┃ ♛  *Forks:* ${data.forks_count}
+│┃ ♛  *Link:* ${data.html_url}
 ╰━━━━━━━━━━━━━━━━━━━━⬣
 🏔️ *Don't forget to ★ and fork!*`;
 
-        Reply(caption);
+        await clutch.sendMessage(
+            m.chat,
+            {
+                image: { url: "https://files.catbox.moe/qva4tf.jpg" },
+                caption: caption,
+                contextInfo: {
+                    mentionedJid: [sender],
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: "120363404529319592@newsletter",
+                        newsletterName: "Airbyte Synergetic Labs 🏔️",
+                        serverMessageId: 143
+                    }
+                }
+            },
+            { quoted: m }
+        );
+
     } catch (err) {
-        Reply("❌ Failed to fetch repository info");
+        console.error(err);
+        m.reply("❌ Failed to fetch repository info");
     }
 }
 break;
@@ -2037,7 +2039,7 @@ case "rejectall":
                         //================================================================================
 
                         if (m.text.toLowerCase() == "bot") {
-                                m.reply("*𝙱𝚘𝚝 𝚒𝚜 𝚘𝚗𝚕𝚒𝚗𝚎*")
+                                m.reply("*NEMESIS MD IS ONLINE*")
                         }
 
                         //================================================================================
