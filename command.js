@@ -175,28 +175,28 @@ try {
 
 let dec = `    
 ⟣──────────────────⟢
-▧ *ᴄʀᴇᴀᴛᴏʀ* : *Ridz Coder (🇺🇬🇿🇼)*
+▧ *ᴄʀᴇᴀᴛᴏʀ* : *Ridz Coder X Kevin tech*
 ▧ *ᴍᴏᴅᴇ* : *public*
 ▧ *ᴘʀᴇғɪx* : .
 ▧ *ᴠᴇʀsɪᴏɴ* : *2.0.0*
 
 ⟣──────────────────⟢
 
-> MAWRLD MD 
+> NEMESIS MD 
 https://github.com/Ridzcoder/NEMESIS-MD
 
 ⟣──────────────────⟢
 > CHANNEL
-https://whatsapp.com/channel/0029VajohKp5a2498c8Dbl2Y
+https://whatsapp.com/channel/0029Vb73EYZFXUujAoHFor1i
 
 > GROUP
-https://chat.whatsapp.com/JgaAxg3I2Oy35Gdbk3Zvv2
+https://chat.whatsapp.com/KQzM54TU1LmGwIGc2TcOGi?mode=gi_t
 `
 
 await clutch.sendMessage(
 m.chat,
 {
-image:{url:"https://files.catbox.moe/qwpimr.png"},
+image:{url:"https://files.catbox.moe/qhl7st.png"},
 caption:dec,
 contextInfo:{
 mentionedJid:[m.sender],
@@ -235,7 +235,7 @@ let caption=`📶 *Instagram Downloader*
 
 ❤‍🩹 Quality: HD
 
-> © Powered by Ridz Coder`
+> © Powered by Ridz Coder x Kevin Tech`
 
 await clutch.sendMessage(
 m.chat,
@@ -377,7 +377,7 @@ let caption=`
 await clutch.sendMessage(
 m.chat,
 {
-image:{url:"https://files.catbox.moe/qwpimr.png"},
+image:{url:"https://files.catbox.moe/qhl7st.png"},
 caption:caption,
 contextInfo:{
 mentionedJid:[m.sender],
@@ -439,7 +439,7 @@ let caption=`
 await clutch.sendMessage(
 m.chat,
 {
-image:{url:"https://files.catbox.moe/qwpimr.png"},
+image:{url:"https://files.catbox.moe/qhl7st.png"},
 caption:caption,
 contextInfo:{
 mentionedJid:[m.sender],
@@ -476,7 +476,7 @@ ohh 😯 No, to pair your number contact Ridz Coder on +237678687593
 await clutch.sendMessage(
 m.chat,
 {
-image:{url:"https://files.catbox.moe/qwpimr.png"},
+image:{url:"https://files.catbox.moe/qhl7st.png"},
 caption:caption,
 contextInfo:{
 mentionedJid:[m.sender],
@@ -1716,7 +1716,7 @@ case "getpp": {
         try {
             profilePic = await clutch.profilePictureUrl(userToAnalyze, "image");
         } catch {
-            profilePic = "https://files.catbox.moe/lvcwnf.jpg";
+            profilePic = "https://files.catbox.moe/qhl7st.png";
         }
 
         await clutch.sendMessage(m.chat, {
@@ -2097,6 +2097,7 @@ case "acceptall":
     }
 }
 break
+
 case "repo": {
     try {
         const sender = m.sender;
@@ -2120,14 +2121,7 @@ case "repo": {
                 image: { url: "https://files.catbox.moe/qva4tf.jpg" },
                 caption: caption,
                 contextInfo: {
-                    mentionedJid: [sender],
-                    forwardingScore: 999,
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                        newsletterJid: "120363404529319592@newsletter",
-                        newsletterName: "Airbyte Synergetic Labs 🏔️",
-                        serverMessageId: 143
-                    }
+                    mentionedJid: [sender]
                 }
             },
             { quoted: m }
@@ -2139,7 +2133,6 @@ case "repo": {
     }
 }
 break;
-
 
 case "yts": {
     if (!text) return Reply("❌ Give search text");
@@ -2183,14 +2176,7 @@ case "uptime": {
                 image: { url: "https://files.catbox.moe/qva4tf.jpg" },
                 caption: respon,
                 contextInfo: {
-                    mentionedJid: [sender],
-                    forwardingScore: 999,
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                        newsletterJid: "120363404529319592@newsletter",
-                        newsletterName: "Airbyte Synergetic Labs 🏔️",
-                        serverMessageId: 143
-                    }
+                    mentionedJid: [sender]
                 }
             },
             { quoted: m }
