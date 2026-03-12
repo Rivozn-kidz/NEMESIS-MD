@@ -74,41 +74,95 @@ module.exports = clutch = async (clutch, m, chatUpdate, store) => {
 
                 const qlocJpm = {key: {participant: '0@s.whatsapp.net', ...(m.chat ? {remoteJid: `status@broadcast`} : {})}, message: {locationMessage: {name: `Kᴇᴠɪɴ ᴛᴇᴄʜ x Rɪᴅᴢ Cᴏᴅᴇʀ`,jpegThumbnail: ""}}}
 
-                //============= [ EVENT GROUP ] ===============================================
+     // Ensure group database exists
+if (m.isGroup) {
+    if (!db.groups) db.groups = {}
 
-                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].mute == true && !isCreator) return
+    if (!db.groups[m.chat]) {
+        db.groups[m.chat] = {
+            mute: false,
+            antilink: false,
+            antilink2: false
+        }
+    }
+}
 
-                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink == true) {
-                        var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
-                        if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-                                var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
-                                var isLinkThisGc = new RegExp(gclink, 'i')
-                                var isgclink = isLinkThisGc.test(m.text)
-                                if (isgclink) return
-                                let delet = m.key.participant
-                                let bang = m.key.id
-                                await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+// Mute check
+if (m.isGroup && db.groups[m.chat].mute === true && !isCreator) return
 
-@${m.sender.split("@")[0]} Sorry, I will kick you, because the admin/bot owner has activated the anti-link feature for other groups.!`, mentions: [m.sender]}, {quoted: m})
-                                await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
-                                await sleep(1000)
-                                await clutch.groupParticipantsUpdate(m.chat, [m.sender], "remove")
-                        }}
+// Anti-link kick
+if (m.isGroup && db.groups[m.chat].antilink === true) {
+    const link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
 
-                if (m.isGroup && db.groups[m.chat] && db.groups[m.chat].antilink2 == true) {
-                        var link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
-                        if (link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
-                                var gclink = (`https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat))
-                                var isLinkThisGc = new RegExp(gclink, 'i')
-                                var isgclink = isLinkThisGc.test(m.text)
-                                if (isgclink) return
-                                let delet = m.key.participant
-                                let bang = m.key.id
-                                await clutch.sendMessage(m.chat, {text: `*乂 [ Group Link Detected ]*
+    if (m.text && link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
 
-@${m.sender.split("@")[0]} Sorry, I deleted your message, because the admin/bot owner has activated the anti-link feature for other groups!`, mentions: [m.sender]}, {quoted: m})
-                                await clutch.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
-                        }}
+        const gclink = `https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat)
+        const isLinkThisGc = new RegExp(gclink, 'i')
+        const isgclink = isLinkThisGc.test(m.text)
+
+        if (isgclink) return
+
+        let delet = m.key.participant
+        let bang = m.key.id
+
+        await clutch.sendMessage(
+            m.chat,
+            {
+                text: `*乂 [ Group Link Detected ]*\n\n@${m.sender.split("@")[0]} Sorry, I will kick you because the anti-link feature is enabled.`,
+                mentions: [m.sender]
+            },
+            { quoted: m }
+        )
+
+        await clutch.sendMessage(m.chat, {
+            delete: {
+                remoteJid: m.chat,
+                fromMe: false,
+                id: bang,
+                participant: delet
+            }
+        })
+
+        await sleep(1000)
+
+        await clutch.groupParticipantsUpdate(m.chat, [m.sender], "remove")
+    }
+}
+
+// Anti-link delete message only
+if (m.isGroup && db.groups[m.chat].antilink2 === true) {
+    const link = /chat.whatsapp.com|buka tautaniniuntukbergabungkegrupwhatsapp/gi
+
+    if (m.text && link.test(m.text) && !isCreator && !m.isAdmin && m.isBotAdmin && !m.fromMe) {
+
+        const gclink = `https://chat.whatsapp.com/` + await clutch.groupInviteCode(m.chat)
+        const isLinkThisGc = new RegExp(gclink, 'i')
+        const isgclink = isLinkThisGc.test(m.text)
+
+        if (isgclink) return
+
+        let delet = m.key.participant
+        let bang = m.key.id
+
+        await clutch.sendMessage(
+            m.chat,
+            {
+                text: `*乂 [ Group Link Detected ]*\n\n@${m.sender.split("@")[0]} Your message was deleted because the anti-link feature is enabled.`,
+                mentions: [m.sender]
+            },
+            { quoted: m }
+        )
+
+        await clutch.sendMessage(m.chat, {
+            delete: {
+                remoteJid: m.chat,
+                fromMe: false,
+                id: bang,
+                participant: delet
+            }
+        })
+    }
+}
 
                 //============= [ FUNCTION ] ======================================================
 
