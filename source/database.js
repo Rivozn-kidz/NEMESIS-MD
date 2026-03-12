@@ -1,86 +1,154 @@
+/*Kelvin Tech*/
 
-require('../settings');
-const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const chalk = require('chalk');
-const mongoose = require('mongoose');
-let DataBase;
+const fs = require('fs');
 
-if (/mongo/.test(global.tempatDB)) {
-	DataBase = class mongoDB {
-		constructor(url, options = { useNewUrlParser: true, useUnifiedTopology: true }) {
-			this.url = url
-			this.data = {}
-			this._model = {}
-			this.options = options
-		}
-		
-		read = async () => {
-			mongoose.connect(this.url, { ...this.options })
-			this.connection = mongoose.connection
-			try {
-				const schema = new mongoose.Schema({
-					data: {
-						type: Object,
-						required: true,
-						default: {},
-					}
-				})
-				this._model = mongoose.model('data', schema)
-			} catch {
-				this._model = mongoose.model('data')
-			}
-			this.data = await this._model.findOne({})
-			if (!this.data) {
-				new this._model({ data: {} }).save()
-				this.data = await this._model.findOne({})
-			} else return this?.data?.data || this?.data
-		}
-		
-		write = async (data) => {
-			if (this.data && !this.data.data) return (new this._model({ data })).save()
-			this._model.findById(this.data._id, (err, docs) => {
-				if (!err) {
-					if (!docs.data) docs.data = {}
-					docs.data = data
-					return docs.save()
-				}
-			})
-		}
-	}
-} else if (/json/.test(global.tempatDB)) {
-	DataBase = class dataBase {
-		data = {}
-		file = path.join(process.cwd(), 'lib/database', global.tempatDB);
-		
-		read = async () => {
-			let data;
-			if (fs.existsSync(this.file)) {
-				data = JSON.parse(fs.readFileSync(this.file))
-			} else {
-				fs.writeFileSync(this.file, JSON.stringify(this.data, null, 2))
-				data = this.data
-			}
-			return data
-		}
-		
-		write = async (data) => {
-			this.data = !!data ? data : global.db
-			let dirname = path.dirname(this.file)
-			if (!fs.existsSync(dirname)) fs.mkdirSync(dirname, { recursive: true })
-			fs.writeFileSync(this.file, JSON.stringify(this.data, null, 2))
-			return this.file
-		}
-	}
+class SQLiteDatabase {
+    constructor(dbPath = './data/database.db') {
+        // Ensure data directory exists
+        const dataDir = path.dirname(dbPath);
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+        
+        this.db = new sqlite3.Database(dbPath);
+        this.initialized = this.init(); // Store the init promise
+    }
+    
+    async init() {
+        console.log('📦 CREATING DATABASE TABLES...');
+        
+        // Create tables - wait for each to complete
+        await new Promise((resolve, reject) => {
+            this.db.run(`
+                CREATE TABLE IF NOT EXISTS settings (
+                    bot_number TEXT,
+                    key TEXT,
+                    value TEXT,
+                    PRIMARY KEY (bot_number, key)
+                )
+            `, (err) => {
+                if (err) reject(err);
+                else {
+                    console.log('✅ SETTINGS TABLE READY');
+                    resolve();
+                }
+            });
+        });
+        
+        await new Promise((resolve, reject) => {
+            this.db.run(`
+                CREATE TABLE IF NOT EXISTS sudo_users (
+                    bot_number TEXT,
+                    user_jid TEXT,
+                    PRIMARY KEY (bot_number, user_jid)
+                )
+            `, (err) => {
+                if (err) reject(err);
+                else {
+                    console.log('✅ SUDO USERS TABLE READY');
+                    resolve();
+                }
+            });
+        });
+        
+        await new Promise((resolve, reject) => {
+            this.db.run(`
+                CREATE TABLE IF NOT EXISTS group_settings (
+                    bot_number TEXT,
+                    group_id TEXT,
+                    key TEXT,
+                    value TEXT,
+                    PRIMARY KEY (bot_number, group_id, key)
+                )
+            `, (err) => {
+                if (err) reject(err);
+                else {
+                    console.log('✅ GROUP SETTINGS TABLE READY');
+                    resolve();
+                }
+            });
+        });
+        
+        console.log('✅ ALL DATABASE TABLES READY!');
+    }
+    
+    async getSetting(botNumber, key) {
+        // Wait for initialization before querying
+        await this.initialized;
+        
+        return new Promise((resolve, reject) => {
+            this.db.get(
+                'SELECT value FROM settings WHERE bot_number = ? AND key = ?',
+                [botNumber, key],
+                (err, row) => {
+                    if (err) {
+                        console.error('❌ Error in getSetting:', err);
+                        reject(err);
+                    } else {
+                        try {
+                            resolve(row ? JSON.parse(row.value) : null);
+                        } catch (e) {
+                            resolve(row ? row.value : null);
+                        }
+                    }
+                }
+            );
+        });
+    }
+    
+    async setSetting(botNumber, key, value) {
+        // Wait for initialization before querying
+        await this.initialized;
+        
+        return new Promise((resolve, reject) => {
+            let valueToStore;
+            try {
+                valueToStore = typeof value === 'string' ? value : JSON.stringify(value);
+            } catch (e) {
+                valueToStore = String(value);
+            }
+            
+            this.db.run(
+                `INSERT OR REPLACE INTO settings (bot_number, key, value) VALUES (?, ?, ?)`,
+                [botNumber, key, valueToStore],
+                (err) => {
+                    if (err) {
+                        console.error('❌ Error in setSetting:', err);
+                        reject(err);
+                    } else {
+                        resolve(true);
+                    }
+                }
+            );
+        });
+    }
+    
+    async getSudo(botNumber) {
+        // Wait for initialization before querying
+        await this.initialized;
+        
+        return new Promise((resolve, reject) => {
+            this.db.all(
+                'SELECT user_jid FROM sudo_users WHERE bot_number = ?',
+                [botNumber],
+                (err, rows) => {
+                    if (err) {
+                        console.error('❌ Error in getSudo:', err);
+                        reject(err);
+                    } else {
+                        resolve(rows.map(r => r.user_jid));
+                    }
+                }
+            );
+        });
+    }
+    
+    async isReady() {
+        await this.initialized;
+        return true;
+    }
 }
 
-module.exports = DataBase
-
-
-let file = require.resolve(__filename)
-fs.watchFile(file, () => {
-	fs.unwatchFile(file)
-	console.log(chalk.redBright(`Update ${__filename}`))
-	delete require.cache[file]
-	require(file)
-});
+module.exports = SQLiteDatabase;
