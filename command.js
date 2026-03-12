@@ -22,19 +22,29 @@ const googleTTS = require('google-tts-api');
 const fetch = require('node-fetch');
 const crypto = require('crypto');
 const { exec, spawn, execSync } = require('child_process');
-const { default: WAConnection, BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, getBinaryNodeChildren, useMultiFileAuthState, generateWAMessageContent, downloadContentFromMessage, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@whiskeysockets/baileys');
+const { default: WAConnection, BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, getBinaryNodeChildren,
+getDevice, useMultiFileAuthState, generateWAMessageContent, downloadContentFromMessage, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@whiskeysockets/baileys');
 
-const { LoadDataBase } = require('./lib/message');
+const db = require('./lib/databaseManager');
+const { ephoto, acr } = require('./functions/nemesis'); 
 const contacts = JSON.parse(fs.readFileSync("./lib/database/contacts.json"))
 const owners = JSON.parse(fs.readFileSync("./lib/database/owner.json"))
 const premium = JSON.parse(fs.readFileSync("./lib/database/premium.json"))
 const list = JSON.parse(fs.readFileSync("./lib/database/list.json"))
 const { pinterest, pinterest2, remini, mediafire, tiktokDl } = require('./lib/scraper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, toIDR, capital } = require('./lib/function');
+const {
+veniceAICommand,
+mistralAICommand,
+perplexityAICommand,
+bardAICommand,
+gpt4NanoAICommand,
+kelvinAICommand,
+claudeAICommand
+} = require('./lib/ai');
 
 module.exports = clutch = async (clutch, m, chatUpdate, store) => {
         try {
-                await LoadDataBase(clutch, m)
                 const botNumber = await clutch.decodeJid(clutch.user.id)
                 const body = (m.type === 'conversation') ? m.message.conversation : (m.type == 'imageMessage') ? m.message.imageMessage.caption : (m.type == 'videoMessage') ? m.message.videoMessage.caption : (m.type == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.type == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.type == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.type == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.type === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
                 const budy = (typeof m.text == 'string' ? m.text : '')
@@ -1762,80 +1772,6 @@ break
     }
 }
 break
-case "movieinfo": {
-    try {
-        // Properly extract the movie name from arguments
-        const movieName = args.length > 0 ? args.join(' ') : m.text.replace(/^[\.\#\$\!]?movie\s?/i, '').trim();
-
-        if (!movieName) {
-            return Reply("📽️ Please provide the name of the movie.\nExample: .movie Iron Man");
-        }
-
-        const apiUrl = `https://apis.davidcyriltech.my.id/imdb?query=${encodeURIComponent(movieName)}`;
-        const response = await axios.get(apiUrl);
-
-        if (!response.data.status || !response.data.movie) {
-            return Reply("🚫 Movie not found. Please check the name and try again.");
-        }
-
-        const movie = response.data.movie;
-
-        // Format the caption
-        const dec = `
-╭──⧼♛ *NEMESIS MD MOVIE INFO* ♛⧽──≽
-│┃ ♛🎬 *${movie.title}* (${movie.year}) ${movie.rated || ''}
-│┃ ♛
-│┃ ♛⭐ *IMDb:* ${movie.imdbRating || 'N/A'} 
-│┃ ♛ 🍅 *Rotten Tomatoes:* ${movie.ratings.find(r => r.source === 'Rotten Tomatoes')?.value || 'N/A'} 
-│┃ ♛ 💰 *Box Office:* ${movie.boxoffice || 'N/A'}
-│┃ ♛
-│┃ ♛📅 *Released:* ${new Date(movie.released).toLocaleDateString()}
-│┃ ♛ *Runtime:* ${movie.runtime}
-│┃ ♛ *Genre:* ${movie.genres}
-│┃ ♛
-│┃ ♛📝 *Plot:* ${movie.plot}
-│┃ ♛
-│┃ ♛🎥 *Director:* ${movie.director}
-│┃ ♛✍️ *Writer:* ${movie.writer}
-│┃ ♛🌟 *Actors:* ${movie.actors}
-│┃ ♛
-│┃ ♛🌍 *Country:* ${movie.country}
-│┃ ♛🗣️ *Language:* ${movie.languages}
-│┃ ♛🏆 *Awards:* ${movie.awards || 'None'}
-│┃ ♛
-│┃ ♛[View on IMDb](${movie.imdbUrl})
-╰────────────────────────≽
-> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ x Kᴇᴠɪɴ ᴛᴇᴄʜ
-`;
-
-        // Send message with the requested format
-        await clutch.sendMessage(
-            m.chat,
-            {
-                image: { 
-                    url: movie.poster && movie.poster !== 'N/A' ? movie.poster : 'https://files.catbox.moe/qva4tf.jpg'
-                },
-                caption: dec,
-                contextInfo: {
-                    mentionedJid: [sender],
-                    forwardingScore: 999,
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363404529319592@newsletter',
-                        newsletterName: 'Airbyte Synergetic Labs 🏔️',
-                        serverMessageId: 143
-                    }
-                }
-            },
-            { quoted: m }
-        );
-
-    } catch (e) {
-        console.error('Movie command error:', e);
-        m.reply(`❌ Error: ${e.message}`);
-    }
-}
-  break
   case "tts":{
 try{
 if(!text) return Reply("Need some text.")
@@ -2132,10 +2068,854 @@ case "repo": {
         m.reply("❌ Failed to fetch repository info");
     }
 }
-break;
+break
+case "smartphone":
+case "gsmarena": {
+    if (!text) return m.reply("*Please provide a query to search for smartphones.*");
 
+    try {
+      const apiUrl = `${global.siputzx}/api/s/gsmarena?query=${encodeURIComponent(text)}`;
+      const response = await fetch(apiUrl);
+      const result = await response.json();
+
+      if (!result.status || !result.data || result.data.length === 0) {
+        return reply("*No results found. Please try another query.*");
+      }
+
+      const limitedResults = result.data.slice(0, 10);
+      let responseMessage = `*Top 10 Results for "${text}":*\n\n`;
+
+      for (let item of limitedResults) {
+        responseMessage += `📱 *Name:* ${item.name}\n`;
+        responseMessage += `📝 *Description:* ${item.description}\n`;
+        responseMessage += `🌐 [View Image](${item.thumbnail})\n\n`;
+      }
+
+      m.reply(responseMessage);
+    } catch (error) {
+      console.error('Error fetching results from GSMArena API:', error);
+      m.reply(mess.error);
+    }
+}
+break
+case "getdevice": {
+   if (!m.quoted) {
+      return m.reply('*Please quote a message to use this command!*');
+    }
+    
+    console.log('Quoted Message:', m.quoted);
+console.log('Quoted Key:', m.quoted?.key);
+
+    try {
+      const quotedMsg = await m.getQuotedMessage();
+
+      if (!quotedMsg) {
+        return reply('*Could not detect, please try with newly sent message!*');
+      }
+
+      const messageId = quotedMsg.key.id;
+
+      const device = getDevice(messageId) || 'Unknown';
+
+      m.reply(`The message is sent from *${device}* device.`);
+    } catch (err) {
+      console.error('Error determining device:', err);
+      m.reply('Error determining device: ' + err.message);
+    }
+}
+break
+case "browse": {
+if (!text) return m.reply("Enter URL");
+
+    try {
+      let res = await fetch(text);
+
+      if (res.headers.get('Content-Type').includes('application/json')) {
+        let json = await res.json();
+        await clutch.sendMessage(m.chat, { text: JSON.stringify(json, null, 2) }, { quoted: m });
+      } else {
+        let resText = await res.text();
+        await clutch.sendMessage(m.chat, { text: resText }, { quoted: m });
+      }
+
+      if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+    } catch (error) {
+      m.reply(`Error fetching URL: ${error.message}`);
+    }
+}
+break
+case "filtervcf": {
+const quoted = m.quoted ? m.quoted : null;
+    const mime = quoted?.mimetype || "";
+    const normalizePhoneNumber = (phone) => {
+      if (!phone || typeof phone !== 'string') return null;
+      return phone.replace(/\D/g, '');
+    };
+
+    if (!quoted || !(mime === "text/vcard" || mime === "text/x-vcard")) {
+      return clutch.sendMessage(m.chat, { 
+        text: "❌ *Error:* Reply to a `.vcf` file with `.filtervcf` or `.cleanvcf`!" 
+      }, { quoted: m });
+    }
+
+    try {
+      const media = await quoted.download();
+      const vcfContent = media.toString('utf8');
+      
+      await clutch.sendMessage(m.chat, { 
+        text: "🔍 Filtering VCF - checking WhatsApp numbers, this may take a while..." 
+      }, { quoted: m });
+
+      const vCards = vcfContent.split('END:VCARD')
+        .map(card => card.trim())
+        .filter(card => card.length > 0);
+
+      const validContacts = [];
+      const invalidContacts = [];
+      let processed = 0;
+
+      for (const card of vCards) {
+        try {
+          const telMatch = card.match(/TEL[^:]*:([^\n]+)/);
+          if (!telMatch) continue;
+          
+          const phoneRaw = telMatch[1].trim();
+          const phoneNumber = normalizePhoneNumber(phoneRaw);
+          if (!phoneNumber) continue;
+
+          const jid = `${phoneNumber}@s.whatsapp.net`;
+          const result = await clutch.onWhatsApp(jid);
+          
+          if (result.length > 0 && result[0].exists) {
+            validContacts.push(card);
+          } else {
+            invalidContacts.push(phoneNumber);
+          }
+        } catch (error) {
+          console.error('Error processing contact:', error);
+        }
+      }
+
+      const filteredVcf = validContacts.join('\nEND:VCARD\n') + (validContacts.length > 0 ? '\nEND:VCARD' : '');
+      
+      const resultMessage = `✅ *VCF Filtering Complete*\n\n` +
+        `• Total contacts: ${vCards.length}\n` +
+        `• Valid WhatsApp contacts: ${validContacts.length}\n` +
+        `• Non-WhatsApp numbers removed: ${invalidContacts.length}\n\n` +
+        `Sending filtered VCF file...`;
+
+      await clutch.sendMessage(m.chat, { text: resultMessage }, { quoted: m });
+
+      await clutch.sendMessage(m.chat, { 
+        document: Buffer.from(filteredVcf), 
+        mimetype: "text/x-vcard", 
+        fileName: "filtered_contacts.vcf" 
+      });
+
+    } catch (error) {
+      await clutch.sendMessage(from, { 
+        text: `❌ *Error:* ${error.message}` 
+      }, { quoted: m });
+    }
+}
+break
+case "shazam": {
+ const quoted = m.quoted ? m.quoted : null || m.msg ;
+ const mime = quoted?.mimetype || ""; 
+      if (!quoted || !/audio|video/.test(mime)) return m.reply("Reply to an audio or video to identify music.");
+      
+try {
+    const media = await m.quoted.download();
+    const filePath = `./tmp/${m.sender}.${mime.split('/')[1]}`;
+    fs.writeFileSync(filePath, media);
+    const res = await acr.identify(fs.readFileSync(filePath));
+    if (res.status.code != 0) throw new Error(res.status.msg);
+
+    //  this check before accessing music[0]
+    if (!res.metadata?.music || res.metadata.music.length === 0) {
+        return m.reply("No music identified in this audio/video.");
+    }
+
+    const { title, artists, album, release_date } = res.metadata.music[0];
+    const resultText = `  *Music Identified!*\n\n*Title:* ${title}\n*Artist(s):* ${artists.map(v => v.name).join(', ')}\n*Album:* ${album?.name || 'Unknown'}\n*Release Date:* ${release_date || 'Unknown'}`;
+    
+    m.reply(resultText);
+} catch (error) {
+    console.error(error);
+    m.reply("Error identifying music: " + error.message);
+      }
+}
+break
+case " advancedglow": {
+let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}advancedglow Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/advanced-glow-effects-74.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in advancedglow command:", error);
+      m.reply(mess.error);
+      }
+}
+break
+case "blackpinklogo": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}blackpinklogo Kevin*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-blackpink-logo-online-free-607.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in blackpinklogo command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "blackpinkstyle": {
+    let q = args.join(" ");
+    if (!q) {
+      return reply(`*Example: ${prefix}blackpinkstyle Ridz coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/online-blackpink-style-logo-maker-effect-711.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in blackpinkstyle command:", error);
+      reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "cartoonstyle": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}cartoonstyle Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-a-cartoon-style-graffiti-text-effect-online-668.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in cartoonstyle command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "deadpool": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}deadpool Kevin*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-light-effects-green-neon-online-429.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in deadpool command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+} 
+break
+case "effectclounds": {
+let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}effectclouds Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/write-text-effect-clouds-in-the-sky-online-619.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in effectclouds command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "flagtext": {
+let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}flagtext Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/nigeria-3d-flag-text-effect-online-free-753.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in flagtext command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "freecreate": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}freecreate Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/free-create-a-3d-hologram-text-effect-441.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in freecreate command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "galaxystyle": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}galaxystyle Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-galaxy-style-free-name-logo-438.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in galaxystyle command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "galaxywallpaper": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}galaxywallpaper Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-galaxy-wallpaper-mobile-online-528.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in galaxywallpaper command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "makingneon": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}makingneon Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/making-neon-light-text-effect-with-galaxy-style-521.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in makingneon command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+case "matrix": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}matrix Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/matrix-text-effect-154.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in matrix command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case"royaltext": {
+let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}royaltext Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/royal-text-effect-online-free-471.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in royaltext command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "sand": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}sand Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/write-in-sand-summer-beach-online-576.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in sand command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "summerbeach": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}summerbeach Kevin*`);
+    }
+
+    const link = "https://en.ephoto360.com/write-in-sand-summer-beach-online-free-595.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in summerbeach command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "topography": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}topography Ridz coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-typography-text-effect-on-pavement-online-774.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in topography command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "typography": {
+    let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}typography Ridz Coder*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-typography-text-effect-on-pavement-online-774.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in typography command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "luxurygold": {
+let q = args.join(" ");
+    if (!q) {
+      return m.reply(`*Example: ${prefix}luxurygold Kevin*`);
+    }
+
+    const link = "https://en.ephoto360.com/create-a-luxury-gold-text-effect-online-594.html";
+
+    try {
+      let result = await ephoto(link, q);
+      await clutch.sendMessage(
+        m.chat,
+        { image: { url: result }, caption: `> ${global.wm}` },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.error("Error in luxurygold command:", error);
+      m.reply("*An error occurred while generating the effect.*");
+    }
+}
+break
+case "imdb":
+case "movie": {
+if (!text) return m.reply("Provide a movie or series name.");
+      
+      try {
+        const { data } = await axios.get(`http://www.omdbapi.com/?apikey=742b2d09&t=${text}&plot=full`);
+        if (data.Response === "False") throw new Error();
+
+        const imdbText = `🎬 *IMDB SEARCH*\n\n`
+          + `*Title:* ${data.Title}\n*Year:* ${data.Year}\n*Rated:* ${data.Rated}\n`
+          + `*Released:* ${data.Released}\n*Runtime:* ${data.Runtime}\n*Genre:* ${data.Genre}\n`
+          + `*Director:* ${data.Director}\n*Actors:* ${data.Actors}\n*Plot:* ${data.Plot}\n`
+          + `*IMDB Rating:* ${data.imdbRating} ⭐\n*Votes:* ${data.imdbVotes}`;
+
+        clutch.sendMessage(m.chat, { image: { url: data.Poster }, caption: imdbText }, { quoted: m });
+      } catch (error) {
+        m.reply("❌ Unable to fetch IMDb data.");
+      }
+}
+break
+case 'venice':
+case 'vai': {
+    await veniceAICommand(clutch, m.chat, text, m);
+    break;
+}
+
+case 'mistral': {
+    await mistralAICommand(clutch, m.chat, text, m);
+    break;
+}
+
+case 'perplexity': {
+    await perplexityAICommand(clutch, m.chat, text, m);
+    break;
+}
+
+case 'bard': {
+    await bardAICommand(clutch, m.chat, text, m);
+    break;
+}
+
+case 'gpt4nano':
+case 'gpt41nano': {
+    await gpt4NanoAICommand(clutch, m.chat, text, m);
+    break;
+}
+
+case 'nemesisai': {
+    await kelvinAICommand(clutch, text, m.chat, m);
+    break;
+}
+
+case 'claude': {
+    await claudeAICommand(clutch, m.chat, text, m);
+    break;
+}
+case 'autotyping':
+case 'typing': {
+    if (!isCreator) return m.reply(mess.owner);
+    const autoTyping = await db.get(botNumber, 'autoTyping', false);
+    
+    const mode = args[0]?.toLowerCase();
+    if (!mode || !['on', 'off'].includes(mode)) {
+        return m.reply(`❌ Usage: ${prefix}autotyping <on/off>`);
+    }
+    
+    const boolValue = mode === 'on';
+    
+    await db.set(botNumber, 'autoTyping', boolValue);
+    
+    m.reply(`✅ Auto-typing ${boolValue ? 'enabled' : 'disabled'}`);
+    break;
+}
+case 'autoreact': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    if (!mode || !['on', 'off'].includes(mode)) {
+        const current = await db.get(botNumber, 'autoreact', false);
+        return m.reply(`❌ Usage: ${prefix}autoreact <on/off>\n\nCurrent: ${current ? 'ON ✅' : 'OFF ❌'}`);
+    }
+    
+    const boolValue = mode === 'on';
+    await db.set(botNumber, 'autoreact', boolValue);
+    m.reply(`✅ Auto-react ${boolValue ? 'enabled' : 'disabled'}`);
+    break;
+}
+case 'autoread': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    if (!mode || !['on', 'off'].includes(mode)) {
+        const current = await db.get(botNumber, 'autoread', false);
+        return m.reply(`❌ Usage: ${prefix}autoread <on/off>\n\nCurrent: ${current ? 'ON ✅' : 'OFF ❌'}`);
+    }
+    
+    const boolValue = mode === 'on';
+    await db.set(botNumber, 'autoread', boolValue);
+    m.reply(`✅ Auto-read ${boolValue ? 'enabled' : 'disabled'}`);
+    break;
+}
+case 'autorecord':
+case 'autorecording': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    if (!mode || !['on', 'off'].includes(mode)) {
+        const current = await db.get(botNumber, 'autorecording', false);
+        return m.reply(`❌ Usage: ${prefix}autorecord <on/off>\n\nCurrent: ${current ? 'ON ✅' : 'OFF ❌'}`);
+    }
+    
+    const boolValue = mode === 'on';
+    await db.set(botNumber, 'autorecording', boolValue);
+    m.reply(`✅ Auto-recording ${boolValue ? 'enabled' : 'disabled'}`);
+    break;
+}
+case 'aichat':
+case 'chatbot':
+case 'aichatbot':
+case 'setai': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    if (!mode || !['on', 'off'].includes(mode)) {
+        const current = await db.get(botNumber, 'AI_CHAT', false);
+        return m.reply(`❌ Usage: ${prefix}aichat <on/off>\n\nCurrent: ${current ? 'ON ✅' : 'OFF ❌'}`);
+    }
+    // Message memory for conversation context
+   let messageMemory = new Map();
+   const MAX_MEMORY = 150; // Maximum messages to remember per chat
+   
+    const boolValue = mode === 'on';
+    await db.set(botNumber, 'AI_CHAT', boolValue);
+    
+    // Clear memory when turning off/on
+    if (boolValue) {
+        // Clear old memory when turning on
+        messageMemory.clear();
+    }
+    
+    m.reply(`✅ AI Chatbot ${boolValue ? 'enabled' : 'disabled'}`);
+    
+}
+case 'antiedit': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    
+    // Show help if no arguments
+    if (!mode) {
+        const currentMode = await db.get(botNumber, 'antiedit', 'off');
+        return m.reply(`*ANTI-EDIT SETTINGS*
+
+Current Mode: ${currentMode}
+
+📌 *Commands:*
+• ${prefix}antiedit on - Enable (chat mode)
+• ${prefix}antiedit off - Disable
+• ${prefix}antiedit chat - Set to chat mode
+• ${prefix}antiedit private - Set to private mode`);
+    }
+    
+    // Handle on/off
+    if (mode === 'on') {
+        await db.set(botNumber, 'antiedit', 'chat');
+        return m.reply(`✅*Successfully enabled antiedit chat mode*`);
+    }
+    
+    if (mode === 'off') {
+        await db.set(botNumber, 'antiedit', 'off');
+        return m.reply(`✅*Successfully disabled antiedit*`);
+    }
+    
+    // Handle mode settings
+    if (mode === 'chat') {
+        await db.set(botNumber, 'antiedit', 'chat');
+        return m.reply(`✅*Successfully enabled antiedit chat mode*`);
+    }
+    
+    if (mode === 'private') {
+        await db.set(botNumber, 'antiedit', 'private');
+        return m.reply(`✅*Successfully enabled antiedit private mode*`);
+    }
+    
+    m.reply('*Invalid option! Use: on, off, chat, private*');
+    break;
+}
+case 'antidelete': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    
+    if (!mode) {
+        const currentMode = await db.get(botNumber, 'antidelete', 'off');
+        
+        return m.reply(`*ANTI-DELETE SETTINGS*
+
+Current Mode: ${currentMode}
+
+📌 *Commands:*
+• ${prefix}antidelete on - Enable (chat mode)
+• ${prefix}antidelete off - Disable
+• ${prefix}antidelete chat - Set to chat mode
+• ${prefix}antidelete private - Set to private mode
+• ${prefix}antidelete status - Show settings`);
+    }
+    
+    // Handle on/off
+    if (mode === 'on') {
+        await db.set(botNumber, 'antidelete', 'chat');
+        return m.reply(`✅*Successfully enabled antidelete chat mode*`);
+    }
+    
+    if (mode === 'off') {
+        await db.set(botNumber, 'antidelete', 'off');
+        return m.reply(`✅*Successfully disabled antidelete*`);
+    }
+    
+    // Handle mode settings
+    if (mode === 'chat') {
+        await db.set(botNumber, 'antidelete', 'chat');
+        return m.reply(`✅*Successfully enabled antidelete chat mode*`);
+    }
+    
+    if (mode === 'private') {
+        await db.set(botNumber, 'antidelete', 'private');
+        return m.reply(`✅*Successfully enabled antidelete private mode*`);
+    }
+    
+    // Handle status
+    if (mode === 'status') {
+        const currentMode = await db.get(botNumber, 'antidelete', 'off');
+        return m.reply(`*ANTI-DELETE STATUS*
+
+Mode: ${currentMode}
+Status: ${currentMode !== 'off' ? '✅ Enabled' : '❌ Disabled'}
+
+📌 *Modes:*
+• chat - Alerts sent to same chat
+• private - Alerts sent to bot owner's inbox`);
+    }
+    
+    m.reply('*Invalid option! Use: on, off, chat, private, status*');
+    break;
+}
+case 'anticall': {
+    if (!isCreator) return m.reply(mess.owner);
+    
+    const mode = args[0]?.toLowerCase();
+    const action = args[1]?.toLowerCase();
+    
+    // Show help if no arguments
+    if (!mode) {
+        const current = await db.get(botNumber, 'anticall', 'off');
+        return m.reply(`*ANTICALL*\n\n` +
+            `• ${prefix}anticall decline on\n` +
+            `• ${prefix}anticall decline off\n` +
+            `• ${prefix}anticall block on\n` +
+            `• ${prefix}anticall block off\n\n` +
+            `Current: ${current}`);
+    }
+    
+    // Handle decline mode
+    if (mode === 'decline') {
+        if (action === 'on') {
+            await db.set(botNumber, 'anticall', 'decline');
+            return m.reply('✅ *Successfully enabled anticall decline mode*');
+        }
+        if (action === 'off') {
+            await db.set(botNumber, 'anticall', 'off');
+            return m.reply('❌ Anticall OFF');
+        }
+    }
+    
+    // Handle block mode
+    if (mode === 'block') {
+        if (action === 'on') {
+            await db.set(botNumber, 'anticall', 'block');
+            return m.reply('✅ *Successfully enabled anticall block mode*');
+        }
+        if (action === 'off') {
+            await db.set(botNumber, 'anticall', 'off');
+            return m.reply('Anticall OFF');
+        }
+    }
+    
+    // Invalid command
+    m.reply('*Use: .anticall decline on/off or .anticall block on/off*');
+    
+}
+break;
 case "yts": {
-    if (!text) return Reply("❌ Give search text");
+    if (!text) return m.reply("❌ Give search text");
 
     const { videos } = await yts(text);
     if (!videos.length) return Reply("❌ No results");
