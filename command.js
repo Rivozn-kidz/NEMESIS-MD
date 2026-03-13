@@ -565,32 +565,36 @@ break
 case "play": {
 try {
 
-const sender = m.sender
-
-if (!text) return Reply("❌ Example: .play lucid dreams")
+if (!text) return Reply("Example: .play lucid dreams")
 
 await clutch.sendMessage(m.chat,{react:{text:"🔎",key:m.key}})
 
-const search = await yts(text)
-if (!search.videos.length) return Reply("❌ No results found")
+let search = await yts(text)
+if (!search.videos.length) return Reply("No results found")
 
-const video = search.videos[0]
+let video = search.videos[0]
+let videoUrl = video.url.split("&")[0]
 
 await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
 
-const api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
-const res = await axios.get(api).catch(()=>null)
+const res = await axios.get(
+"https://api.malvin.gleeze.com/download/youtube",
+{
+params:{ url: videoUrl },
+headers:{ "User-Agent":"Mozilla/5.0" }
+}
+).catch(()=>null)
 
-if (!res || !res.data.status) return Reply("❌ API failed")
+if (!res || !res.data.status) return Reply("Download failed")
 
-const anu = res.data
+let anu = res.data
 
-const caption = `
+let caption = `
 ╭─❍ *NEMESIS MD SONG DL*
 ║ 🎵 Title: ${anu.title}
 ║ ⏱ Duration: ${video.timestamp}
-║ 🔗 Link: ${video.url}
-╰──────────────
+║ 🔗 Link: ${videoUrl}
+╰────────────
 > Created by Ridz Coder
 `
 
@@ -609,7 +613,7 @@ await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
 
 } catch(e){
 console.log(e)
-Reply("❌ Download failed")
+Reply("Download failed")
 }
 }
 break
@@ -984,15 +988,22 @@ await fs.unlinkSync(media)
 break
 
 case "play2": {
-if (!text) return m.reply(example("youtube link"))
+if (!text) return m.reply("Example: .play2 youtube link")
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
 await clutch.sendMessage(m.chat,{react:{text:"🕖",key:m.key}})
 
 try {
 
-let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
-let res = await axios.get(api).catch(()=>null)
+let videoUrl = text.split("&")[0]
+
+const res = await axios.get(
+"https://api.malvin.gleeze.com/download/youtube",
+{
+params:{ url: videoUrl },
+headers:{ "User-Agent":"Mozilla/5.0" }
+}
+).catch(()=>null)
 
 if (!res || !res.data.status) return m.reply("Error! No result")
 
@@ -1013,16 +1024,25 @@ await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
+//=================================================
+
 case "ytmp4": {
-if (!text) return m.reply(example("youtube link"))
+if (!text) return m.reply("Example: .ytmp4 youtube link")
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
 await clutch.sendMessage(m.chat,{react:{text:"🕖",key:m.key}})
 
 try {
 
-let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
-let res = await axios.get(api).catch(()=>null)
+let videoUrl = text.split("&")[0]
+
+const res = await axios.get(
+"https://api.malvin.gleeze.com/download/youtube",
+{
+params:{ url: videoUrl },
+headers:{ "User-Agent":"Mozilla/5.0" }
+}
+).catch(()=>null)
 
 if (!res || !res.data.status) return m.reply("Error! No result")
 
@@ -1043,8 +1063,10 @@ await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
-case "playvid": {
-if (!text) return m.reply(example("faded alan walker"))
+//=================================================
+
+case "video": {
+if (!text) return m.reply("Example: .playvid faded alan walker")
 
 await clutch.sendMessage(m.chat,{react:{text:"🔎",key:m.key}})
 
@@ -1055,8 +1077,15 @@ if (!video) return m.reply("No result found")
 
 try {
 
-let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
-let res = await axios.get(api).catch(()=>null)
+let videoUrl = video.url.split("&")[0]
+
+const res = await axios.get(
+"https://api.malvin.gleeze.com/download/youtube",
+{
+params:{ url: videoUrl },
+headers:{ "User-Agent":"Mozilla/5.0" }
+}
+).catch(()=>null)
 
 if (!res || !res.data.status) return m.reply("Download failed")
 
