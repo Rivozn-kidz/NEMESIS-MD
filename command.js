@@ -567,77 +567,49 @@ try {
 
 const sender = m.sender
 
-if (!text) {
-return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`")
-}
+if (!text) return Reply("❌ Example: .play lucid dreams")
 
-await clutch.sendMessage(m.chat,{react:{text:"🔍",key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"🔎",key:m.key}})
 
-const { videos } = await yts(text)
-if (!videos || videos.length === 0) {
-await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
-return Reply("⚠️ No results found!")
-}
+const search = await yts(text)
+if (!search.videos.length) return Reply("❌ No results found")
 
-const video = videos[0]
+const video = search.videos[0]
 
 await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
 
-/* MALVIN API */
 const api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
-const res = await fetch(api)
-const anu = await res.json()
+const res = await axios.get(api).catch(()=>null)
 
-if (!anu.status) {
-await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
-return Reply("🚫 Download failed")
-}
+if (!res || !res.data.status) return Reply("❌ API failed")
+
+const anu = res.data
 
 const caption = `
-╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
-║友│⊷
-║友│⊷🏔️ *Title:* ${anu.title}
-║友│⊷🏔️ *Duration:* ${video.timestamp}
-║友│⊷🏔️ *Link:* ${video.url}
-║友│⊷
-╰─────────────────────━━╯
-> Cʀᴇᴀᴛᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ❦`
+╭─❍ *NEMESIS MD SONG DL*
+║ 🎵 Title: ${anu.title}
+║ ⏱ Duration: ${video.timestamp}
+║ 🔗 Link: ${video.url}
+╰──────────────
+> Created by Ridz Coder
+`
 
-await clutch.sendMessage(
-m.chat,
-{
+await clutch.sendMessage(m.chat,{
 image:{url:anu.thumbnail},
-caption:caption,
-contextInfo:{
-mentionedJid:[sender],
-forwardingScore:999,
-isForwarded:true,
-forwardedNewsletterMessageInfo:{
-newsletterJid:"120363404529319592@newsletter",
-newsletterName:"Airbyte Synergetic Labs 🏔️",
-serverMessageId:143
-}
-}
-},
-{quoted:m}
-)
+caption
+},{quoted:m})
+
+await clutch.sendMessage(m.chat,{
+audio:{url:anu.audio},
+mimetype:"audio/mpeg",
+fileName:`${anu.title}.mp3`
+},{quoted:m})
 
 await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
 
-await clutch.sendMessage(
-m.chat,
-{
-document:{url:anu.audio},
-mimetype:"audio/mpeg",
-fileName:`${anu.title}.mp3`
-},
-{quoted:m}
-)
-
-} catch(e) {
+} catch(e){
 console.log(e)
-await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
-Reply("❌ Download failed. Try again later.")
+Reply("❌ Download failed")
 }
 }
 break
@@ -1012,103 +984,96 @@ await fs.unlinkSync(media)
 break
 
 case "play2": {
-if (!text) return m.reply(example("the link"))
+if (!text) return m.reply(example("youtube link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
-await clutch.sendMessage(m.chat,{react:{text:'🕖',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"🕖",key:m.key}})
 
 try {
 
 let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
-let res = await fetch(api)
-let anu = await res.json()
+let res = await axios.get(api).catch(()=>null)
 
-if (anu.status) {
+if (!res || !res.data.status) return m.reply("Error! No result")
+
+let anu = res.data
 
 await clutch.sendMessage(m.chat,{
-audio:{ url: anu.audio },
+audio:{url:anu.audio},
 mimetype:"audio/mpeg",
-fileName: `${anu.title}.mp3`
+fileName:`${anu.title}.mp3`
 },{quoted:m})
 
-} else {
-m.reply("Error! No result found")
-}
-
-} catch (e) {
+} catch(e){
 console.log(e)
 m.reply("API error")
 }
 
-await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
 case "ytmp4": {
-if (!text) return m.reply(example("the link"))
+if (!text) return m.reply(example("youtube link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
-await clutch.sendMessage(m.chat,{react:{text:'🕖',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"🕖",key:m.key}})
 
 try {
 
 let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
-let res = await fetch(api)
-let anu = await res.json()
+let res = await axios.get(api).catch(()=>null)
 
-if (anu.status) {
+if (!res || !res.data.status) return m.reply("Error! No result")
+
+let anu = res.data
 
 await clutch.sendMessage(m.chat,{
-video:{ url: anu.videos["360"] },
+video:{url:anu.videos["360"]},
 mimetype:"video/mp4",
 fileName:`${anu.title}.mp4`
 },{quoted:m})
 
-} else {
-m.reply("Error! No result found")
-}
-
-} catch (e) {
+} catch(e){
 console.log(e)
 m.reply("API error")
 }
 
-await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
-case "video": {
-if (!text) return m.reply(example("faded by Alan walker"))
+case "playvid": {
+if (!text) return m.reply(example("faded alan walker"))
 
-await clutch.sendMessage(m.chat,{react:{text:'🔎',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"🔎",key:m.key}})
 
-let ytsSearch = await yts(text)
-let video = ytsSearch.all[0]
+let search = await yts(text)
+let video = search.videos[0]
+
+if (!video) return m.reply("No result found")
 
 try {
 
 let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
-let res = await fetch(api)
-let anu = await res.json()
+let res = await axios.get(api).catch(()=>null)
 
-if (anu.status) {
+if (!res || !res.data.status) return m.reply("Download failed")
+
+let anu = res.data
 
 await clutch.sendMessage(m.chat,{
-video:{ url: anu.videos["360"] },
+video:{url:anu.videos["360"]},
 ptv:true,
 mimetype:"video/mp4"
 },{quoted:m})
 
-} else {
-m.reply("Error occurred while downloading your video")
-}
-
-} catch (e) {
+} catch(e){
 console.log(e)
 m.reply("API error")
 }
 
-await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
+await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
