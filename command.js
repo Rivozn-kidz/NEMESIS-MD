@@ -583,21 +583,20 @@ const video = videos[0]
 
 await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
 
-/* YOUR API */
+/* MALVIN API */
 const api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
-const { data } = await axios.get(api)
+const res = await fetch(api)
+const anu = await res.json()
 
-if (!data || !data.result) {
+if (!anu.status) {
 await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
 return Reply("🚫 Download failed")
 }
 
-const song = data.result
-
 const caption = `
 ╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
 ║友│⊷
-║友│⊷🏔️ *Title:* ${song.title || video.title}
+║友│⊷🏔️ *Title:* ${anu.title}
 ║友│⊷🏔️ *Duration:* ${video.timestamp}
 ║友│⊷🏔️ *Link:* ${video.url}
 ║友│⊷
@@ -607,7 +606,7 @@ const caption = `
 await clutch.sendMessage(
 m.chat,
 {
-image:{url:video.thumbnail},
+image:{url:anu.thumbnail},
 caption:caption,
 contextInfo:{
 mentionedJid:[sender],
@@ -628,9 +627,9 @@ await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
 await clutch.sendMessage(
 m.chat,
 {
-document:{url:song.download},
+document:{url:anu.audio},
 mimetype:"audio/mpeg",
-fileName:`${song.title || video.title}.mp3`
+fileName:`${anu.title}.mp3`
 },
 {quoted:m}
 )
@@ -1011,6 +1010,7 @@ await clutch.sendMessage(m.chat, {text: teks}, {quoted: m})
 await fs.unlinkSync(media)
 }
 break
+
 case "play2": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
@@ -1025,10 +1025,10 @@ let anu = await res.json()
 
 if (anu.status) {
 
-let audioUrl = anu.result.audio
 await clutch.sendMessage(m.chat,{
-audio:{ url: audioUrl },
-mimetype:"audio/mpeg"
+audio:{ url: anu.audio },
+mimetype:"audio/mpeg",
+fileName: `${anu.title}.mp3`
 },{quoted:m})
 
 } else {
@@ -1043,6 +1043,7 @@ m.reply("API error")
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
+
 case "ytmp4": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
@@ -1057,10 +1058,10 @@ let anu = await res.json()
 
 if (anu.status) {
 
-let videoUrl = anu.result.video
 await clutch.sendMessage(m.chat,{
-video:{ url: videoUrl },
-mimetype:"video/mp4"
+video:{ url: anu.videos["360"] },
+mimetype:"video/mp4",
+fileName:`${anu.title}.mp4`
 },{quoted:m})
 
 } else {
@@ -1075,6 +1076,7 @@ m.reply("API error")
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
+
 case "video": {
 if (!text) return m.reply(example("faded by Alan walker"))
 
@@ -1091,9 +1093,8 @@ let anu = await res.json()
 
 if (anu.status) {
 
-let videoUrl = anu.result.video
 await clutch.sendMessage(m.chat,{
-video:{ url: videoUrl },
+video:{ url: anu.videos["360"] },
 ptv:true,
 mimetype:"video/mp4"
 },{quoted:m})
@@ -1110,6 +1111,7 @@ m.reply("API error")
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
+
 case "tt": case "tiktok": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 if (!text.startsWith("https://")) return m.reply(example("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
