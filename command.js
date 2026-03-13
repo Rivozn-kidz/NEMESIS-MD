@@ -583,21 +583,22 @@ const video = videos[0]
 
 await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
 
-const api = `https://api-aswin-sparky.koyeb.app/api/downloader/song?search=${encodeURIComponent(video.url)}`
+/* YOUR API */
+const api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
 const { data } = await axios.get(api)
 
-if (!data || !data.data) {
+if (!data || !data.result) {
 await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
 return Reply("🚫 Download failed")
 }
 
-const song = data.data
+const song = data.result
 
 const caption = `
 ╭─❍  *NEMESIS MD SONG DL*  ⬡────⭓
 ║友│⊷
 ║友│⊷🏔️ *Title:* ${song.title || video.title}
-║友│⊷🏔️ *Duration:* ${song.duration || video.timestamp}
+║友│⊷🏔️ *Duration:* ${video.timestamp}
 ║友│⊷🏔️ *Link:* ${video.url}
 ║友│⊷
 ╰─────────────────────━━╯
@@ -1010,41 +1011,38 @@ await clutch.sendMessage(m.chat, {text: teks}, {quoted: m})
 await fs.unlinkSync(media)
 }
 break
-
 case "play2": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
-await clutch.sendMessage(m.chat, {react: {text: '🕖', key: m.key}})
+await clutch.sendMessage(m.chat,{react:{text:'🕖',key:m.key}})
 
 try {
 
-let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=mp3`
+let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
 let res = await fetch(api)
 let anu = await res.json()
 
 if (anu.status) {
 
-let audioUrl = anu.result.download
+let audioUrl = anu.result.audio
 await clutch.sendMessage(m.chat,{
-audio: { url: audioUrl },
-mimetype: "audio/mpeg"
-},{ quoted: m })
+audio:{ url: audioUrl },
+mimetype:"audio/mpeg"
+},{quoted:m})
 
 } else {
 m.reply("Error! No result found")
 }
 
 } catch (e) {
+console.log(e)
 m.reply("API error")
 }
 
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
-
-//=================================================
-
 case "ytmp4": {
 if (!text) return m.reply(example("the link"))
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
@@ -1053,33 +1051,31 @@ await clutch.sendMessage(m.chat,{react:{text:'🕖',key:m.key}})
 
 try {
 
-let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(text)}&format=360p`
+let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(text)}`
 let res = await fetch(api)
 let anu = await res.json()
 
 if (anu.status) {
 
-let videoUrl = anu.result.download
+let videoUrl = anu.result.video
 await clutch.sendMessage(m.chat,{
-video: { url: videoUrl },
-mimetype: "video/mp4"
-},{ quoted: m })
+video:{ url: videoUrl },
+mimetype:"video/mp4"
+},{quoted:m})
 
 } else {
 m.reply("Error! No result found")
 }
 
 } catch (e) {
+console.log(e)
 m.reply("API error")
 }
 
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
-
-//=================================================
-
-case "playvid": {
+case "video": {
 if (!text) return m.reply(example("faded by Alan walker"))
 
 await clutch.sendMessage(m.chat,{react:{text:'🔎',key:m.key}})
@@ -1089,31 +1085,31 @@ let video = ytsSearch.all[0]
 
 try {
 
-let api = `https://meta-api.zone.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=360p`
+let api = `https://api.malvin.gleeze.com/download/youtube?url=${encodeURIComponent(video.url)}`
 let res = await fetch(api)
 let anu = await res.json()
 
 if (anu.status) {
 
-let videoUrl = anu.result.download
+let videoUrl = anu.result.video
 await clutch.sendMessage(m.chat,{
-video: { url: videoUrl },
-ptv: true,
-mimetype: "video/mp4"
-},{ quoted: m })
+video:{ url: videoUrl },
+ptv:true,
+mimetype:"video/mp4"
+},{quoted:m})
 
 } else {
 m.reply("Error occurred while downloading your video")
 }
 
 } catch (e) {
+console.log(e)
 m.reply("API error")
 }
 
 await clutch.sendMessage(m.chat,{react:{text:'',key:m.key}})
 }
 break
-
 case "tt": case "tiktok": {
 if (!text) return m.reply(example("𝙿𝚛𝚘𝚟𝚒𝚍𝚎 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
 if (!text.startsWith("https://")) return m.reply(example("𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝚝𝚒𝚔𝚝𝚘𝚔 𝚞𝚛𝚕"))
