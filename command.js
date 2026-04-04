@@ -563,60 +563,72 @@ m.reply("Error")
 }
 break
 case "play": {
-try {
+        try {
+            if (!text) {
+                return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
+            }
 
-if (!text) return Reply("Example: .play lucid dreams")
+            // Add initial reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "🔍", key: m.key } 
+            });
 
-await clutch.sendMessage(m.chat,{react:{text:"🔎",key:m.key}})
+            // Search YouTube
+            const { videos } = await yts(text);
+            if (!videos || videos.length === 0) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return Reply("⚠️ No results found for your query!");
+            }
 
-let search = await yts(text)
-if (!search.videos.length) return Reply("No results found")
+            const video = videos[0];
+            
+            // Update reaction to downloading
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "⬇️", key: m.key } 
+            });
 
-let video = search.videos[0]
-let videoUrl = video.url.split("&")[0]
+            // Send video info
+            await clutch.sendMessage(m.chat, {
+                image: { url: video.thumbnail },
+                caption: `🎵 *${video.title}*\n\n⬇️Andy is Downloading audio...`
+            }, { quoted: m });
 
-await clutch.sendMessage(m.chat,{react:{text:"⬇️",key:m.key}})
+            // Download audio
+            const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
+            const response = await axios.get(apiUrl);
+            const data = response.data;
 
-const res = await axios.get(
-"https://api.malvin.gleeze.com/download/youtube",
-{
-params:{ url: videoUrl },
-headers:{ "User-Agent":"Mozilla/5.0" }
-}
-).catch(()=>null)
+            if (!data?.status || !data.audio) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return await reply("🚫 Download failed. Try again later.");
+            }
 
-if (!res || !res.data.status) return Reply("Download failed")
+            // Success reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "✅", key: m.key } 
+            });
 
-let anu = res.data
+         // Send as document
+await clutch.sendMessage(m.chat, {
+    document: { url: data.audio },
+    mimetype: "audio/mpeg",
+    fileName: `${data.title || video.title}.mp3`,
+    caption: `🎵 ${data.title || video.title}`
+}, { quoted: m });
 
-let caption = `
-╭─❍ *NEMESIS MD SONG DL*
-║ 🎵 Title: ${anu.title}
-║ ⏱ Duration: ${video.timestamp}
-║ 🔗 Link: ${videoUrl}
-╰────────────
-> Created by Ridz Coder
-`
-
-await clutch.sendMessage(m.chat,{
-image:{url:anu.thumbnail},
-caption
-},{quoted:m})
-
-await clutch.sendMessage(m.chat,{
-audio:{url:anu.audio},
-mimetype:"audio/mpeg",
-fileName:`${anu.title}.mp3`
-},{quoted:m})
-
-await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
-
-} catch(e){
-console.log(e)
-Reply("Download failed")
-}
-}
-break
+        } catch (error) {
+            console.error('Error in play command:', error);
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "❌", key: m.key } 
+            });
+           return Reply("❌ Download failed. Please try again later.");
+        }
+    }
+    break
 // ===== BIBLE VERSE =====
 case "bible": {
     if (!text) return m.reply("Example: .bible john 3:16")
@@ -988,42 +1000,72 @@ await fs.unlinkSync(media)
 break
 
 case "play2": {
-if (!text) return m.reply("Example: .play2 youtube link")
-if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
+        try {
+            if (!text) {
+                return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
+            }
 
-await clutch.sendMessage(m.chat,{react:{text:"🕖",key:m.key}})
+            // Add initial reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "🔍", key: m.key } 
+            });
 
-try {
+            // Search YouTube
+            const { videos } = await yts(text);
+            if (!videos || videos.length === 0) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return Reply("⚠️ No results found for your query!");
+            }
 
-let videoUrl = text.split("&")[0]
+            const video = videos[0];
+            
+            // Update reaction to downloading
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "⬇️", key: m.key } 
+            });
 
-const res = await axios.get(
-"https://api.malvin.gleeze.com/download/youtube",
-{
-params:{ url: videoUrl },
-headers:{ "User-Agent":"Mozilla/5.0" }
-}
-).catch(()=>null)
+            // Send video info
+            await clutch.sendMessage(m.chat, {
+                image: { url: video.thumbnail },
+                caption: `🎵 *${video.title}*\n\n⬇️Andy is Downloading audio...`
+            }, { quoted: m });
 
-if (!res || !res.data.status) return m.reply("Error! No result")
+            // Download audio
+            const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`;
+            const response = await axios.get(apiUrl);
+            const data = response.data;
 
-let anu = res.data
+            if (!data?.status || !data.audio) {
+                await clutch.sendMessage(m.chat, { 
+                    react: { text: "❌", key: m.key } 
+                });
+                return await reply("🚫 Download failed. Try again later.");
+            }
 
-await clutch.sendMessage(m.chat,{
-audio:{url:anu.audio},
-mimetype:"audio/mpeg",
-fileName:`${anu.title}.mp3`
-},{quoted:m})
+            // Success reaction
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "✅", key: m.key } 
+            });
 
-} catch(e){
-console.log(e)
-m.reply("API error")
-}
+         // Send as document
+await clutch.sendMessage(m.chat, {
+    document: { url: data.audio },
+    mimetype: "audio/mpeg",
+    fileName: `${data.title || video.title}.mp3`,
+    caption: `🎵 ${data.title || video.title}`
+}, { quoted: m });
 
-await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
-}
-break
-
+        } catch (error) {
+            console.error('Error in play command:', error);
+            await clutch.sendMessage(m.chat, { 
+                react: { text: "❌", key: m.key } 
+            });
+           return Reply("❌ Download failed. Please try again later.");
+        }
+    }
+    break
 //=================================================
 
 case "ytmp4": {
