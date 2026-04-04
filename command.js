@@ -562,6 +562,7 @@ m.reply("Error")
 }
 }
 break
+case"song":
 case "play": {
         try {
             if (!text) {
@@ -592,7 +593,7 @@ case "play": {
             // Send video info
             await clutch.sendMessage(m.chat, {
                 image: { url: video.thumbnail },
-                caption: `🎵 *${video.title}*\n\n⬇️Andy is Downloading audio...`
+                caption: `🎵 *${video.title}*\n\n⬇️ NEMESIS MD is Downloading audio...`
             }, { quoted: m });
 
             // Download audio
@@ -1029,7 +1030,7 @@ case "play2": {
             // Send video info
             await clutch.sendMessage(m.chat, {
                 image: { url: video.thumbnail },
-                caption: `🎵 *${video.title}*\n\n⬇️Andy is Downloading audio...`
+                caption: `🎵 *${video.title}*\n\n⬇️ NEMESIS MD is Downloading audio...`
             }, { quoted: m });
 
             // Download audio
@@ -1067,7 +1068,6 @@ await clutch.sendMessage(m.chat, {
     }
     break
 //=================================================
-
 case "ytmp4": {
 if (!text) return m.reply("Example: .ytmp4 youtube link")
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
@@ -1078,35 +1078,33 @@ try {
 
 let videoUrl = text.split("&")[0]
 
-const res = await axios.get(
-"https://api.malvin.gleeze.com/download/youtube",
-{
-params:{ url: videoUrl },
-headers:{ "User-Agent":"Mozilla/5.0" }
+const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(videoUrl)}`
+const res = await axios.get(apiUrl).catch(()=>null)
+
+if (!res || !res.data?.status || !res.data.video) {
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
+return m.reply("Download failed")
 }
-).catch(()=>null)
 
-if (!res || !res.data.status) return m.reply("Error! No result")
-
-let anu = res.data
+let data = res.data
 
 await clutch.sendMessage(m.chat,{
-video:{url:anu.videos["360"]},
+video:{ url: data.video },
 mimetype:"video/mp4",
-fileName:`${anu.title}.mp4`
+fileName:`${data.title || "video"}.mp4`,
+caption:`🎬 ${data.title || "Video"}`
 },{quoted:m})
+
+await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
 
 } catch(e){
 console.log(e)
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
 m.reply("API error")
 }
 
-await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
-
-//=================================================
-
 case "video": {
 if (!text) return m.reply("Example: .playvid faded alan walker")
 
@@ -1119,32 +1117,36 @@ if (!video) return m.reply("No result found")
 
 try {
 
-let videoUrl = video.url.split("&")[0]
+await clutch.sendMessage(m.chat,{
+image:{ url: video.thumbnail },
+caption:`🎬 *${video.title}*\n\n⬇️ Downloading video...`
+},{quoted:m})
 
-const res = await axios.get(
-"https://api.malvin.gleeze.com/download/youtube",
-{
-params:{ url: videoUrl },
-headers:{ "User-Agent":"Mozilla/5.0" }
+const apiUrl = `https://yt-dl.officialhectormanuel.workers.dev/?url=${encodeURIComponent(video.url)}`
+const res = await axios.get(apiUrl).catch(()=>null)
+
+if (!res || !res.data?.status || !res.data.video) {
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
+return m.reply("Download failed")
 }
-).catch(()=>null)
 
-if (!res || !res.data.status) return m.reply("Download failed")
-
-let anu = res.data
+let data = res.data
 
 await clutch.sendMessage(m.chat,{
-video:{url:anu.videos["360"]},
-ptv:true,
-mimetype:"video/mp4"
+video:{ url: data.video },
+mimetype:"video/mp4",
+fileName:`${data.title || video.title}.mp4`,
+caption:`🎬 ${data.title || video.title}`
 },{quoted:m})
+
+await clutch.sendMessage(m.chat,{react:{text:"✅",key:m.key}})
 
 } catch(e){
 console.log(e)
+await clutch.sendMessage(m.chat,{react:{text:"❌",key:m.key}})
 m.reply("API error")
 }
 
-await clutch.sendMessage(m.chat,{react:{text:"",key:m.key}})
 }
 break
 
