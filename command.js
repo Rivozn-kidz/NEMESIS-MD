@@ -1482,7 +1482,9 @@ break;
                         //================================================================================
 
                         case "linkgc": {
-                        🌋
+                                                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
                                 const urlGrup = "https://chat.whatsapp.com/" + await clutch.groupInviteCode(m.chat)
