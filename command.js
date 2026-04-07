@@ -222,6 +222,9 @@ if (m.isGroup && db.groups[m.chat].antilink2 === true) {
                 switch (command) {
 
                 case "ssweb": {
+                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if (!text) return m.reply(example("https://ridzcoder.zone.id"))
 if (!isUrl(text)) return m.reply(example("https://ridzcoder.zone.id"))
 const {
@@ -236,7 +239,9 @@ await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted:
 break
 case "support": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let dec = `    
 ⟣──────────────────⟢
 ▧ *ᴄʀᴇᴀᴛᴏʀ* : *Ridz Coder X Kevin tech*
@@ -268,7 +273,7 @@ forwardingScore:999,
 isForwarded:true,
 forwardedNewsletterMessageInfo:{
 newsletterJid:"120363404529319592@newsletter",
-newsletterName:"Airbyte Synergetic Labs🪀",
+newsletterName:"Airbyte Synergetic Labs🌋",
 serverMessageId:143
 }
 }
@@ -286,7 +291,9 @@ case "instagram":
 case "insta":
 case "ig": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 const url = text || m.quoted?.text
 if(!url || !url.includes("instagram.com")) return m.reply("Provide Instagram link")
 
@@ -334,7 +341,9 @@ break
 case "instagram2":
 case "ig2": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 const url = text
 if(!url || !url.includes("instagram.com")) return m.reply("Invalid link")
 
@@ -378,7 +387,9 @@ break
 case "facebook":
 case "fbdl": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 const url=text
 if(!url || !url.includes("facebook.com")) return m.reply("Invalid Facebook link")
 
@@ -424,7 +435,9 @@ break
 
 case "family": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let caption=`
       *╭┈──[ • RIDZ TECH 𝖥𝖠𝖬𝖨𝖫𝖸 • ]───•*
       *│  ◦* *▢➠*
@@ -469,7 +482,9 @@ break
 case "ridzcoder":
 case "kayiza": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let caption=`
 ╭━━〔 ʀɪᴅᴢ ᴄᴏᴅᴇʀ ɪɴғᴏ〕━━┈⊷
 ┃★
@@ -528,7 +543,9 @@ break
 case "pair":
 case "pair2": {
 try {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let caption=`
 ohh 😯 No, to pair your number contact Ridz Coder on +237678687593
 
@@ -565,13 +582,14 @@ break
 case"song":
 case "play": {
         try {
+        
             if (!text) {
                 return Reply("❌ Please provide a song name!\nExample: `.play Lilly Alan Walker`");
             }
 
             // Add initial reaction
             await clutch.sendMessage(m.chat, { 
-                react: { text: "🔍", key: m.key } 
+                react: { text: "🌋", key: m.key } 
             });
 
             // Search YouTube
@@ -632,6 +650,9 @@ await clutch.sendMessage(m.chat, {
     break
 // ===== BIBLE VERSE =====
 case "bible": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) return m.reply("Example: .bible john 3:16")
     try {
         let res = await fetch(`https://bible-api.com/${encodeURIComponent(text)}`)
@@ -651,6 +672,9 @@ break
 
 // ===== BIBLE BOOK LIST (FULL) =====
 case "biblelist": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     m.reply(`📖 *NEMESIS MD BIBLE BOOKS*
 
 ╭──⧼♛ *Old Testament* ♛⧽──≽
@@ -729,6 +753,9 @@ case "biblelist": {
 break
 // ===== QURAN VERSE =====
 case "quran": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) return m.reply("Example: .quran 1:1")
     try {
         let res = await fetch(`https://api.alquran.cloud/v1/ayah/${text}/en.asad`)
@@ -749,6 +776,9 @@ break
 
 // ===== QURAN SURAH LIST (FULL 114) =====
 case "quranlist": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     try {
         let res = await fetch("https://api.alquran.cloud/v1/surah")
         let json = await res.json()
@@ -765,6 +795,9 @@ case "quranlist": {
 break
 
 case "fact": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random")
     let json = await res.json()
     m.reply(`🧠 ${json.text}`)
@@ -772,6 +805,9 @@ case "fact": {
 break
 
 case "roast": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://evilinsult.com/generate_insult.php?lang=en&type=json")
     let json = await res.json()
     m.reply(`🔥 ${json.insult}`)
@@ -779,6 +815,9 @@ case "roast": {
 break
 
 case "compliment": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://complimentr.com/api")
     let json = await res.json()
     m.reply(`💖 ${json.compliment}`)
@@ -786,6 +825,9 @@ case "compliment": {
 break
 
 case "truth": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://api.truthordarebot.xyz/v1/truth")
     let json = await res.json()
     m.reply(`🎯 Truth:\n${json.question}`)
@@ -793,6 +835,9 @@ case "truth": {
 break
 
 case "dare": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://api.truthordarebot.xyz/v1/dare")
     let json = await res.json()
     m.reply(`🎯 Dare:\n${json.question}`)
@@ -800,6 +845,9 @@ case "dare": {
 break
 
 case "riddle": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://riddles-api.vercel.app/random")
     let json = await res.json()
     m.reply(`🧩 Riddle:\n${json.riddle}\n\n💡 Answer:\n${json.answer}`)
@@ -824,6 +872,9 @@ case "8ball": {
 break
 
 case "meme": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://meme-api.com/gimme")
     let json = await res.json()
     clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ" }, { quoted: m })
@@ -831,6 +882,9 @@ case "meme": {
 break
 
 case "anime": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let res = await fetch("https://api.waifu.pics/sfw/waifu")
     let json = await res.json()
     clutch.sendMessage(m.chat, { image: { url: json.url }, caption: "🌸 Anime" }, { quoted: m })
@@ -848,7 +902,9 @@ case "kill":
 case "blush":
 case "cry":
 case "smile": {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let target = m.mentionedJid[0] || m.quoted?.sender
     if (!target) return m.reply("Tag or reply to someone")
 
@@ -870,6 +926,9 @@ break
 
 
                 case "shortlink": case "shorturl": {
+                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if (!text) return m.reply(example("https://ridzcoder.zone.id"))
 if (!isUrl(text)) return m.reply(example("https://ridzcoder.zone.id"))
 var res = await axios.get('https://tinyurl.com/api-create.php?url='+encodeURIComponent(text))
@@ -883,6 +942,9 @@ break
 
 case "vv": {
         try {
+        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
             let mediaMessage;
 
             // Check main message
@@ -988,6 +1050,9 @@ async function handleAudio(clutch, chatId, mediaMessage) {
 break
 
                 case "tourl": {
+                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if (!/image/.test(mime)) return m.reply(example("𝚛𝚎𝚙𝚕𝚢 𝚙𝚑𝚘𝚝𝚘 𝚠𝚒𝚝𝚑 .𝚝𝚘𝚞𝚛𝚕"))
 let media = await clutch.downloadAndSaveMediaMessage(qmsg)
 const { ImageUploadService } = require('node-upload-images')
@@ -1008,7 +1073,7 @@ case "play2": {
 
             // Add initial reaction
             await clutch.sendMessage(m.chat, { 
-                react: { text: "🔍", key: m.key } 
+                react: { text: "🌋", key: m.key } 
             });
 
             // Search YouTube
@@ -1069,6 +1134,7 @@ await clutch.sendMessage(m.chat, {
     break
 //=================================================
 case "ytmp4": {
+
 if (!text) return m.reply("Example: .ytmp4 youtube link")
 if (!text.startsWith("https://")) return m.reply("Invalid youtube link")
 
@@ -1203,6 +1269,9 @@ await clutch.sendMessage(m.chat, {react: {text: '', key: m.key}})
 break
 
                 case "swgc": {
+                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!isCreator) return Reply(mess.owner);
     const quoted = m.quoted ? m.quoted : m;
     const mime = (quoted.msg || quoted).mimetype || "";
@@ -1272,6 +1341,9 @@ break
 break;
 
 case "swgc_process": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!isCreator && !m.isAdmins) return Reply(mess.admin);
     if (!text) return Reply("❌𝚁𝚎𝚙𝚕𝚢 𝚟𝚒𝚍𝚎𝚘");
     const groupId = text.split("|")[0];
@@ -1302,6 +1374,9 @@ case "swgc_process": {
 }
 break;
                 case "brat": {
+                await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) 
         return m.reply('❌ Use: .𝚋𝚛𝚊𝚝 𝚑𝚎𝚕𝚕𝚘 𝚠𝚘𝚛𝚕𝚍');
         await clutch.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
@@ -1340,6 +1415,9 @@ break;
 
                         case "kick": 
                         case "kik": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
@@ -1358,6 +1436,9 @@ break;
                         //================================================================================
 
                         case "leave": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.isGroup) return Reply(mess.group)
                                 await m.reply("𝙶𝚛𝚘𝚞𝚙 𝚕𝚎𝚏𝚝 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢")
@@ -1369,6 +1450,9 @@ break;
                         //================================================================================
 
                         case "resetlinkgc": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
@@ -1380,6 +1464,9 @@ break;
                         //================================================================================
 
                         case "tagall": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
                                 if (!text) return m.reply(example("𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
@@ -1395,6 +1482,7 @@ break;
                         //================================================================================
 
                         case "linkgc": {
+                        🌋
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
                                 const urlGrup = "https://chat.whatsapp.com/" + await clutch.groupInviteCode(m.chat)
@@ -1409,6 +1497,9 @@ ${urlGrup}
 
                         case "ht": 
                         case "hidetag": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
                                 if (!text) return m.reply(example("group"))
@@ -1421,6 +1512,9 @@ ${urlGrup}
 
                         case "joingc": 
                         case "join": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!text) return m.reply(example("linkgcnya"))
                                 if (!text.includes("chat.whatsapp.com")) return m.reply("Invalid WhatsApp group link")
@@ -1434,6 +1528,9 @@ ${urlGrup}
 
                         case "get": 
                         case "g": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!text) return m.reply(example("https://ridzcoder.zone.id"))
                                 let data = await fetchJson(text)
@@ -1445,6 +1542,9 @@ ${urlGrup}
                         //================================================================================
                         case "on":
 case "off": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!isCreator) return Reply(mess.owner)
     if (!m.isGroup) return Reply(mess.group)
 
@@ -1477,6 +1577,9 @@ break
                         case "close": 
                         case "opengc": 
                         case "open": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
@@ -1494,6 +1597,9 @@ break
 
                         case "demote":
                         case "promote": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!m.isGroup) return Reply(mess.group)
                                 if (!m.isBotAdmin) return Reply(mess.botAdmin)
                                 if (!isCreator && !m.isAdmin) return Reply(mess.admin)
@@ -1514,6 +1620,9 @@ break
                         //================================================================================
 
                         case 'addcase': {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!isCreator) return Reply(mess.owner);
     if (!text) return Reply(`Usage: .addcase *vv*`);
     const namaFile = path.join(__dirname, 'command.js');
@@ -1552,6 +1661,9 @@ break
 }
 break
 case 'delcase': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!isCreator) return Reply(mess.owner);
     if (!text) 
         return Reply(`usage: .delcase nama_case`);
@@ -1580,6 +1692,9 @@ case 'delcase': {
 break;
 
                         case "addstore": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!text) return m.reply(example("store|nemesis"))
                                 if (!text.split("|")) return m.reply(example("store|nemesis"))
@@ -1598,7 +1713,9 @@ break;
                         }
                         break
 
-                        case "addprem": {
+                        case "addprem": {await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!text && !m.quoted) return m.reply(example("2567###"))
                                 const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
@@ -1613,6 +1730,9 @@ break;
                         //================================================================================
 
                         case "listprem": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (premium.length < 1) return m.reply("𝙽𝚘 𝚙𝚛𝚎𝚖𝚒𝚞𝚖 𝚞𝚜𝚎𝚛")
                                 let teks = `\n *乂𝚙𝚛𝚎𝚖 𝚞𝚜𝚎𝚛𝚜*\n`
                                 for (let i of premium) {
@@ -1626,6 +1746,9 @@ break;
                         //================================================================================
 
                         case "delprem": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.quoted && !text) return m.reply(example("2567###"))
                                 const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
@@ -1642,6 +1765,9 @@ break;
                         //================================================================================
 
                         case "jpm": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!q) return m.reply(example("𝚑𝚎𝚕𝚕𝚘 𝚖𝚎𝚖𝚋𝚎𝚛𝚜"))
                                 let allgrup = await clutch.groupFetchAllParticipating()
@@ -1666,18 +1792,27 @@ break;
 
                         case "developerbot": 
                         case "owner": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 await clutch.sendContact(m.chat, [global.owner], m)
                         }
                         break
 
                         //================================================================================
                         case "self": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return
                                 clutch.public = false
                                 m.reply("𝙱𝙾𝚃 𝙲𝙷𝙰𝙽𝙶𝙴𝙳 𝚃𝙾 𝙿𝚁𝙸𝚅𝙰𝚃𝙴 𝙼𝙾𝙳𝙴*")
                         }
                         break
                         case "public": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return
                                 clutch.public = true
                                 m.reply("𝙱𝚘𝚝 𝚌𝚑𝚊𝚗𝚐𝚎𝚍 𝚝𝚘 𝚙𝚞𝚋𝚕𝚒𝚌 𝚖𝚘𝚍𝚎*")
@@ -1686,6 +1821,9 @@ break;
 
                         case "resetdb": 
                         case "rstdb": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 for (let i of Object.keys(global.db)) {
                                         global.db[i] = {}
@@ -1697,6 +1835,9 @@ break;
                         //================================================================================
 
                         case "setppbot": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (/image/g.test(mime)) {
                                         var medis = await clutch.downloadAndSaveMediaMessage(qmsg)
@@ -1732,6 +1873,9 @@ break;
 
                         case "clearchat": 
                         case "clc": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 clutch.chatModify({ delete: true, lastMessages: [{ key: m.key, messageTimestamp: m.timestamp }]}, m.chat)
                         }
@@ -1741,6 +1885,9 @@ break;
 
                         case "listowner": 
                         case "listown": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (owners.length < 1) return m.reply("𝙽𝚘 𝚘𝚠𝚗𝚎𝚛𝚜 𝚒𝚗 𝚝𝚑𝚎 𝚍𝚊𝚝𝚊𝚋𝚊𝚜𝚎")
                                 let teks = `\n *༒𝙾𝚠𝚗𝚎𝚛𝚜 𝚕𝚒𝚜𝚝༒*\n`
                                 for (let i of owners) {
@@ -1755,6 +1902,9 @@ break;
 
                         case "delowner": 
                         case "delown": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.quoted && !text) return m.reply(example("2567###"))
                                 const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
@@ -1772,6 +1922,9 @@ break;
 
                         case "addowner": 
                         case "addown": {
+                        await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
                                 if (!isCreator) return Reply(mess.owner)
                                 if (!m.quoted && !text) return m.reply(example("2567###"))
                                 const input = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net"
@@ -1785,33 +1938,28 @@ break;
 
 case "getpp": {
     try {
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
         if (!isCreator) {
             return Reply("❌ This command is only available for the owner!");
         }
 
         let userToAnalyze;
-
-        // Mentioned user (group)
         if (m.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
             userToAnalyze = m.message.extendedTextMessage.contextInfo.mentionedJid[0];
         }
 
-        // Replied message
         else if (m.message?.extendedTextMessage?.contextInfo?.participant) {
             userToAnalyze = m.message.extendedTextMessage.contextInfo.participant;
         }
-
-        // Number provided (works in inbox)
         else if (text) {
             let number = text.replace(/[^0-9]/g, "");
             userToAnalyze = number + "@s.whatsapp.net";
         }
-
-        // Default to sender
         else {
             userToAnalyze = m.sender;
         }
-
         let profilePic;
         try {
             profilePic = await clutch.profilePictureUrl(userToAnalyze, "image");
@@ -1833,7 +1981,9 @@ case "getpp": {
 break
 
     case "block": {
-    // Get the bot owner's number dynamically
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     const botOwner = sock.user.id.split(":")[0] + "@s.whatsapp.net";
 
     if (!isCreator) {
@@ -1864,6 +2014,9 @@ break
 break
   case "tts":{
 try{
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if(!text) return Reply("Need some text.")
     const url = googleTTS.getAudioUrl(q, {
   lang: 'hi-IN',
@@ -1902,6 +2055,9 @@ break
 
 case "joke": {
     try {
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
       const { data } = await axios.get("https://v2.jokeapi.dev/joke/Any?type=single");
       if (!data || !data.joke) return Reply("❌ Couldn't fetch a joke!");
     return  Reply(`😂 *Here's a joke for you:*\n\n${data.joke}`);
@@ -1911,8 +2067,11 @@ case "joke": {
     }
   }
 break
-//repeated 
+
 case "msg": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
   if (!isCreator) return Reply(mess.owner);
 
   try {
@@ -1946,6 +2105,9 @@ break
 //TikTok stalk
 case "ttstalk":{
   try {
+  await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) {
       return Reply("❎ Please provide a TikTok username.\n\n*Example:* .tiktokstalk mrbeast");
     }
@@ -1998,6 +2160,9 @@ break
   //lines
   case "lines": {
     try {
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
         const { data } = await axios.get('https://apis.davidcyriltech.my.id/pickupline');
 
         if (!data.success) return Reply("❌ Failed to get a pickup line. Try again!");
@@ -2012,7 +2177,10 @@ break
 break
   // news
   case "news": {
-    try {
+    try {   
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
         const apiKey = 'dcd720a6f1914e2d9dba9790c188c08c';  // Replace with your NewsAPI key
         const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
         const articles = response.data.articles.slice(0, 5); // Get top 5 articles
@@ -2033,7 +2201,7 @@ case "requests":
  {
     try {
         await clutch.sendMessage(m.chat, {
-            react: { text: '⏳', key: m.key }
+            react: { text: '🌋', key: m.key }
         });
 
         if (!m.isGroup) {
@@ -2080,6 +2248,9 @@ break
 case "acceptall":
 {
     try {
+    await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
         await clutch.sendMessage(m.chat, {
             react: { text: '⏳', key: m.key }
         });
@@ -2161,6 +2332,9 @@ case "repo": {
 break
 case "smartphone":
 case "gsmarena": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) return m.reply("*Please provide a query to search for smartphones.*");
 
     try {
@@ -2189,6 +2363,9 @@ case "gsmarena": {
 }
 break
 case "getdevice": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
    if (!m.quoted) {
       return m.reply('*Please quote a message to use this command!*');
     }
@@ -2215,6 +2392,9 @@ console.log('Quoted Key:', m.quoted?.key);
 }
 break
 case "browse": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if (!text) return m.reply("Enter URL");
 
     try {
@@ -2235,6 +2415,9 @@ if (!text) return m.reply("Enter URL");
 }
 break
 case "filtervcf": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 const quoted = m.quoted ? m.quoted : null;
     const mime = quoted?.mimetype || "";
     const normalizePhoneNumber = (phone) => {
@@ -2310,6 +2493,9 @@ const quoted = m.quoted ? m.quoted : null;
 }
 break
 case "shazam": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
  const quoted = m.quoted ? m.quoted : null || m.msg ;
  const mime = quoted?.mimetype || ""; 
       if (!quoted || !/audio|video/.test(mime)) return m.reply("Reply to an audio or video to identify music.");
@@ -2337,6 +2523,9 @@ try {
 }
 break
 case " advancedglow": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}advancedglow Ridz Coder*`);
@@ -2358,6 +2547,9 @@ let q = args.join(" ");
 }
 break
 case "blackpinklogo": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}blackpinklogo Kevin*`);
@@ -2379,6 +2571,9 @@ case "blackpinklogo": {
 }
 break
 case "blackpinkstyle": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return reply(`*Example: ${prefix}blackpinkstyle Ridz coder*`);
@@ -2400,6 +2595,9 @@ case "blackpinkstyle": {
 }
 break
 case "cartoonstyle": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}cartoonstyle Ridz Coder*`);
@@ -2421,6 +2619,9 @@ case "cartoonstyle": {
 }
 break
 case "deadpool": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}deadpool Kevin*`);
@@ -2442,6 +2643,9 @@ case "deadpool": {
 } 
 break
 case "effectclounds": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}effectclouds Ridz Coder*`);
@@ -2463,6 +2667,9 @@ let q = args.join(" ");
 }
 break
 case "flagtext": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}flagtext Ridz Coder*`);
@@ -2484,6 +2691,9 @@ let q = args.join(" ");
 }
 break
 case "freecreate": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}freecreate Ridz Coder*`);
@@ -2505,6 +2715,9 @@ case "freecreate": {
 }
 break
 case "galaxystyle": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}galaxystyle Ridz Coder*`);
@@ -2526,6 +2739,9 @@ case "galaxystyle": {
 }
 break
 case "galaxywallpaper": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}galaxywallpaper Ridz Coder*`);
@@ -2547,6 +2763,9 @@ case "galaxywallpaper": {
 }
 break
 case "makingneon": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}makingneon Ridz Coder*`);
@@ -2567,6 +2786,9 @@ case "makingneon": {
     }
 }
 case "matrix": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}matrix Ridz Coder*`);
@@ -2588,6 +2810,9 @@ case "matrix": {
 }
 break
 case"royaltext": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}royaltext Ridz Coder*`);
@@ -2609,6 +2834,9 @@ let q = args.join(" ");
 }
 break
 case "sand": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}sand Ridz Coder*`);
@@ -2630,6 +2858,9 @@ case "sand": {
 }
 break
 case "summerbeach": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}summerbeach Kevin*`);
@@ -2651,6 +2882,9 @@ case "summerbeach": {
 }
 break
 case "topography": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}topography Ridz coder*`);
@@ -2672,6 +2906,9 @@ case "topography": {
 }
 break
 case "typography": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}typography Ridz Coder*`);
@@ -2693,6 +2930,9 @@ case "typography": {
 }
 break
 case "luxurygold": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 let q = args.join(" ");
     if (!q) {
       return m.reply(`*Example: ${prefix}luxurygold Kevin*`);
@@ -2715,6 +2955,9 @@ let q = args.join(" ");
 break
 case "imdb":
 case "movie": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
 if (!text) return m.reply("Provide a movie or series name.");
       
       try {
@@ -2735,37 +2978,58 @@ if (!text) return m.reply("Provide a movie or series name.");
 break
 case 'venice':
 case 'vai': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await veniceAICommand(clutch, m.chat, text, m);
     break;
 }
 
 case 'mistral': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await mistralAICommand(clutch, m.chat, text, m);
     break;
 }
 
 case 'perplexity': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await perplexityAICommand(clutch, m.chat, text, m);
     break;
 }
 
 case 'bard': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await bardAICommand(clutch, m.chat, text, m);
     break;
 }
 
 case 'gpt4nano':
 case 'gpt41nano': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await gpt4NanoAICommand(clutch, m.chat, text, m);
     break;
 }
 
 case 'nemesisai': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await kelvinAICommand(clutch, text, m.chat, m);
     break;
 }
 
 case 'claude': {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     await claudeAICommand(clutch, m.chat, text, m);
     break;
 }
@@ -3005,6 +3269,9 @@ case 'anticall': {
 }
 break;
 case "yts": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!text) return m.reply("❌ Give search text");
 
     const { videos } = await yts(text);
@@ -3019,15 +3286,15 @@ case "yts": {
     Reply(msg);
 }
 break;
-case "ping":
+			case "ping":
 case "uptime": {
-    try {
-        const sender = m.sender;
-
-        let timestamp = speed();
-        let latensi = speed() - timestamp;
-        let tio = await nou.os.oos();
-        var tot = await nou.drive.info();
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
+    let timestamp = speed();
+    let latensi = speed() - timestamp;
+    let tio = await nou.os.oos();
+    var tot = await nou.drive.info();
 
         let respon =
 `╭═══⬡𝑁𝐸𝑀𝐸𝑆𝐼𝑆 𝑀𝐷 ⬡═══⬡ 
@@ -3040,24 +3307,11 @@ case "uptime": {
 ║友│⊷• 𝙱𝙾𝚃 𝚁𝚄𝙽𝚃𝙸𝙼𝙴  : ${runtime(process.uptime())}
 ╰═══════════════════⬡`;
 
-        await clutch.sendMessage(
-            m.chat,
-            {
-                image: { url: "https://files.catbox.moe/qva4tf.jpg" },
-                caption: respon,
-                contextInfo: {
-                    mentionedJid: [sender]
-                }
-            },
-            { quoted: m }
-        );
-
-    } catch (e) {
-        console.log(e)
-        m.reply("Error")
-    }
+    await m.reply(respon)
 }
-break;
+break
+
+        
 /* ================= GROUP COMMANDS ================= */
 
 case "link":
@@ -3071,7 +3325,9 @@ case "setgcpp":
 case "antilink":
 case "antitagadmin":
 case "invite": {
-
+await clutch.sendMessage(m.chat, {
+  react: { text: "🌋", key: m.key }
+})
     if (!m.isGroup) return Reply("❌ Group only");
 
     const metadata = await clutch.groupMetadata(m.chat);
