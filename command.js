@@ -237,6 +237,181 @@ var data = await screenshotV2(text)
 await clutch.sendMessage(m.chat, { image: data, mimetype: "image/png"}, {quoted: m})
 }
 break
+case "repo": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "📂", key: m.key }
+})
+
+try {
+    let repoURL = "https://github.com/Ridzcoder/NEMESIS-MD"
+
+    let match = repoURL.match(/github\.com\/([^/]+)\/([^/]+)/)
+    if (!match) return m.reply("Invalid repo URL")
+
+    let [, owner, repo] = match
+
+    let res = await fetch(`https://api.github.com/repos/${owner}/${repo}`)
+    let json = await res.json()
+
+    if (!json.name) return m.reply("Repository not found")
+
+    m.reply(`📂 *Repository Info*
+
+📛 Name: ${json.name}
+👤 Owner: ${json.owner.login}
+⭐ Stars: ${json.stargazers_count}
+🍴 Forks: ${json.forks_count}
+👀 Watchers: ${json.watchers_count}
+🐞 Issues: ${json.open_issues_count}
+💻 Language: ${json.language || "Unknown"}
+
+🔗 ${json.html_url}
+
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ`)
+
+} catch {
+    m.reply("Error fetching repository")
+}
+}
+break
+case "gitinfo": {
+await clutch.sendMessage(m.chat, { react: { text: "📊", key: m.key } })
+
+if (!text) return m.reply("Example: .repo username")
+
+try {
+let res = await fetch(`https://api.github.com/users/${text}`)
+let json = await res.json()
+
+m.reply(`📊 *GitHub Stats*
+
+👤 Username: ${json.login}
+📦 Public Repos: ${json.public_repos}
+👥 Followers: ${json.followers}
+➡️ Following: ${json.following}
+⭐ Bio: ${json.bio || "None"}
+🔗 ${json.html_url}`)
+} catch {
+m.reply("Error fetching GitHub stats")
+}
+}
+break
+case "gitclone": {
+await clutch.sendMessage(m.chat, { react: { text: "📥", key: m.key } })
+
+if (!text) return m.reply("Example: .gitclone https://github.com/user/repo")
+
+try {
+let repoPath = text.replace("https://github.com/", "")
+let zipUrl = `https://github.com/${repoPath}/archive/refs/heads/main.zip`
+
+await clutch.sendMessage(m.chat, {
+document: { url: zipUrl },
+fileName: `${repoPath.split("/")[1]}.zip`,
+mimetype: "application/zip"
+}, { quoted: m })
+
+} catch {
+m.reply("Failed to download repo")
+}
+}
+break
+case "wordofday": {
+await clutch.sendMessage(m.chat, { react: { text: "📖", key: m.key } })
+try {
+let res = await fetch("https://random-word-api.herokuapp.com/word")
+let json = await res.json()
+
+m.reply(`📖 *Word of the Day*\n${json[0]}`)
+} catch {
+m.reply("Error fetching word")
+}
+}
+break
+case "historyfact": {
+await clutch.sendMessage(m.chat, { react: { text: "📜", key: m.key } })
+try {
+let res = await fetch("https://history.muffinlabs.com/date")
+let json = await res.json()
+
+let fact = json.data.Events[Math.floor(Math.random()*json.data.Events.length)]
+m.reply(`📜 *History Fact*\n${fact.year} - ${fact.text}`)
+} catch {
+m.reply("Error fetching history")
+}
+}
+break
+case "apk": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "📥", key: m.key }
+})
+
+if (!text) return m.reply("Example: .happymod whatsapp")
+
+try {
+    let res = await fetch(`https://kayiza-apis.zone.id/discovery/happymod?query=${encodeURIComponent(text)}`)
+    let json = await res.json()
+
+    if (!json.result || json.result.length === 0) {
+        return m.reply("App not found")
+    }
+
+    let app = json.result[0]
+
+    let caption = `📥 *HappyMod Download*
+
+📛 Name: ${app.name}
+📦 Size: ${app.size}
+⭐ Rating: ${app.rating}
+📥 Downloads: ${app.download}
+
+🔗 Download: ${app.link}
+
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ`
+
+    await clutch.sendMessage(m.chat, {
+         image: { url: app.icon },
+        caption: caption
+    document: { url: app.link },
+    fileName: `${app.name}.apk`,
+    mimetype: "application/vnd.android.package-archive"
+}, { quoted: m })
+
+} catch {
+    m.reply("Error fetching app")
+}
+}
+break
+case "lyrics": {
+await clutch.sendMessage(m.chat, {
+  react: { text: "🎵", key: m.key }
+})
+
+if (!text) return m.reply("Example: .lyrics already dead juice wrld")
+
+try {
+    let res = await fetch(`https://kayiza-apis.zone.id/search/lyrics?query=${encodeURIComponent(text)}`)
+    let json = await res.json()
+
+    if (!json.result) return m.reply("Lyrics not found")
+
+    let data = json.result
+
+    m.reply(`🎵 *Lyrics*
+
+🎤 Title: ${data.title}
+👤 Artist: ${data.artist}
+
+${data.lyrics}
+
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ Rɪᴅᴢ Cᴏᴅᴇʀ`)
+
+} catch {
+    m.reply("Error fetching lyrics")
+}
+}
+break
+
 case "support": {
 try {
 await clutch.sendMessage(m.chat, {
