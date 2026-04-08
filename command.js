@@ -346,7 +346,7 @@ await clutch.sendMessage(m.chat, {
   react: { text: "📥", key: m.key }
 })
 
-if (!text) return m.reply("Example: .happymod whatsapp")
+if (!text) return m.reply("Example: .apk whatsapp")
 
 try {
     let res = await fetch(`https://kayiza-apis.zone.id/discovery/happymod?query=${encodeURIComponent(text)}`)
@@ -371,7 +371,7 @@ try {
 
     await clutch.sendMessage(m.chat, {
          image: { url: app.icon },
-        caption: caption
+        caption: caption,
     document: { url: app.link },
     fileName: `${app.name}.apk`,
     mimetype: "application/vnd.android.package-archive"
